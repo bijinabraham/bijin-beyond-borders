@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { photo } from "@/lib/basePath";
 import TiltCard from "./TiltCard";
 import styles from "./PlacesGrid.module.css";
 
@@ -27,7 +29,7 @@ export default function PlacesGrid() {
         >
           Places
         </motion.h2>
-        <a href="/travels" className={styles.seeAll}>All &rarr;</a>
+        <Link href="/travels" className={styles.seeAll}>All &rarr;</Link>
       </div>
 
       <div className={styles.grid}>
@@ -45,7 +47,7 @@ export default function PlacesGrid() {
               transition={{ delay: i * 0.08, duration: 0.9, ease }}
             >
               <img
-                src={p.img}
+                src={photo(p.img)}
                 alt={`${p.city}, ${p.country}`}
                 className={styles.img}
                 loading={i === 0 ? "eager" : "lazy"}

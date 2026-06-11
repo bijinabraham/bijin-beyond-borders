@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { photo } from "@/lib/basePath";
 import styles from "./Hero.module.css";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -101,8 +103,8 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.88, duration: 0.6, ease }}
         >
-          <a href="/travels" className={styles.ctaPrimary}>Enter</a>
-          <a href="/about"   className={styles.ctaGhost}>About &rarr;</a>
+          <Link href="/travels" className={styles.ctaPrimary}>Enter</Link>
+          <Link href="/about"   className={styles.ctaGhost}>About &rarr;</Link>
         </motion.div>
       </div>
 
@@ -110,7 +112,7 @@ export default function Hero() {
         <div className={styles.imageWrap}>
           <motion.img
             ref={imgRef}
-            src="/photos/hero.jpeg"
+            src={photo("/photos/hero.jpeg")}
             alt="A place"
             className={styles.heroImg}
             initial={{ opacity: 0, scale: 1.04 }}

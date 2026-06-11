@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import TiltCard from "./TiltCard";
 import styles from "./Adrenaline.module.css";
 
@@ -28,7 +29,7 @@ export default function Adrenaline() {
         >
           Adrenaline
         </motion.h2>
-        <a href="/adrenaline" className={styles.seeAll}>All &rarr;</a>
+        <Link href="/adrenaline" className={styles.seeAll}>All &rarr;</Link>
       </div>
 
       <div className={styles.grid}>

@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import type { Destination } from "@/lib/travelsData";
+import { photo } from "@/lib/basePath";
 import styles from "@/app/travels/[slug]/destination.module.css";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -10,11 +12,11 @@ export default function DestinationContent({ dest }: { dest: Destination }) {
   const hasPhotos = (dest.photos?.length ?? 0) > 0;
 
   const heroSrc = hasPhotos
-    ? `/photos/${dest.slug}/${dest.heroPhoto ?? "hero.jpg"}`
+    ? photo(`/photos/${dest.slug}/${dest.heroPhoto ?? "hero.jpg"}`)
     : `https://picsum.photos/seed/${dest.heroSeed}/1600/900`;
 
   const galleryPhotos = hasPhotos
-    ? dest.photos!.map((f) => `/photos/${dest.slug}/${f}`)
+    ? dest.photos!.map((f) => photo(`/photos/${dest.slug}/${f}`))
     : [1, 2, 3, 4, 5].map((n) => `https://picsum.photos/seed/${dest.gallerySeed}-g${n}/500/420`);
 
   return (
@@ -137,13 +139,13 @@ export default function DestinationContent({ dest }: { dest: Destination }) {
       </div>
 
       {/* ── NEXT DESTINATION ── */}
-      <a href={`/travels/${dest.nextSlug}`} className={styles.nextDest}>
+      <Link href={`/travels/${dest.nextSlug}`} className={styles.nextDest}>
         <div>
           <p className={styles.nextLabel}>Next destination</p>
           <p className={styles.nextName}>{dest.nextName}</p>
         </div>
         <span className={styles.nextArrow}>&rarr;</span>
-      </a>
+      </Link>
 
     </article>
   );
