@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="charcoal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direction C — Color Variants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Nunito+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── THEME TOKENS ─── */
+
+    [data-theme="charcoal"] {
+      --bg:       oklch(0.10 0 0);
+      --surface:  oklch(0.16 0 0);
+      --surface2: oklch(0.07 0 0);
+      --ink:      oklch(0.95 0 0);
+      --primary:  oklch(0.72 0.09 140);
+      --accent:   oklch(0.90 0.17 82);
+      --muted:    oklch(0.46 0 0);
+      --rule:     oklch(0.20 0 0);
+      --img-filter: brightness(0.75) saturate(0.65);
+      --img-blend: luminosity;
+      --outline-stroke: oklch(0.65 0.09 140);
+    }
+
+    [data-theme="white"] {
+      --bg:       oklch(1.000 0 0);
+      --surface:  oklch(0.965 0 0);
+      --surface2: oklch(0.93 0 0);
+      --ink:      oklch(0.14 0 0);
+      --primary:  oklch(0.50 0.12 140);
+      --accent:   oklch(0.52 0.17 32);
+      --muted:    oklch(0.50 0 0);
+      --rule:     oklch(0.86 0 0);
+      --img-filter: brightness(0.90) saturate(0.80);
+      --img-blend: luminosity;
+      --outline-stroke: oklch(0.50 0.12 140);
+    }
+
+    [data-theme="midnight"] {
+      --bg:       oklch(0.17 0.045 265);
+      --surface:  oklch(0.23 0.050 265);
+      --surface2: oklch(0.12 0.035 265);
+      --ink:      oklch(0.95 0.006 265);
+      --primary:  oklch(0.70 0.14 230);
+      --accent:   oklch(0.88 0.18 75);
+      --muted:    oklch(0.54 0.030 265);
+      --rule:     oklch(0.27 0.045 265);
+      --img-filter: brightness(0.70) saturate(0.55);
+      --img-blend: luminosity;
+      --outline-stroke: oklch(0.70 0.14 230);
+    }
+
+    [data-theme="blanc-ox"] {
+      --bg:       oklch(0.93 0.016 14);
+      --surface:  oklch(0.89 0.020 14);
+      --surface2: oklch(0.85 0.024 14);
+      --ink:      oklch(0.14 0.022 14);
+      --primary:  oklch(0.34 0.11 14);
+      --accent:   oklch(0.58 0.19 32);
+      --muted:    oklch(0.44 0.010 14);
+      --rule:     oklch(0.82 0.018 14);
+      --img-filter: none;
+      --img-blend: normal;
+      --outline-stroke: oklch(0.34 0.11 14);
+    }
+
+    [data-theme="oxblood"] {
+      --bg:       oklch(0.20 0.055 14);
+      --surface:  oklch(0.26 0.060 14);
+      --surface2: oklch(0.14 0.040 14);
+      --ink:      oklch(0.96 0.007 14);
+      --primary:  oklch(0.78 0.10 22);
+      --accent:   oklch(0.88 0.18 60);
+      --muted:    oklch(0.58 0.030 14);
+      --rule:     oklch(0.30 0.050 14);
+      --img-filter: brightness(0.70) saturate(0.55);
+      --img-blend: luminosity;
+      --outline-stroke: oklch(0.78 0.10 22);
+    }
+
+    /* ─── SWITCHER ─── */
+    .switcher {
+      position: fixed;
+      inset-block-end: 2rem;
+      inset-inline-start: 50%;
+      translate: -50% 0;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: oklch(0.08 0 0 / 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid oklch(1 0 0 / 0.1);
+      padding: 0.6rem 0.8rem;
+      border-radius: 100px;
+    }
+
+    .switcher-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: oklch(0.5 0 0);
+      padding-inline-end: 0.5rem;
+    }
+
+    .swatch {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+
+    .swatch:hover { transform: scale(1.15); }
+
+    .swatch.active {
+      border-color: oklch(1 0 0 / 0.7);
+      transform: scale(1.15);
+    }
+
+    .swatch[data-t="charcoal"]  { background: oklch(0.10 0 0); box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.2); }
+    .swatch[data-t="white"]     { background: oklch(1.000 0 0); box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.2); }
+    .swatch[data-t="midnight"]  { background: oklch(0.17 0.045 265); }
+    .swatch[data-t="oxblood"]   { background: oklch(0.20 0.055 14); }
+    .swatch[data-t="blanc-ox"]  {
+      background: linear-gradient(135deg, oklch(1.000 0 0) 50%, oklch(0.36 0.10 14) 50%);
+      box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.15);
+    }
+
+    .swatch-name {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: oklch(1 0 0);
+      position: absolute;
+      inset-block-start: calc(100% + 0.4rem);
+      inset-inline-start: 50%;
+      translate: -50% 0;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      pointer-events: none;
+    }
+
+    .swatch:hover .swatch-name,
+    .swatch.active .swatch-name { opacity: 1; }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Nunito Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.75rem 3rem;
+      border-block-end: 1px solid var(--rule);
+      transition: border-color 0.4s ease;
+    }
+
+    .nav-brand {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ─── HERO ─── */
+    .hero {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      min-height: calc(100svh - 67px);
+      border-block-end: 1px solid var(--rule);
+      transition: border-color 0.4s ease;
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 4rem 3rem;
+      border-inline-end: 1px solid var(--rule);
+      transition: border-color 0.4s ease;
+    }
+
+    .hero-index {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      align-self: flex-start;
+      margin-block-end: auto;
+      transition: color 0.4s ease;
+    }
+
+    .hero-title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: clamp(5rem, 10vw, 9rem);
+      font-weight: 700;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-wrap: balance;
+      margin-block-end: 2.5rem;
+      transition: color 0.4s ease;
+    }
+
+    .hero-title .line-2 { color: var(--primary); transition: color 0.4s ease; }
+
+    .hero-title .line-3 {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--outline-stroke);
+      transition: -webkit-text-stroke-color 0.4s ease;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 44ch;
+      line-height: 1.8;
+      margin-block-end: 2.5rem;
+      transition: color 0.4s ease;
+    }
+
+    .hero-actions { display: flex; align-items: center; gap: 2rem; }
+
+    .hero-cta-primary {
+      background: var(--accent);
+      color: var(--bg);
+      text-decoration: none;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.75rem;
+      transition: background 0.25s ease, color 0.4s ease;
+    }
+
+    [data-theme="white"] .hero-cta-primary,
+    [data-theme="blanc-ox"] .hero-cta-primary { color: oklch(1 0 0); }
+
+    .hero-cta-secondary {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 600;
+      border-block-end: 1px solid var(--primary);
+      padding-block-end: 0.15rem;
+      transition: color 0.4s ease, border-color 0.4s ease;
+    }
+
+    .hero-right { display: grid; grid-template-rows: 1fr auto; }
+
+    .hero-image { overflow: hidden; }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: var(--img-filter);
+      mix-blend-mode: var(--img-blend, luminosity);
+      transition: filter 0.4s ease;
+    }
+
+    .hero-stat-strip {
+      padding: 2rem;
+      border-block-start: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      transition: border-color 0.4s ease;
+    }
+
+    .hero-stat-value {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      line-height: 1;
+      transition: color 0.4s ease;
+    }
+
+    .hero-stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-block-start: 0.35rem;
+      transition: color 0.4s ease;
+    }
+
+    /* ─── BENTO ─── */
+    .places { border-block-end: 1px solid var(--rule); transition: border-color 0.4s ease; }
+
+    .places-header {
+      padding: 3rem 3rem 2.5rem;
+      border-block-end: 1px solid var(--rule);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      transition: border-color 0.4s ease;
+    }
+
+    .section-title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .see-all {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 700;
+      transition: color 0.4s ease;
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 240px 240px;
+    }
+
+    .bento-cell {
+      position: relative;
+      overflow: hidden;
+      border-inline-end: 1px solid var(--rule);
+      border-block-end: 1px solid var(--rule);
+      cursor: pointer;
+      transition: border-color 0.4s ease;
+    }
+
+    .bento-cell:last-child,
+    .bento-cell:nth-child(4) { border-inline-end: none; }
+
+    .bento-cell.large { grid-column: 1 / 3; grid-row: 1 / 3; }
+    .bento-cell.tall  { grid-row: span 2; }
+
+    .bento-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: var(--img-filter);
+      mix-blend-mode: var(--img-blend, luminosity);
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+
+    .bento-cell:hover img {
+      filter: brightness(0.9) saturate(1);
+      transform: scale(1.04);
+    }
+
+    .bento-label {
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline: 0;
+      padding: 1.5rem;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+      transition: background 0.4s ease;
+    }
+
+    .bento-city {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .bento-cell.large .bento-city { font-size: 2rem; }
+
+    .bento-country {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      font-weight: 600;
+      font-family: 'Josefin Sans', sans-serif;
+      margin-block-start: 0.2rem;
+      transition: color 0.4s ease;
+    }
+
+    /* ─── ABOUT ─── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-block-end: 1px solid var(--rule);
+      transition: border-color 0.4s ease;
+    }
+
+    .about-text-panel {
+      padding: clamp(4rem, 8vw, 6rem) 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-inline-end: 1px solid var(--rule);
+      transition: border-color 0.4s ease;
+    }
+
+    .about-tag {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-block-end: 2rem;
+      transition: color 0.4s ease;
+    }
+
+    .about-heading {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-block-end: 2rem;
+      color: var(--ink);
+      transition: color 0.4s ease;
+    }
+
+    .about-heading .outline {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--outline-stroke);
+      transition: -webkit-text-stroke-color 0.4s ease;
+    }
+
+    .about-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 50ch;
+      transition: color 0.4s ease;
+    }
+
+    .about-body p + p { margin-block-start: 1.25rem; }
+
+    .about-image-panel {
+      background: var(--surface2);
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+
+    .about-image-panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: var(--img-filter);
+      mix-blend-mode: var(--img-blend, luminosity);
+      transition: filter 0.4s ease;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      transition: color 0.4s ease;
+    }
+
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 600;
+      transition: color 0.4s ease;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-text { padding: 2.5rem 1.5rem 3rem; border-inline-end: none; border-block-end: 1px solid var(--rule); }
+      .hero-right { display: none; }
+      .bento { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .bento-cell.large { grid-column: 1/3; grid-row: auto; }
+      .bento-cell.tall { grid-row: auto; }
+      .about { grid-template-columns: 1fr; }
+      .about-image-panel { height: 300px; }
+      .about-text-panel { border-inline-end: none; padding: 3rem 1.5rem; }
+      footer { padding: 1.75rem 1.5rem; }
+      .places-header { padding: 2rem 1.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body, nav, .hero, .hero-title, .hero-desc, .bento-cell img,
+      .switcher, .swatch { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COLOR SWITCHER -->
+  <div class="switcher" role="group" aria-label="Color theme">
+    <span class="switcher-label">Color</span>
+    <button class="swatch active" data-t="charcoal" aria-label="Charcoal" title="Charcoal">
+      <span class="swatch-name">Charcoal</span>
+    </button>
+    <button class="swatch" data-t="white" aria-label="White" title="White">
+      <span class="swatch-name">White</span>
+    </button>
+    <button class="swatch" data-t="midnight" aria-label="Midnight" title="Midnight">
+      <span class="swatch-name">Midnight</span>
+    </button>
+    <button class="swatch" data-t="oxblood" aria-label="Oxblood" title="Oxblood">
+      <span class="swatch-name">Oxblood</span>
+    </button>
+    <button class="swatch" data-t="blanc-ox" aria-label="Blanc Ox" title="Blanc Ox">
+      <span class="swatch-name">Blanc Ox</span>
+    </button>
+  </div>
+
+  <nav>
+    <a href="#" class="nav-brand">Bijin&nbsp;&nbsp;Beyond&nbsp;&nbsp;Borders</a>
+    <ul class="nav-links">
+      <li><a href="#">Travels</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-index">A personal archive</p>
+      <h1 class="hero-title">
+        <span class="line-1">Bijin</span><br>
+        <span class="line-2">Beyond</span><br>
+        <span class="line-3">Borders</span>
+      </h1>
+      <p class="hero-desc">Travels, projects, and the spaces between — collected by someone who looks slowly and moves often.</p>
+      <div class="hero-actions">
+        <a href="#" class="hero-cta-primary">Enter</a>
+        <a href="#" class="hero-cta-secondary">About &rarr;</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-image">
+        <img src="https://picsum.photos/seed/wb-hero/800/900" alt="A place">
+      </div>
+      <div class="hero-stat-strip">
+        <div class="hero-stat">
+          <div class="hero-stat-value">34</div>
+          <div class="hero-stat-label">Countries visited</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">12</div>
+          <div class="hero-stat-label">Projects built</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="places">
+    <div class="places-header">
+      <h2 class="section-title">Places</h2>
+      <a href="#" class="see-all">All &rarr;</a>
+    </div>
+    <div class="bento">
+      <div class="bento-cell large">
+        <img src="https://picsum.photos/seed/wb-kyoto/1000/1000" alt="Kyoto, Japan">
+        <div class="bento-label">
+          <div class="bento-city">Kyoto</div>
+          <div class="bento-country">Japan</div>
+        </div>
+      </div>
+      <div class="bento-cell tall">
+        <img src="https://picsum.photos/seed/wb-lisbon/500/900" alt="Lisbon">
+        <div class="bento-label">
+          <div class="bento-city">Lisbon</div>
+          <div class="bento-country">Portugal</div>
+        </div>
+      </div>
+      <div class="bento-cell tall">
+        <img src="https://picsum.photos/seed/wb-tbilisi/500/900" alt="Tbilisi">
+        <div class="bento-label">
+          <div class="bento-city">Tbilisi</div>
+          <div class="bento-country">Georgia</div>
+        </div>
+      </div>
+      <div class="bento-cell">
+        <img src="https://picsum.photos/seed/wb-oaxaca/500/400" alt="Oaxaca">
+        <div class="bento-label">
+          <div class="bento-city">Oaxaca</div>
+          <div class="bento-country">Mexico</div>
+        </div>
+      </div>
+      <div class="bento-cell">
+        <img src="https://picsum.photos/seed/wb-marrakech/500/400" alt="Marrakech">
+        <div class="bento-label">
+          <div class="bento-city">Marrakech</div>
+          <div class="bento-country">Morocco</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about-text-panel">
+      <p class="about-tag">Who I am</p>
+      <h2 class="about-heading">
+        Slow<br>
+        <span class="outline">Looking</span><br>
+        Far<br>
+        <span class="outline">Going</span>
+      </h2>
+      <div class="about-body">
+        <p>I move through places the way some people move through books — completely, with attention to the margins. This site is where I keep what stays with me.</p>
+        <p>Part travel record, part creative archive. No itineraries, no optimization. Just the things worth remembering.</p>
+      </div>
+    </div>
+    <div class="about-image-panel">
+      <img src="https://picsum.photos/seed/wb-portrait/700/900" alt="Portrait">
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">Bijin Beyond Borders</div>
+    <ul class="footer-links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    const html = document.documentElement;
+    const swatches = document.querySelectorAll('.swatch');
+
+    swatches.forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        const theme = swatch.dataset.t;
+        html.dataset.theme = theme;
+        swatches.forEach(s => s.classList.toggle('active', s === swatch));
+      });
+    });
+  </script>
+</body>
+</html>

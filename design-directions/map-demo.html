@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map — Bijin Beyond Borders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <style>
+    :root {
+      --bg:      oklch(0.93 0.016 14);
+      --surface: oklch(0.89 0.020 14);
+      --ink:     oklch(0.14 0.022 14);
+      --primary: oklch(0.34 0.11 14);
+      --accent:  oklch(0.58 0.19 32);
+      --muted:   oklch(0.44 0.010 14);
+      --rule:    oklch(0.82 0.018 14);
+      --ff-d: 'Josefin Sans', sans-serif;
+      --ff-b: 'Nunito Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--ff-b);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100svh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.75rem 3rem;
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 50;
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 1.25rem; }
+
+    .nav-compass { width: 32px; height: 32px; flex-shrink: 0; }
+    .c-ring       { stroke: var(--rule); }
+    .c-label-n    { fill: var(--primary); font-family: var(--ff-d); font-size: 10px; font-weight: 700; }
+    .c-label-m    { fill: var(--muted);   font-family: var(--ff-d); font-size: 7px; }
+    .c-needle-n   { fill: var(--primary); }
+    .c-needle-s   { fill: var(--rule); }
+    .c-pivot-o    { fill: var(--bg); stroke: var(--primary); }
+    .c-pivot-i    { fill: var(--primary); }
+
+    .nav-brand {
+      font-family: var(--ff-d);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a.active { color: var(--primary); }
+
+    /* ── PAGE LAYOUT ── */
+    .page {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      min-height: calc(100svh - 65px);
+    }
+
+    /* ── MAP ── */
+    .map-wrap {
+      position: relative;
+      border-right: 1px solid var(--rule);
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    #world-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Countries */
+    .country {
+      fill: var(--surface);
+      stroke: var(--rule);
+      stroke-width: 0.5px;
+      transition: fill 0.3s ease;
+    }
+
+    .country.visited {
+      fill: oklch(0.89 0.025 14);
+    }
+
+    .graticule {
+      fill: none;
+      stroke: var(--rule);
+      stroke-width: 0.3px;
+      opacity: 0.5;
+    }
+
+    .sphere {
+      fill: oklch(0.91 0.014 14);
+    }
+
+    /* City markers */
+    .city-group { cursor: pointer; }
+
+    .city-pulse {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 1px;
+      opacity: 0;
+      animation: pulse 2.4s ease-out infinite;
+    }
+
+    .city-pulse:nth-child(2) { animation-delay: 0.6s; }
+    .city-pulse:nth-child(3) { animation-delay: 1.2s; }
+
+    @keyframes pulse {
+      0%   { r: 4px; opacity: 0.7; }
+      100% { r: 18px; opacity: 0; }
+    }
+
+    .city-dot {
+      fill: var(--primary);
+      stroke: var(--bg);
+      stroke-width: 1.5px;
+      transition: r 0.2s ease, fill 0.2s ease;
+    }
+
+    .city-group:hover .city-dot {
+      fill: var(--accent);
+      r: 6;
+    }
+
+    /* City tooltip */
+    .city-label {
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .city-group:hover .city-label { opacity: 1; }
+
+    .city-label rect {
+      fill: var(--primary);
+    }
+
+    .city-label-name {
+      fill: oklch(0.93 0.016 14);
+      font-family: var(--ff-d);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .city-label-country {
+      fill: oklch(0.93 0.016 14 / 0.65);
+      font-family: var(--ff-d);
+      font-size: 7px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .sidebar-heading {
+      font-family: var(--ff-d);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .city-list-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--rule);
+      cursor: pointer;
+      transition: padding-left 0.2s ease;
+    }
+
+    .city-list-item:hover { padding-left: 0.5rem; }
+
+    .city-list-name {
+      font-family: var(--ff-d);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .city-list-country {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      font-family: var(--ff-d);
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 2rem;
+    }
+
+    .visit-count {
+      font-family: var(--ff-d);
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .visit-count-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    /* ── HORIZON SECTION ── */
+    .horizon {
+      padding: 2rem;
+      border-top: 1px solid var(--rule);
+      margin-top: 2rem;
+    }
+
+    .horizon-label {
+      font-family: var(--ff-d);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .horizon-city {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 0;
+      font-family: var(--ff-d);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .horizon-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .city-pulse { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="animation-demo.html" class="nav-brand">Bijin&nbsp;&nbsp;Beyond&nbsp;&nbsp;Borders</a>
+
+      <svg class="nav-compass" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <circle cx="50" cy="50" r="46" class="c-ring" stroke-width="1.5"/>
+        <line x1="50" y1="5"  x2="50" y2="14" class="c-ring" stroke-width="2"/>
+        <line x1="50" y1="86" x2="50" y2="95" class="c-ring" stroke-width="1"/>
+        <line x1="5"  y1="50" x2="14" y2="50" class="c-ring" stroke-width="1"/>
+        <line x1="86" y1="50" x2="95" y2="50" class="c-ring" stroke-width="1"/>
+        <text x="50" y="24" text-anchor="middle" class="c-label-n">N</text>
+        <text x="50" y="82" text-anchor="middle" class="c-label-m">S</text>
+        <text x="79" y="54" text-anchor="middle" class="c-label-m">E</text>
+        <text x="21" y="54" text-anchor="middle" class="c-label-m">W</text>
+        <g id="mapNeedle">
+          <polygon points="50,16 45,50 55,50" class="c-needle-n"/>
+          <polygon points="50,84 45,50 55,50" class="c-needle-s"/>
+          <circle cx="50" cy="50" r="6"   class="c-pivot-o" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="2.5" class="c-pivot-i"/>
+        </g>
+      </svg>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Travels</a></li>
+      <li><a href="#">Adrenaline</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="map-demo.html" class="active">Map</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="page">
+    <div class="map-wrap" id="mapWrap">
+      <svg id="world-svg"></svg>
+    </div>
+
+    <aside class="sidebar">
+      <p class="sidebar-heading">Places visited</p>
+
+      <div id="cityList"></div>
+
+      <div class="sidebar-footer">
+        <div class="visit-count" id="visitCount">0</div>
+        <div class="visit-count-label">Cities visited</div>
+      </div>
+
+      <div class="horizon">
+        <p class="horizon-label">On the horizon</p>
+        <div class="horizon-city"><span class="horizon-dot"></span>Tokyo, Japan</div>
+        <div class="horizon-city"><span class="horizon-dot"></span>Buenos Aires, Argentina</div>
+        <div class="horizon-city"><span class="horizon-dot"></span>Nairobi, Kenya</div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const visited = [
+      { name: "Kyoto",     country: "Japan",    lat:  35.01, lng:  135.77 },
+      { name: "Lisbon",    country: "Portugal", lat:  38.72, lng:   -9.14 },
+      { name: "Tbilisi",   country: "Georgia",  lat:  41.69, lng:   44.80 },
+      { name: "Oaxaca",    country: "Mexico",   lat:  17.07, lng:  -96.73 },
+      { name: "Marrakech", country: "Morocco",  lat:  31.63, lng:   -7.98 },
+    ];
+
+    // Sidebar city list
+    const listEl = document.getElementById('cityList');
+    visited.forEach(c => {
+      const item = document.createElement('div');
+      item.className = 'city-list-item';
+      item.innerHTML = `
+        <span class="city-list-name">${c.name}</span>
+        <span class="city-list-country">${c.country}</span>
+      `;
+      listEl.appendChild(item);
+    });
+
+    // Animate count
+    const countEl = document.getElementById('visitCount');
+    let n = 0;
+    const step = () => {
+      n++;
+      countEl.textContent = n;
+      if (n < visited.length) setTimeout(step, 120);
+    };
+    setTimeout(step, 600);
+
+    // ── D3 MAP ──
+    const wrap = document.getElementById('mapWrap');
+    const svg  = d3.select('#world-svg');
+
+    function draw() {
+      svg.selectAll('*').remove();
+
+      const W = wrap.clientWidth;
+      const H = wrap.clientHeight || window.innerHeight - 65;
+
+      svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+      const proj = d3.geoNaturalEarth1()
+        .scale(W / 6.3)
+        .translate([W / 2, H / 2]);
+
+      const path = d3.geoPath().projection(proj);
+
+      // Sphere (ocean)
+      svg.append('path')
+        .datum({ type: 'Sphere' })
+        .attr('class', 'sphere')
+        .attr('d', path);
+
+      // Graticule
+      svg.append('path')
+        .datum(d3.geoGraticule()())
+        .attr('class', 'graticule')
+        .attr('d', path);
+
+      d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+        .then(world => {
+          const countries = topojson.feature(world, world.objects.countries);
+
+          svg.selectAll('.country')
+            .data(countries.features)
+            .enter()
+            .append('path')
+            .attr('class', 'country')
+            .attr('d', path);
+
+          // Country borders
+          svg.append('path')
+            .datum(topojson.mesh(world, world.objects.countries, (a, b) => a !== b))
+            .attr('fill', 'none')
+            .attr('stroke', 'var(--rule)')
+            .attr('stroke-width', 0.4)
+            .attr('d', path);
+
+          // City markers
+          visited.forEach((city, i) => {
+            const [x, y] = proj([city.lng, city.lat]);
+
+            const g = svg.append('g')
+              .attr('class', 'city-group')
+              .attr('transform', `translate(${x},${y})`);
+
+            // Pulse rings (3 staggered)
+            [0, 1, 2].forEach(j => {
+              g.append('circle')
+                .attr('class', 'city-pulse')
+                .attr('r', 4)
+                .style('animation-delay', `${j * 0.8}s`);
+            });
+
+            // Core dot
+            g.append('circle')
+              .attr('class', 'city-dot')
+              .attr('r', 4);
+
+            // Label (shows on hover)
+            const label = g.append('g')
+              .attr('class', 'city-label')
+              .attr('transform', 'translate(0, -28)');
+
+            const pad = { x: 8, y: 5 };
+            const nameW = city.name.length * 6.5 + pad.x * 2;
+            const boxH = 30;
+
+            label.append('rect')
+              .attr('x', -nameW / 2)
+              .attr('y', -boxH / 2)
+              .attr('width', nameW)
+              .attr('height', boxH)
+              .attr('rx', 0);
+
+            label.append('text')
+              .attr('class', 'city-label-name')
+              .attr('text-anchor', 'middle')
+              .attr('dy', '-2px')
+              .text(city.name);
+
+            label.append('text')
+              .attr('class', 'city-label-country')
+              .attr('text-anchor', 'middle')
+              .attr('dy', '9px')
+              .text(city.country);
+
+            // Pointer triangle
+            label.append('polygon')
+              .attr('points', '-5,14 5,14 0,20')
+              .attr('fill', 'var(--primary)');
+          });
+        });
+    }
+
+    draw();
+    window.addEventListener('resize', draw);
+
+    // Compass needle rotation
+    const needle = document.getElementById('mapNeedle');
+    let cAngle = 0, tAngle = 0;
+
+    window.addEventListener('scroll', () => {
+      const max = document.body.scrollHeight - window.innerHeight;
+      tAngle = max > 0 ? (window.scrollY / max) * 720 : 0;
+    }, { passive: true });
+
+    // On the map page there's little scroll, so give the needle
+    // a slow idle drift so it's still visibly alive
+    let idle = 0;
+    (function spin() {
+      idle += 0.15;
+      const target = tAngle + idle;
+      cAngle += (target - cAngle) * 0.025;
+      needle.setAttribute('transform', `rotate(${cAngle}, 50, 50)`);
+      requestAnimationFrame(spin);
+    })();
+  </script>
+
+</body>
+</html>
