@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import styles from "./Projects.module.css";
 
 const projects = [
@@ -24,7 +25,7 @@ export default function Projects() {
         >
           Projects
         </motion.h2>
-        <a href="/projects" className={styles.seeAll}>All &rarr;</a>
+        <Link href="/projects" className={styles.seeAll}>All &rarr;</Link>
       </div>
 
       {projects.map((p, i) => (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import styles from "./Nav.module.css";
 
 export default function Nav() {
@@ -48,9 +49,9 @@ export default function Nav() {
   return (
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.left}>
-        <a href="/" className={styles.brand}>
+        <Link href="/" className={styles.brand}>
           Bijin&nbsp;&nbsp;Beyond&nbsp;&nbsp;Borders
-        </a>
+        </Link>
 
         <svg
           className={styles.compass}
@@ -77,11 +78,11 @@ export default function Nav() {
       </div>
 
       <ul className={styles.links}>
-        <li><a href="/travels">Travels</a></li>
-        <li><a href="/adrenaline">Adrenaline</a></li>
-        <li><a href="/projects">Projects</a></li>
-        <li><a href="/map">Map</a></li>
-        <li><a href="/about">About</a></li>
+        <li><Link href="/travels">Travels</Link></li>
+        <li><Link href="/adrenaline">Adrenaline</Link></li>
+        <li><Link href="/projects">Projects</Link></li>
+        <li><Link href="/map">Map</Link></li>
+        <li><Link href="/about">About</Link></li>
       </ul>
     </nav>
   );

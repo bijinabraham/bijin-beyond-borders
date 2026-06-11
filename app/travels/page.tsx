@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { photo } from "@/lib/basePath";
 import styles from "./travels.module.css";
 
 // ── DATA ──────────────────────────────────────────────────────────────────────
@@ -256,21 +258,23 @@ export default function TravelsPage() {
 
                 <div className={styles.cityGrid}>
                   {c.cities.map((city) => (
-                    <a
+                    <Link
                       key={city.name}
                       href={`/travels/${city.name.toLowerCase().replace(/[\s.]+/g, "-")}`}
                       className={styles.cityCard}
                     >
                       <div className={styles.cityTint} />
                       <img
-                        src={(city as any).img || `https://picsum.photos/seed/${city.seed}/400/520`}
+                        src={photo((city as any).img || `https://picsum.photos/seed/${city.seed}/400/520`)}
                         alt={city.name}
                         className={styles.cityImg}
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className={styles.cityLabel}>
                         <span className={styles.cityName}>{city.name}</span>
                       </div>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </section>
@@ -287,7 +291,7 @@ export default function TravelsPage() {
                   <div key={year} className={styles.yearBlock}>
                     <p className={styles.yearLabel}>{year}</p>
                     {trips.map((trip) => (
-                      <a
+                      <Link
                         key={trip.title}
                         href={`/travels/${trip.slug}`}
                         className={styles.tripRow}
@@ -300,9 +304,11 @@ export default function TravelsPage() {
                           <div className={styles.tripImgWrap}>
                             <div className={styles.tripTint} />
                             <img
-                              src={(trip as any).img || `https://picsum.photos/seed/${trip.seed}/320/220`}
+                              src={photo((trip as any).img || `https://picsum.photos/seed/${trip.seed}/320/220`)}
                               alt={trip.country}
                               className={styles.tripImg}
+                              loading="lazy"
+                              decoding="async"
                             />
                           </div>
                           <div className={styles.tripBody}>
@@ -313,7 +319,7 @@ export default function TravelsPage() {
                             <span className={styles.tripArrow}>Read more &rarr;</span>
                           </div>
                         </div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 ))}
