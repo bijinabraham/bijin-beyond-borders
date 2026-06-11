@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travels — Layout Options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: oklch(0.93 0.016 14);
+      --surface: oklch(0.89 0.020 14);
+      --ink: oklch(0.14 0.022 14);
+      --primary: oklch(0.34 0.11 14);
+      --accent: oklch(0.58 0.19 32);
+      --muted: oklch(0.44 0.010 14);
+      --rule: oklch(0.82 0.018 14);
+      --ff-d: 'Josefin Sans', sans-serif;
+      --ff-b: 'Nunito Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--ff-b); font-weight: 300; -webkit-font-smoothing: antialiased; }
+
+    /* ── VIEW TABS ── */
+    .tabs {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+    }
+    .tabs-brand {
+      font-family: var(--ff-d);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      padding: 1.5rem 0;
+    }
+    .tabs-list {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+    .tab-btn {
+      padding: 1.5rem 1.5rem;
+      border: none;
+      background: none;
+      font-family: var(--ff-d);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    /* ── VIEWS ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 4rem 3rem 3rem;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .page-title {
+      font-family: var(--ff-d);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      line-height: 0.92;
+      color: var(--ink);
+    }
+    .page-title span { color: var(--primary); }
+    .page-count {
+      font-family: var(--ff-d);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: 0.5rem;
+    }
+
+    /* ═══════════════════════════════
+       VIEW A — BY COUNTRY
+    ═══════════════════════════════ */
+    .country-section { border-bottom: 1px solid var(--rule); }
+
+    .country-header {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      align-items: center;
+      padding: 2.5rem 3rem;
+      border-bottom: 1px solid var(--rule);
+      gap: 3rem;
+    }
+    .country-name {
+      font-family: var(--ff-d);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .country-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: var(--ff-d);
+    }
+
+    .city-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      border-top: none;
+    }
+    .city-card {
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      aspect-ratio: 3/4;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .city-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: oklch(0.34 0.11 14 / 0.55);
+      mix-blend-mode: multiply;
+      z-index: 1;
+      transition: opacity 0.5s ease;
+    }
+    .city-card:hover::before { opacity: 0; }
+    .city-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: grayscale(0.65) brightness(0.9);
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
+    }
+    .city-card:hover img { transform: scale(1.06); filter: grayscale(0) brightness(1); }
+    .city-card-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem 1.25rem 1rem;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+      z-index: 2;
+    }
+    .city-card-name {
+      font-family: var(--ff-d);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    /* ═══════════════════════════════
+       VIEW B — TIMELINE
+    ═══════════════════════════════ */
+    .timeline { padding: 0 3rem 4rem; }
+
+    .year-block { margin-top: 3.5rem; }
+    .year-label {
+      font-family: var(--ff-d);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0;
+    }
+    .trip-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid var(--rule);
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0.2s;
+    }
+    .trip-item:hover { background: var(--surface); }
+    .trip-left {
+      padding: 2rem;
+      border-right: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .trip-date {
+      font-family: var(--ff-d);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .trip-country {
+      font-family: var(--ff-d);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+    .trip-right {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0;
+    }
+    .trip-img {
+      width: 160px;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(0.6) brightness(0.9);
+      transition: filter 0.4s ease;
+    }
+    .trip-item:hover .trip-img { filter: grayscale(0) brightness(1); }
+    .trip-text {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .trip-title {
+      font-family: var(--ff-d);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .trip-cities {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .trip-arrow {
+      font-family: var(--ff-d);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-top: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .trip-item:hover .trip-arrow { opacity: 1; }
+
+    /* ═══════════════════════════════
+       VIEW C — EDITORIAL GRID
+    ═══════════════════════════════ */
+    .editorial-filter {
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: var(--ff-d);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--rule);
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary);
+      color: oklch(0.93 0.016 14);
+      border-color: var(--primary);
+    }
+
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 340px 240px 240px;
+    }
+    .ed-card {
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .ed-card:nth-child(3n) { border-right: none; }
+    /* Feature spans */
+    .ed-card.feat-1 { grid-column: 1; grid-row: 1 / 3; }
+    .ed-card.feat-2 { grid-column: 2; grid-row: 2 / 4; }
+    .ed-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: oklch(0.34 0.11 14 / 0.55);
+      mix-blend-mode: multiply;
+      z-index: 1;
+      transition: opacity 0.5s ease;
+    }
+    .ed-card:hover::before { opacity: 0; }
+    .ed-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: grayscale(0.65) brightness(0.9);
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
+    }
+    .ed-card:hover img { transform: scale(1.05); filter: grayscale(0) brightness(1); }
+    .ed-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem 1.5rem 1.25rem;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+      z-index: 2;
+    }
+    .ed-region {
+      font-family: var(--ff-d);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+    }
+    .ed-city {
+      font-family: var(--ff-d);
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .ed-card.feat-1 .ed-city { font-size: 2.2rem; }
+    .ed-card.feat-2 .ed-city { font-size: 1.6rem; }
+  </style>
+</head>
+<body>
+
+  <div class="tabs">
+    <span class="tabs-brand">Bijin&nbsp;&nbsp;Beyond&nbsp;&nbsp;Borders</span>
+    <ul class="tabs-list">
+      <li><button class="tab-btn active" onclick="show('country')">By Country</button></li>
+      <li><button class="tab-btn" onclick="show('timeline')">By Trip</button></li>
+      <li><button class="tab-btn" onclick="show('editorial')">Grid View</button></li>
+    </ul>
+  </div>
+
+  <!-- ── VIEW A: BY COUNTRY ── -->
+  <div id="view-country" class="view active">
+    <div class="page-header">
+      <h1 class="page-title">Travels<br><span>Around</span><br>the World</h1>
+      <p class="page-count">15 countries &middot; 55+ cities</p>
+    </div>
+
+    <div class="country-section">
+      <div class="country-header">
+        <h2 class="country-name">Japan</h2>
+        <p class="country-meta">13 cities &middot; Asia</p>
+      </div>
+      <div class="city-cards">
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/wb-kyoto/400/540" alt="Kyoto"><div class="city-card-label"><div class="city-card-name">Kyoto</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/tokyo-1/400/540" alt="Tokyo"><div class="city-card-label"><div class="city-card-name">Tokyo</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/osaka-1/400/540" alt="Osaka"><div class="city-card-label"><div class="city-card-name">Osaka</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/sapporo-1/400/540" alt="Sapporo"><div class="city-card-label"><div class="city-card-name">Sapporo</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/fuji-1/400/540" alt="Mt. Fuji"><div class="city-card-label"><div class="city-card-name">Mt. Fuji</div></div></a>
+      </div>
+    </div>
+
+    <div class="country-section">
+      <div class="country-header">
+        <h2 class="country-name">United States</h2>
+        <p class="country-meta">14 cities &middot; North America</p>
+      </div>
+      <div class="city-cards">
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/sf-1/400/540" alt="San Francisco"><div class="city-card-label"><div class="city-card-name">San Francisco</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/ny-1/400/540" alt="New York"><div class="city-card-label"><div class="city-card-name">New York</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/yosemite-1/400/540" alt="Yosemite"><div class="city-card-label"><div class="city-card-name">Yosemite</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/horseshoe-1/400/540" alt="Horseshoe Bend"><div class="city-card-label"><div class="city-card-name">Horseshoe Bend</div></div></a>
+      </div>
+    </div>
+
+    <div class="country-section">
+      <div class="country-header">
+        <h2 class="country-name">Europe</h2>
+        <p class="country-meta">12 cities &middot; Spain · Italy · Switzerland · Netherlands</p>
+      </div>
+      <div class="city-cards">
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/barcelona-1/400/540" alt="Barcelona"><div class="city-card-label"><div class="city-card-name">Barcelona</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/rome-1/400/540" alt="Rome"><div class="city-card-label"><div class="city-card-name">Rome</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/venice-1/400/540" alt="Venice"><div class="city-card-label"><div class="city-card-name">Venice</div></div></a>
+        <a href="#" class="city-card"><img src="https://picsum.photos/seed/amsterdam-1/400/540" alt="Amsterdam"><div class="city-card-label"><div class="city-card-name">Amsterdam</div></div></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VIEW B: TIMELINE ── -->
+  <div id="view-timeline" class="view">
+    <div class="page-header">
+      <h1 class="page-title">Travels<br><span>Through</span><br>Time</h1>
+      <p class="page-count">15 countries &middot; 55+ cities</p>
+    </div>
+    <div class="timeline">
+      <div class="year-block">
+        <p class="year-label">2024</p>
+        <a href="#" class="trip-item">
+          <div class="trip-left">
+            <span class="trip-date">Spring</span>
+            <span class="trip-country">Japan</span>
+          </div>
+          <div class="trip-right">
+            <img class="trip-img" src="https://picsum.photos/seed/wb-kyoto/320/220" alt="Japan">
+            <div class="trip-text">
+              <div class="trip-title">Land of the rising sun</div>
+              <div class="trip-cities">Tokyo, Kyoto, Osaka, Nara, Kamakura, Mt. Fuji</div>
+              <div class="trip-arrow">Read more &rarr;</div>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="trip-item">
+          <div class="trip-left">
+            <span class="trip-date">Autumn</span>
+            <span class="trip-country">Europe</span>
+          </div>
+          <div class="trip-right">
+            <img class="trip-img" src="https://picsum.photos/seed/barcelona-1/320/220" alt="Europe">
+            <div class="trip-text">
+              <div class="trip-title">Iberian and Italian circuit</div>
+              <div class="trip-cities">Madrid, Barcelona, Rome, Florence, Venice, Amsterdam</div>
+              <div class="trip-arrow">Read more &rarr;</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="year-block">
+        <p class="year-label">2023</p>
+        <a href="#" class="trip-item">
+          <div class="trip-left">
+            <span class="trip-date">Summer</span>
+            <span class="trip-country">United States</span>
+          </div>
+          <div class="trip-right">
+            <img class="trip-img" src="https://picsum.photos/seed/sf-1/320/220" alt="USA">
+            <div class="trip-text">
+              <div class="trip-title">Coasts and canyons</div>
+              <div class="trip-cities">San Francisco, Yosemite, Las Vegas, Horseshoe Bend, Antelope Canyon</div>
+              <div class="trip-arrow">Read more &rarr;</div>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="trip-item">
+          <div class="trip-left">
+            <span class="trip-date">Winter</span>
+            <span class="trip-country">Canada</span>
+          </div>
+          <div class="trip-right">
+            <img class="trip-img" src="https://picsum.photos/seed/canada-1/320/220" alt="Canada">
+            <div class="trip-text">
+              <div class="trip-title">Great white north</div>
+              <div class="trip-cities">Toronto, Montreal, Quebec City, Vancouver, Mont Tremblant</div>
+              <div class="trip-arrow">Read more &rarr;</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VIEW C: EDITORIAL GRID ── -->
+  <div id="view-editorial" class="view">
+    <div class="page-header">
+      <h1 class="page-title">Travels<br><span>Collected</span></h1>
+      <p class="page-count">15 countries &middot; 55+ cities</p>
+    </div>
+    <div class="editorial-filter">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Asia</button>
+      <button class="filter-btn">North America</button>
+      <button class="filter-btn">Europe</button>
+      <button class="filter-btn">Middle East</button>
+      <button class="filter-btn">South America</button>
+    </div>
+    <div class="editorial-grid">
+      <a href="#" class="ed-card feat-1"><img src="https://picsum.photos/seed/wb-kyoto/700/900" alt="Kyoto"><div class="ed-label"><div class="ed-region">Japan</div><div class="ed-city">Kyoto</div></div></a>
+      <a href="#" class="ed-card"><img src="https://picsum.photos/seed/tokyo-1/400/340" alt="Tokyo"><div class="ed-label"><div class="ed-region">Japan</div><div class="ed-city">Tokyo</div></div></a>
+      <a href="#" class="ed-card"><img src="https://picsum.photos/seed/sf-1/400/340" alt="San Francisco"><div class="ed-label"><div class="ed-region">USA</div><div class="ed-city">San Francisco</div></div></a>
+      <a href="#" class="ed-card feat-2"><img src="https://picsum.photos/seed/barcelona-1/400/580" alt="Barcelona"><div class="ed-label"><div class="ed-region">Spain</div><div class="ed-city">Barcelona</div></div></a>
+      <a href="#" class="ed-card"><img src="https://picsum.photos/seed/ny-1/400/240" alt="New York"><div class="ed-label"><div class="ed-region">USA</div><div class="ed-city">New York</div></div></a>
+      <a href="#" class="ed-card"><img src="https://picsum.photos/seed/rome-1/400/240" alt="Rome"><div class="ed-label"><div class="ed-region">Italy</div><div class="ed-city">Rome</div></div></a>
+      <a href="#" class="ed-card"><img src="https://picsum.photos/seed/amsterdam-1/400/240" alt="Amsterdam"><div class="ed-label"><div class="ed-region">Netherlands</div><div class="ed-city">Amsterdam</div></div></a>
+    </div>
+  </div>
+
+  <script>
+    function show(view) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('view-' + view).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

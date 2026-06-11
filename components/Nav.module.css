@@ -1,0 +1,76 @@
+.nav {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem var(--page-px);
+  background: var(--bg);
+  border-block-end: 1px solid var(--rule);
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease;
+}
+
+.nav.scrolled {
+  padding-block: 0.75rem;
+  box-shadow: 0 4px 24px oklch(0.14 0.022 14 / 0.07);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.brand {
+  font-family: var(--font-display), sans-serif;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* ── Compass ── */
+.compass {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.cRing        { stroke: var(--rule); }
+.cLabelN      { fill: var(--primary); font-family: var(--font-display), sans-serif; font-size: 10px; font-weight: 700; }
+.cLabelMinor  { fill: var(--muted);   font-family: var(--font-display), sans-serif; font-size: 7px; }
+.cNeedleN     { fill: var(--primary); }
+.cNeedleS     { fill: var(--rule); }
+.cPivotOuter  { fill: var(--bg); stroke: var(--primary); }
+.cPivotInner  { fill: var(--primary); }
+
+/* ── Nav links ── */
+.links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.links a:hover { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .nav { padding: 1.25rem var(--page-px); }
+  .links { gap: 1.5rem; }
+  .compass { width: 26px; height: 26px; }
+}

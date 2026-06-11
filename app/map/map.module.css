@@ -1,0 +1,236 @@
+.page {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  height: calc(100svh - 67px);
+  overflow: hidden; /* page itself never scrolls */
+}
+
+/* MAP */
+.mapWrap {
+  position: relative;
+  border-inline-end: 1px solid var(--rule);
+  overflow: hidden;
+  background: var(--bg);
+  height: 100%;
+  cursor: grab;
+}
+
+.mapWrap:active { cursor: grabbing; }
+
+.svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: inherit;
+}
+
+/* These are used by D3 via .attr("class") not CSS modules */
+.sphere   { fill: oklch(0.91 0.014 14); }
+.graticule { fill: none; stroke: var(--rule); stroke-width: 0.3px; opacity: 0.5; }
+.country  { fill: var(--surface); stroke: var(--rule); stroke-width: 0.5px; }
+
+/* City markers */
+.cityGroup { cursor: pointer; }
+
+.pulse {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 1px;
+  opacity: 0;
+  animation: pulse 2.4s ease-out infinite;
+}
+
+@keyframes pulse {
+  0%   { r: 4px; opacity: 0.7; }
+  100% { r: 18px; opacity: 0; }
+}
+
+.dot {
+  fill: var(--primary);
+  stroke: var(--bg);
+  stroke-width: 1.5px;
+  transition: r 0.2s ease, fill 0.2s ease;
+}
+
+.cityGroup:hover .dot { fill: var(--accent); r: 6; }
+
+.label {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cityGroup:hover .label { opacity: 1; }
+
+.labelName {
+  fill: oklch(0.93 0.016 14);
+  font-family: var(--font-display), sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.labelCountry {
+  fill: oklch(0.93 0.016 14 / 0.65);
+  font-family: var(--font-display), sans-serif;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* SIDEBAR */
+.sidebar {
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;        /* fill the grid cell */
+  overflow-y: auto;    /* only the sidebar scrolls */
+  overflow-x: hidden;
+}
+
+.countBlock {
+  padding-block-end: 2rem;
+  border-block-end: 1px solid var(--rule);
+  margin-block-end: 1.5rem;
+}
+
+.countNum {
+  font-family: var(--font-display), sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.countLabel {
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-block-start: 0.35rem;
+}
+
+/* Flag collection */
+.flagSection {
+  padding-block: 1.5rem;
+  border-block-end: 1px solid var(--rule);
+  margin-block-end: 0.25rem;
+}
+
+.flagHeading {
+  font-family: var(--font-display), sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-block-end: 1rem;
+}
+
+.flagGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem 0.5rem;
+}
+
+.flagItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+}
+
+.flagEmoji {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.flagName {
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Grouped region list */
+.regionList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+.region {
+  padding: 1rem 0;
+  border-block-end: 1px solid var(--rule);
+}
+
+.regionName {
+  font-family: var(--font-display), sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-block-end: 0.4rem;
+}
+
+.regionCities {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.horizonBlock {
+  margin-block-start: 1.5rem;
+  padding-block-start: 1.5rem;
+  border-block-start: 1px solid var(--rule);
+}
+
+.horizonLabel {
+  font-family: var(--font-display), sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-block-end: 0.6rem;
+}
+
+.horizonNote {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse { animation: none; }
+}
+
+@media (max-width: 768px) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60svh 1fr;
+    height: auto;       /* allow page to scroll on mobile */
+    overflow: visible;
+  }
+  .mapWrap {
+    height: 60svh;
+    border-inline-end: none;
+    border-block-end: 1px solid var(--rule);
+  }
+  .sidebar {
+    height: auto;
+    padding: 2rem 1.5rem;
+  }
+}
