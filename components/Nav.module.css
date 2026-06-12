@@ -24,6 +24,9 @@
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display), sans-serif;
   font-size: var(--text-sm);
   font-weight: 700;
