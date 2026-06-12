@@ -50,7 +50,20 @@ export default function Nav() {
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.left}>
         <Link href="/" className={styles.brand}>
-          Bijin&nbsp;&nbsp;Beyond&nbsp;&nbsp;Borders
+          <svg width="32" height="32" viewBox="0 0 80 80" fill="none" aria-hidden style={{ flexShrink: 0 }}>
+            <circle cx="40" cy="40" r="37" stroke="currentColor" strokeWidth="2"/>
+            <circle cx="40" cy="40" r="31" stroke="currentColor" strokeWidth="0.6" strokeDasharray="2.5 2"/>
+            <text x="40" y="47" textAnchor="middle" fontSize="20" fill="currentColor" fontFamily="serif">美人</text>
+            <path id="nta" d="M 12 40 A 28 28 0 0 1 68 40" fill="none"/>
+            <text fontFamily="sans-serif" fontSize="6" fill="currentColor" fontWeight="600" letterSpacing="3">
+              <textPath href="#nta" startOffset="50%" textAnchor="middle">BIJIN · BEYOND</textPath>
+            </text>
+            <path id="nba" d="M 12 40 A 28 28 0 0 0 68 40" fill="none"/>
+            <text fontFamily="sans-serif" fontSize="6" fill="currentColor" fontWeight="600" letterSpacing="5">
+              <textPath href="#nba" startOffset="50%" textAnchor="middle">BORDERS</textPath>
+            </text>
+          </svg>
+          <span>Bijin&nbsp;&nbsp;Beyond&nbsp;&nbsp;Borders</span>
         </Link>
 
         <svg
