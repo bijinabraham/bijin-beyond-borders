@@ -233,7 +233,7 @@ export const destinations: Record<string, Destination> = {
       "JFK layover detour: Central Park grass and Ichiran Ramen",
       "The bag mixup at Delhi baggage claim: solved, ribbon noted for all future travel",
     ],
-    gallerySeed: "yosemite", nextSlug: "toronto", nextName: "Toronto",
+    gallerySeed: "yosemite", nextSlug: "toronto-2024", nextName: "Toronto",
     heroPhoto: "hero.jpeg",
     photos: ["IMG_20260621_003521 Large.jpeg","IMG_20260621_003537 Large.jpeg","IMG_20260621_003625 Large.jpeg","IMG_20260621_003636 Large.jpeg","IMG_20260621_003642 Large.jpeg","IMG_20260621_003647 Large.jpeg","IMG_20260621_003653 Large.jpeg","IMG_20260621_003658 Large.jpeg","IMG_7794 Large.jpeg","IMG_7797 Large.jpeg","IMG_7799 Large.jpeg","IMG_7802 Large.jpeg","IMG_7805 Large.jpeg"],
   },
@@ -394,24 +394,60 @@ export const destinations: Record<string, Destination> = {
       "Capilano Suspension Bridge at sunset",
       "Gastown for dinner and the steam clock",
     ],
-    gallerySeed: "vancouver", nextSlug: "toronto", nextName: "Toronto",
+    gallerySeed: "vancouver", nextSlug: "toronto-2024", nextName: "Toronto",
   },
 
-  "toronto": {
-    slug: "toronto", name: "Toronto", country: "Canada", region: "Ontario",
-    lat: 43.6532, lng: -79.3832, visitDate: "2024", duration: "3 days",
-    heroSeed: "toronto-hero",
+
+  "toronto-2024": {
+    slug: "toronto-2024", name: "Toronto", country: "Canada", region: "Ontario",
+    lat: 43.6532, lng: -79.3832, visitDate: "Nov 2024", duration: "Nov 2024",
+    heroSeed: "toronto-2024-hero",
     story: [
-      "Toronto is a city that earns its reputation slowly and then all at once. It is more diverse than almost anywhere I have been, and that diversity shows up in the food before anywhere else: every neighbourhood has a completely different identity.",
-      "Kensington Market in the afternoon. Distillery District for design and architecture. The CN Tower is obligatory and still impressive. The lakeshore in winter is cold and genuinely beautiful.",
+      "Second visit to Toronto.",
     ],
-    highlights: [
-      "Kensington Market on a Saturday",
-      "Distillery District  -  best preserved Victorian industrial area in North America",
-      "St. Lawrence Market for the peameal bacon sandwich",
-      "AGO (Art Gallery of Ontario) for the Frank Gehry renovation",
+    highlights: [],
+    gallerySeed: "toronto-2024", nextSlug: "montreal-2024", nextName: "Montreal",
+    heroPhoto: "hero.jpeg",
+    photos: ["20241103_140936 Large.jpeg","20241103_142534 Large.jpeg","20241103_153121 Large.jpeg","20241105_144214 Large.jpeg","IMG-20241103-WA0001 Large.jpeg","IMG-20241103-WA0007 Large.jpeg","IMG-20241103-WA0012 Large.jpeg","IMG-20241103-WA0019 Large.jpeg","IMG-20241104-WA0006 Large.jpeg"],
+  },
+
+  "montreal-2024": {
+    slug: "montreal-2024", name: "Montreal", country: "Canada", region: "Quebec",
+    lat: 45.5017, lng: -73.5673, visitDate: "Nov 2024", duration: "Nov 2024",
+    heroSeed: "montreal-2024-hero",
+    story: [
+      "Montreal.",
     ],
-    gallerySeed: "toronto", nextSlug: "london", nextName: "London",
+    highlights: [],
+    gallerySeed: "montreal-2024", nextSlug: "quebec-city-2024", nextName: "Quebec City",
+    heroPhoto: "hero.jpg",
+    photos: ["20241106_154248.jpg"],
+  },
+
+  "quebec-city-2024": {
+    slug: "quebec-city-2024", name: "Quebec City", country: "Canada", region: "Quebec",
+    lat: 46.8139, lng: -71.2080, visitDate: "Nov 2024", duration: "Nov 2024",
+    heroSeed: "quebec-2024-hero",
+    story: [
+      "Quebec City.",
+    ],
+    highlights: [],
+    gallerySeed: "quebec-2024", nextSlug: "niagara-falls", nextName: "Niagara Falls",
+    heroPhoto: "hero.jpeg",
+    photos: ["20241107_110413 Large.jpeg","20241107_113056 Large.jpeg","20241107_114232 Large.jpeg","20241107_114352 Large.jpeg","20241107_114947 Large.jpeg","20241107_115437 Large.jpeg","20241107_115522 Large.jpeg","20241107_122131 Large.jpeg","20241107_133601 Large.jpeg","20241107_135948 Large.jpeg","20241107_152229 Large.jpeg","20241109_093308 Large.jpeg"],
+  },
+
+  "niagara-falls": {
+    slug: "niagara-falls", name: "Niagara Falls", country: "Canada", region: "Ontario",
+    lat: 43.0896, lng: -79.0849, visitDate: "Nov 2024", duration: "Nov 2024",
+    heroSeed: "niagara-hero",
+    story: [
+      "Niagara Falls.",
+    ],
+    highlights: [],
+    gallerySeed: "niagara", nextSlug: "toronto-2024", nextName: "Toronto",
+    heroPhoto: "hero.jpeg",
+    photos: ["20241107_163601 Large.jpeg","20241110_154340 Large.jpeg","20241110_154423 Large.jpeg","20241110_154511 Large.jpeg","20241110_202212 Large.jpeg"],
   },
 
   "london": {

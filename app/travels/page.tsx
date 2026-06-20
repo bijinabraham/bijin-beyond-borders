@@ -57,12 +57,12 @@ const byCountry = [
   {
     country: "Canada", region: "North America", count: 6, countryCount: 1,
     cities: [
-      { name: "Vancouver",      slug: "vancouver",      seed: "vancouver-ca"  },
-      { name: "Toronto",        slug: "toronto",        seed: "toronto-ca"    },
-      { name: "Montreal",       slug: "montreal",       seed: "montreal-ca"   },
-      { name: "Quebec City",    slug: "quebec-city",    seed: "quebec-ca"     },
-      { name: "Niagara Falls",  slug: "niagara-falls",  seed: "niagara-ca"    },
-      { name: "Mont Tremblant", slug: "mont-tremblant", seed: "tremblant-ca"  },
+      { name: "Vancouver",      slug: "vancouver",        seed: "vancouver-ca"  },
+      { name: "Toronto",        slug: "toronto-2024",     seed: "toronto-ca"    },
+      { name: "Montreal",       slug: "montreal-2024",    seed: "montreal-ca"   },
+      { name: "Quebec City",    slug: "quebec-city-2024", seed: "quebec-ca"     },
+      { name: "Niagara Falls",  slug: "niagara-falls",    seed: "niagara-ca"    },
+      { name: "Mont Tremblant", slug: "mont-tremblant",   seed: "tremblant-ca"  },
     ],
   },
   {
@@ -162,7 +162,7 @@ const byTrip = [
     year: "2024", season: "2024", country: "Canada",
     title: "Great White North",
     cities: ["Toronto", "Montreal", "Quebec City", "Vancouver", "Mont Tremblant", "Niagara Falls"],
-    seed: "toronto-ca", slug: "toronto",
+    seed: "toronto-ca", slug: "toronto-2024",
   },
   {
     year: "2025", season: "January", country: "Japan",
@@ -192,7 +192,7 @@ const byTrip = [
     year: "2026", season: "2026", country: "Canada",
     title: "Back to Canada",
     cities: ["Toronto", "Montreal", "Quebec City", "Vancouver", "Mont Tremblant", "Niagara Falls"],
-    seed: "vancouver-ca", slug: "toronto",
+    seed: "vancouver-ca", slug: "toronto-2024",
   },
 ];
 
