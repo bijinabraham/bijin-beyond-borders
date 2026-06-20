@@ -19,121 +19,121 @@ const byCountry = [
   {
     country: "Japan", region: "Asia", count: 13, countryCount: 1,
     cities: [
-      { name: "Tokyo",         seed: "tokyo-jp"      },
-      { name: "Kyoto",         seed: "wb-kyoto"      },
-      { name: "Osaka",         seed: "osaka-jp"      },
-      { name: "Nara",          seed: "nara-jp"       },
-      { name: "Kobe",          seed: "kobe-jp"       },
-      { name: "Sakai",         seed: "sakai-jp"      },
-      { name: "Nikko",         seed: "nikko-jp"      },
-      { name: "Kamakura",      seed: "kamakura-jp"   },
-      { name: "Enoshima",      seed: "enoshima-jp"   },
-      { name: "Otaru",         seed: "otaru-jp"      },
-      { name: "Sapporo",       seed: "sapporo-jp"    },
-      { name: "Mt. Fuji",      seed: "fuji-jp"       },
-      { name: "Chuzenji Lake", seed: "chuzenji-jp"   },
+      { name: "Tokyo",         slug: "tokyo",          seed: "tokyo-jp"      },
+      { name: "Kyoto",         slug: "kyoto",          seed: "wb-kyoto"      },
+      { name: "Osaka",         slug: "osaka",          seed: "osaka-jp"      },
+      { name: "Nara",          slug: "nara",           seed: "nara-jp"       },
+      { name: "Kobe",          slug: "kobe",           seed: "kobe-jp"       },
+      { name: "Sakai",         slug: "sakai",          seed: "sakai-jp"      },
+      { name: "Nikko",         slug: "nikko",          seed: "nikko-jp"      },
+      { name: "Kamakura",      slug: "kamakura",       seed: "kamakura-jp"   },
+      { name: "Enoshima",      slug: "enoshima",       seed: "enoshima-jp"   },
+      { name: "Otaru",         slug: "otaru",          seed: "otaru-jp"      },
+      { name: "Sapporo",       slug: "sapporo",        seed: "sapporo-jp"    },
+      { name: "Mt. Fuji",      slug: "mt-fuji",        seed: "fuji-jp"       },
+      { name: "Chuzenji Lake", slug: "chuzenji-lake",  seed: "chuzenji-jp"   },
     ],
   },
   {
     country: "United States", region: "North America", count: 14, countryCount: 1,
     cities: [
-      { name: "San Francisco",   seed: "sf-us"          },
-      { name: "Los Angeles",     seed: "la-us"          },
-      { name: "Yosemite",        seed: "yosemite-us"    },
-      { name: "Seattle",         seed: "seattle-us"     },
-      { name: "Snoqualmie",      seed: "snoqualmie-us"  },
-      { name: "Las Vegas",       seed: "vegas-us",       img: "/photos/las-vegas/hero.jpeg" },
-      { name: "Horseshoe Bend",  seed: "horseshoe-us"   },
-      { name: "Antelope Canyon", seed: "antelope-us"    },
-      { name: "Austin",          seed: "austin-us"      },
-      { name: "Miami",           seed: "miami-us"       },
-      { name: "Jupiter Beach",   seed: "jupiter-us"     },
-      { name: "Washington DC",   seed: "dc-us",          img: "/photos/washington-dc/hero Large.jpeg" },
-      { name: "New York",        seed: "ny-us",          img: "/photos/new-york/hero.jpeg" },
-      { name: "Philadelphia",    seed: "philly-us",      img: "/photos/philadelphia/hero.jpg" },
+      { name: "San Francisco",   slug: "san-francisco",   seed: "sf-us"         },
+      { name: "Los Angeles",     slug: "los-angeles",     seed: "la-us"         },
+      { name: "Yosemite",        slug: "yosemite",        seed: "yosemite-us"   },
+      { name: "Seattle",         slug: "seattle",         seed: "seattle-us"    },
+      { name: "Snoqualmie",      slug: "snoqualmie",      seed: "snoqualmie-us" },
+      { name: "Las Vegas",       slug: "las-vegas",       seed: "vegas-us"      },
+      { name: "Horseshoe Bend",  slug: "horseshoe-bend",  seed: "horseshoe-us"  },
+      { name: "Antelope Canyon", slug: "antelope-canyon", seed: "antelope-us"   },
+      { name: "Austin",          slug: "austin",          seed: "austin-us"     },
+      { name: "Miami",           slug: "miami",           seed: "miami-us"      },
+      { name: "Jupiter Beach",   slug: "jupiter-beach",   seed: "jupiter-us"    },
+      { name: "Washington DC",   slug: "washington-dc",   seed: "dc-us"         },
+      { name: "New York",        slug: "new-york",        seed: "ny-us"         },
+      { name: "Philadelphia",    slug: "philadelphia",    seed: "philly-us"     },
     ],
   },
   {
     country: "Canada", region: "North America", count: 6, countryCount: 1,
     cities: [
-      { name: "Vancouver",       seed: "vancouver-ca"   },
-      { name: "Toronto",         seed: "toronto-ca"     },
-      { name: "Montreal",        seed: "montreal-ca"    },
-      { name: "Quebec City",     seed: "quebec-ca"      },
-      { name: "Niagara Falls",   seed: "niagara-ca"     },
-      { name: "Mont Tremblant",  seed: "tremblant-ca"   },
+      { name: "Vancouver",      slug: "vancouver",      seed: "vancouver-ca"  },
+      { name: "Toronto",        slug: "toronto",        seed: "toronto-ca"    },
+      { name: "Montreal",       slug: "montreal",       seed: "montreal-ca"   },
+      { name: "Quebec City",    slug: "quebec-city",    seed: "quebec-ca"     },
+      { name: "Niagara Falls",  slug: "niagara-falls",  seed: "niagara-ca"    },
+      { name: "Mont Tremblant", slug: "mont-tremblant", seed: "tremblant-ca"  },
     ],
   },
   {
     country: "Europe", region: "Spain · Italy · Switzerland · Netherlands · Germany · Vatican City", count: 14, countryCount: 6,
     cities: [
-      { name: "Madrid",        seed: "madrid-es"      },
-      { name: "Valencia",      seed: "valencia-es"    },
-      { name: "Tarragona",     seed: "tarragona-es"   },
-      { name: "Barcelona",     seed: "barcelona-es"   },
-      { name: "Rome",          seed: "rome-it"        },
-      { name: "Vatican City",  seed: "vatican-it"     },
-      { name: "Florence",      seed: "florence-it"    },
-      { name: "Pisa",          seed: "pisa-it"        },
-      { name: "Venice",        seed: "venice-it"      },
-      { name: "Lucerne",       seed: "lucerne-ch"     },
-      { name: "Zurich",        seed: "zurich-ch"      },
-      { name: "Mt. Pilatus",   seed: "pilatus-ch"     },
-      { name: "Amsterdam",     seed: "amsterdam-nl"   },
-      { name: "Berlin",        seed: "berlin-de"      },
+      { name: "Madrid",        slug: "madrid",        seed: "madrid-es"    },
+      { name: "Valencia",      slug: "valencia",      seed: "valencia-es"  },
+      { name: "Tarragona",     slug: "tarragona",     seed: "tarragona-es" },
+      { name: "Barcelona",     slug: "barcelona",     seed: "barcelona-es" },
+      { name: "Rome",          slug: "rome",          seed: "rome-it"      },
+      { name: "Vatican City",  slug: "vatican-city",  seed: "vatican-it"   },
+      { name: "Florence",      slug: "florence",      seed: "florence-it"  },
+      { name: "Pisa",          slug: "pisa",          seed: "pisa-it"      },
+      { name: "Venice",        slug: "venice",        seed: "venice-it"    },
+      { name: "Lucerne",       slug: "lucerne",       seed: "lucerne-ch"   },
+      { name: "Zurich",        slug: "zurich",        seed: "zurich-ch"    },
+      { name: "Mt. Pilatus",   slug: "mt-pilatus",    seed: "pilatus-ch"   },
+      { name: "Amsterdam",     slug: "amsterdam",     seed: "amsterdam-nl" },
+      { name: "Berlin",        slug: "berlin",        seed: "berlin-de"    },
     ],
   },
   {
     country: "Ireland", region: "Europe", count: 3, countryCount: 1,
     cities: [
-      { name: "Dublin", seed: "dublin-ie" },
-      { name: "Howth",  seed: "howth-ie"  },
-      { name: "Wicklow",seed: "wicklow-ie"},
+      { name: "Dublin",   slug: "dublin",   seed: "dublin-ie"  },
+      { name: "Howth",    slug: "howth",    seed: "howth-ie"   },
+      { name: "Wicklow",  slug: "wicklow",  seed: "wicklow-ie" },
     ],
   },
   {
     country: "UK", region: "Europe", count: 1, countryCount: 1,
     cities: [
-      { name: "London", seed: "london-uk" },
+      { name: "London", slug: "london", seed: "london-uk" },
     ],
   },
   {
     country: "UAE", region: "Middle East", count: 2, countryCount: 1,
     cities: [
-      { name: "Dubai",     seed: "dubai-ae",   img: "/photos/dubai/hero.png" },
-      { name: "Abu Dhabi", seed: "abudhabi-ae"},
+      { name: "Dubai",     slug: "dubai",     seed: "dubai-ae"    },
+      { name: "Abu Dhabi", slug: "abu-dhabi", seed: "abudhabi-ae" },
     ],
   },
   {
     country: "Brazil", region: "South America", count: 2, countryCount: 1,
     cities: [
-      { name: "Rio de Janeiro", seed: "rio-br"   },
-      { name: "São Paulo",      seed: "saopaulo-br"},
+      { name: "Rio de Janeiro", slug: "rio-de-janeiro", seed: "rio-br"      },
+      { name: "São Paulo",      slug: "sao-paulo",       seed: "saopaulo-br" },
     ],
   },
   {
     country: "India", region: "Asia", count: 13, countryCount: 1,
     cities: [
-      { name: "New Delhi",         seed: "delhi-in"     },
-      { name: "Kerala",            seed: "kerala-in"    },
-      { name: "Karnataka",         seed: "karnataka-in" },
-      { name: "Tamil Nadu",        seed: "tamilnadu-in" },
-      { name: "Goa",               seed: "goa-in"       },
-      { name: "Mumbai",            seed: "mumbai-in"    },
-      { name: "Hyderabad",         seed: "hyd-in"       },
-      { name: "Valley of Flowers", seed: "vof-in"       },
-      { name: "Haridwar",          seed: "haridwar-in"  },
-      { name: "Srinagar",          seed: "srinagar-in"  },
-      { name: "Gulmarg",           seed: "gulmarg-in"   },
-      { name: "Nagpur",            seed: "nagpur-in"    },
-      { name: "Mulki",             seed: "mulki-in"     },
+      { name: "New Delhi",         slug: "new-delhi",          seed: "delhi-in"     },
+      { name: "Kerala",            slug: "kerala",             seed: "kerala-in"    },
+      { name: "Karnataka",         slug: "karnataka",          seed: "karnataka-in" },
+      { name: "Tamil Nadu",        slug: "tamil-nadu",         seed: "tamilnadu-in" },
+      { name: "Goa",               slug: "goa",                seed: "goa-in"       },
+      { name: "Mumbai",            slug: "mumbai",             seed: "mumbai-in"    },
+      { name: "Hyderabad",         slug: "hyderabad",          seed: "hyd-in"       },
+      { name: "Valley of Flowers", slug: "valley-of-flowers",  seed: "vof-in"       },
+      { name: "Haridwar",          slug: "haridwar",           seed: "haridwar-in"  },
+      { name: "Srinagar",          slug: "srinagar",           seed: "srinagar-in"  },
+      { name: "Gulmarg",           slug: "gulmarg",            seed: "gulmarg-in"   },
+      { name: "Nagpur",            slug: "nagpur",             seed: "nagpur-in"    },
+      { name: "Mulki",             slug: "mulki",              seed: "mulki-in"     },
     ],
   },
   {
     country: "Hawaii", region: "Pacific", count: 2, countryCount: 1,
     cities: [
-      { name: "Honolulu", seed: "honolulu-hi" },
-      { name: "Kauai",    seed: "kauai-hi"    },
+      { name: "Honolulu", slug: "honolulu", seed: "honolulu-hi" },
+      { name: "Kauai",    slug: "kauai",    seed: "kauai-hi"    },
     ],
   },
 ];
@@ -264,25 +264,29 @@ export default function TravelsPage() {
                 </div>
 
                 <div className={styles.cityGrid}>
-                  {c.cities.map((city) => (
-                    <Link
-                      key={city.name}
-                      href={`/travels/${city.name.toLowerCase().replace(/[\s.]+/g, "-")}`}
-                      className={styles.cityCard}
-                    >
-                      <div className={styles.cityTint} />
-                      <img
-                        src={destHero(city.name.toLowerCase().replace(/[\s.]+/g, "-"), city.seed, "400/520")}
-                        alt={city.name}
-                        className={styles.cityImg}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <div className={styles.cityLabel}>
-                        <span className={styles.cityName}>{city.name}</span>
-                      </div>
-                    </Link>
-                  ))}
+                  {c.cities.map((city) => {
+                    const visitDate = destinations[city.slug]?.visitDate;
+                    return (
+                      <Link
+                        key={city.slug}
+                        href={`/travels/${city.slug}`}
+                        className={styles.cityCard}
+                      >
+                        <div className={styles.cityTint} />
+                        <img
+                          src={destHero(city.slug, city.seed, "400/520")}
+                          alt={city.name}
+                          className={styles.cityImg}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <div className={styles.cityLabel}>
+                          <span className={styles.cityName}>{city.name}</span>
+                          {visitDate && <span className={styles.cityDate}>{visitDate}</span>}
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </section>
             ))}
