@@ -659,3 +659,27 @@ export function getDestination(slug: string): Destination | null {
 export function getAllSlugs(): string[] {
   return Object.keys(destinations);
 }
+
+// All city slugs across the site — includes placeholder destinations not yet written
+export const allCitySlugs: string[] = [
+  // Japan
+  "tokyo","kyoto","osaka","nara","kobe","sakai","nikko","kamakura","enoshima","otaru","sapporo","mt-fuji","chuzenji-lake",
+  // United States
+  "san-francisco","los-angeles","yosemite","seattle","snoqualmie","las-vegas","horseshoe-bend","antelope-canyon","austin","miami","jupiter-beach","washington-dc","new-york","new-york-sep-2024","philadelphia",
+  // Canada
+  "vancouver","toronto-2024","montreal-2024","quebec-city-2024","niagara-falls","mont-tremblant",
+  // Europe
+  "madrid","valencia","tarragona","barcelona","rome","vatican-city","florence","pisa","venice","lucerne","zurich","mt-pilatus","amsterdam","berlin",
+  // Ireland
+  "dublin","howth","wicklow",
+  // UK
+  "london",
+  // UAE
+  "dubai","abu-dhabi",
+  // Brazil
+  "rio-de-janeiro","sao-paulo",
+  // India
+  "new-delhi","kerala","karnataka","tamil-nadu","goa","mumbai","hyderabad","valley-of-flowers","haridwar","srinagar","gulmarg","nagpur","mulki",
+  // Hawaii
+  "honolulu","kauai",
+];

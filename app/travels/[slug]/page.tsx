@@ -1,14 +1,14 @@
-import { notFound } from "next/navigation";
-import { getDestination, getAllSlugs } from "@/lib/travelsData";
+import { getDestination, allCitySlugs } from "@/lib/travelsData";
 import DestinationContent from "@/components/DestinationContent";
+import ComingSoon from "@/components/ComingSoon";
 
 export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+  return allCitySlugs.map((slug) => ({ slug }));
 }
 
 export default async function DestinationPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const dest = getDestination(slug);
-  if (!dest) notFound();
+  if (!dest) return <ComingSoon slug={slug} />;
   return <DestinationContent dest={dest} />;
 }
