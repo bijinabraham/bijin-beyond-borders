@@ -1,14 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import type { Destination } from "@/lib/travelsData";
 import { photo } from "@/lib/basePath";
 import styles from "@/app/travels/[slug]/destination.module.css";
+import Lightbox from "./Lightbox";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function DestinationContent({ dest }: { dest: Destination }) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const hasPhotos = (dest.photos?.length ?? 0) > 0;
 
   const heroSrc = hasPhotos
@@ -127,7 +130,12 @@ export default function DestinationContent({ dest }: { dest: Destination }) {
       {/* ── GALLERY ── */}
       <div className={styles.gallery}>
         {galleryPhotos.map((src, i) => (
-          <div key={i} className={styles.galleryCell}>
+          <div
+            key={i}
+            className={styles.galleryCell}
+            onClick={() => setLightboxIndex(i)}
+            style={{ cursor: "zoom-in" }}
+          >
             <img
               src={src}
               alt={`${dest.name} ${i + 1}`}
@@ -137,6 +145,14 @@ export default function DestinationContent({ dest }: { dest: Destination }) {
           </div>
         ))}
       </div>
+
+      <Lightbox
+        photos={galleryPhotos}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onPrev={() => setLightboxIndex(i => i !== null ? (i - 1 + galleryPhotos.length) % galleryPhotos.length : null)}
+        onNext={() => setLightboxIndex(i => i !== null ? (i + 1) % galleryPhotos.length : null)}
+      />
 
       {/* ── NEXT DESTINATION ── */}
       <Link href={`/travels/${dest.nextSlug}`} className={styles.nextDest}>
