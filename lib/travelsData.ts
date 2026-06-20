@@ -213,6 +213,8 @@ export const destinations: Record<string, Destination> = {
       "Painted Ladies in the evening light",
     ],
     gallerySeed: "sf", nextSlug: "yosemite", nextName: "Yosemite",
+    heroPhoto: "hero.jpeg",
+    photos: ["IMG_20260621_002408 Large.jpeg","IMG_20260621_002418 Large.jpeg","IMG_20260621_002428 Large.jpeg","IMG_20260621_002438 Large.jpeg","IMG_20260621_002447 Large.jpeg","IMG_20260621_002454 Large.jpeg","IMG_20260621_002512 Large.jpeg","IMG_20260621_002527 Large.jpeg","IMG_20260621_002545 Large.jpeg","IMG_20260621_002555 Large.jpeg","IMG_20260621_002602 Large.jpeg","IMG_20260621_002609 Large.jpeg","IMG_20260621_002617 Large.jpeg","IMG_20260621_002629 Large.jpeg","IMG_20260621_002639 Large.jpeg","IMG_20260621_002649 Large.jpeg","IMG_20260621_002711 Large.jpeg","IMG_20260621_002721 Large.jpeg","IMG_20260621_002729 Large.jpeg","IMG_7553 Large.jpeg","IMG_7567 Large.jpeg","IMG_7567 Medium Large.jpeg","IMG_7585 Large.jpeg","IMG_7587 Large.jpeg","IMG_7591 Large.jpeg","IMG_7596 Large.jpeg","IMG_7597 Large.jpeg","IMG_7734 Large.jpeg","IMG-20240921-WA0021 Large.jpeg","IMG-20240921-WA0024 Large.jpeg"],
   },
 
   "yosemite": {
