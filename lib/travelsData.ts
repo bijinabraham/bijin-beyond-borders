@@ -310,9 +310,14 @@ export const destinations: Record<string, Destination> = {
     lat: 40.7128, lng: -74.0060, visitDate: "Sep 2024", duration: "Sep 2024",
     heroSeed: "ny-sep-hero",
     story: [
-      "Second visit to New York.",
+      "Second time in New York, this time as a layover on the way back from Austin to Bangalore. A few hours in the city between flights, which turned out to be enough to do it properly. The day was cloudy and gloomy in exactly the way New York does best.",
+      "Went straight to Central Park. Found a spot on the grass and slept for a while. No particular plan, no particular urgency. Just the park doing what it does: absorbing people and giving them somewhere to be. Afterwards rode the carousel, which is smaller than it looks in photographs and more enjoyable than it has any right to be for an adult riding it alone. Then ramen at Ichiran — the solo booth format, a curtain between you and the counter, a form to fill out your order. Good ramen. Good system.",
     ],
-    highlights: [],
+    highlights: [
+      "Sleeping in Central Park on a cloudy afternoon",
+      "The carousel: smaller than expected, better than it should be",
+      "Ichiran ramen: solo booth, curtain, perfect system",
+    ],
     gallerySeed: "ny-sep", nextSlug: "new-york", nextName: "New York (Feb 2024)",
     heroPhoto: "hero.jpeg",
     photos: ["20240923_102046 Large.jpeg","20240923_123043 Large.jpeg","IMG_7899 Large.jpeg","IMG_7907 Large.jpeg","IMG_7913 Large.jpeg","IMG_7915 Large.jpeg","IMG_7916 Large.jpeg","IMG_7918 Large.jpeg"],
