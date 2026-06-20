@@ -11,7 +11,7 @@ const places = [
   { city: "Las Vegas",     country: "United States", img: "/photos/las-vegas/hero.jpeg",                     slug: "las-vegas" },
   { city: "New York",      country: "United States", img: "/photos/new-york/hero.jpeg",                      slug: "new-york" },
   { city: "Kyoto",         country: "Japan",         img: "https://picsum.photos/seed/wb-kyoto/600/500",     slug: "kyoto" },
-  { city: "Dubai",         country: "UAE",           img: "https://picsum.photos/seed/dubai-ae/600/500",     slug: "dubai" },
+  { city: "Dubai",         country: "UAE",           img: "/photos/dubai/hero.png",                          slug: "dubai" },
 ];
 
 const ease = [0.76, 0, 0.24, 1] as const;

@@ -93,7 +93,7 @@ const byCountry = [
   {
     country: "UAE", region: "Middle East", count: 2, countryCount: 1,
     cities: [
-      { name: "Dubai",     seed: "dubai-ae"   },
+      { name: "Dubai",     seed: "dubai-ae",   img: "/photos/dubai/hero.png" },
       { name: "Abu Dhabi", seed: "abudhabi-ae"},
     ],
   },
@@ -142,7 +142,7 @@ const byTrip = [
     year: "2024", season: "Feb (layover)", country: "UAE",
     title: "8 Hours in Dubai",
     cities: ["Dubai"],
-    seed: "dubai-ae", slug: "dubai",
+    seed: "dubai-ae", slug: "dubai", img: "/photos/dubai/hero.png",
   },
   {
     year: "2024", season: "2024", country: "United States",

@@ -169,6 +169,8 @@ export const destinations: Record<string, Destination> = {
       "Topgolf: first time, not the last",
     ],
     gallerySeed: "austin", nextSlug: "los-angeles", nextName: "Los Angeles",
+    heroPhoto: "Hero.jpeg",
+    photos: ["IMG_6887 Large.jpeg","IMG_6912 Large.jpeg","IMG_6914 Large.jpeg","IMG_6919 Large.jpeg","IMG_6920 Large.jpeg","IMG_6923 Large.jpeg","IMG_6951 Large.jpeg","IMG_6952 Large.jpeg","IMG_6955 Large.jpeg","IMG_6957 Large.jpeg","IMG_6958 Large.jpeg","IMG_6959 Large.jpeg","IMG_6960 Large.jpeg","IMG_6962 Large.jpeg","IMG_6963 Large.jpeg","IMG_6976 Large.jpeg","IMG_7025 Large.jpeg","IMG_7133 Large.jpeg","IMG_7208 Large.jpeg","IMG_7238 Large.jpeg","IMG_7276 Large.jpeg","IMG-20240918-WA0003 Large.jpeg"],
   },
 
   "los-angeles": {
@@ -531,6 +533,8 @@ export const destinations: Record<string, Destination> = {
       "KFC at the mall after two weeks of eating adventurously",
     ],
     gallerySeed: "dubai", nextSlug: "austin", nextName: "Austin",
+    heroPhoto: "hero.png",
+    photos: ["1.png", "2.png"],
   },
 
   "rio-de-janeiro": {
