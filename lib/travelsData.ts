@@ -234,6 +234,8 @@ export const destinations: Record<string, Destination> = {
       "The bag mixup at Delhi baggage claim: solved, ribbon noted for all future travel",
     ],
     gallerySeed: "yosemite", nextSlug: "toronto", nextName: "Toronto",
+    heroPhoto: "hero.jpeg",
+    photos: ["IMG_20260621_003521 Large.jpeg","IMG_20260621_003537 Large.jpeg","IMG_20260621_003625 Large.jpeg","IMG_20260621_003636 Large.jpeg","IMG_20260621_003642 Large.jpeg","IMG_20260621_003647 Large.jpeg","IMG_20260621_003653 Large.jpeg","IMG_20260621_003658 Large.jpeg","IMG_7794 Large.jpeg","IMG_7797 Large.jpeg","IMG_7799 Large.jpeg","IMG_7802 Large.jpeg","IMG_7805 Large.jpeg"],
   },
 
   "las-vegas": {
