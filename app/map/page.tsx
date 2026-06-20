@@ -149,7 +149,7 @@ const VISITED_IDS = new Set([
   356,  // India
 ]);
 
-// Flag collection — excludes Hawaii (part of USA)
+// Flag collection  -  excludes Hawaii (part of USA)
 const countryFlags = [
   { name: "Japan",                flag: "🇯🇵" },
   { name: "India",                flag: "🇮🇳" },
@@ -206,7 +206,7 @@ export default function MapPage() {
       let H = wrapRef.current.clientHeight || window.innerHeight - 67;
       let radius = Math.min(W, H) / 2 - 32;
 
-      // Projection — start facing Europe/Middle East/Japan arc
+      // Projection  -  start facing Europe/Middle East/Japan arc
       const projection = d3.geoOrthographic()
         .clipAngle(90)
         .scale(radius)
@@ -229,7 +229,7 @@ export default function MapPage() {
       atm.append("stop").attr("offset", "85%").attr("stop-color", "oklch(0.91 0.014 14)").attr("stop-opacity", 0);
       atm.append("stop").attr("offset", "100%").attr("stop-color", "oklch(0.34 0.11 14)").attr("stop-opacity", 0.18);
 
-      // Moon gradient — highlight top-left for spherical feel
+      // Moon gradient  -  highlight top-left for spherical feel
       const moonGrad = defs.append("radialGradient")
         .attr("id", "moonGrad")
         .attr("cx", "38%").attr("cy", "35%").attr("r", "58%");
@@ -265,7 +265,7 @@ export default function MapPage() {
             .attr("class", "globe-country")
             .attr("fill", (d: any) =>
               VISITED_IDS.has(+d.id)
-                ? "oklch(0.76 0.07 14)"   // warm rose — visited
+                ? "oklch(0.76 0.07 14)"   // warm rose  -  visited
                 : "oklch(0.89 0.020 14)"  // default land
             )
             .attr("stroke", (d: any) =>
@@ -350,7 +350,7 @@ export default function MapPage() {
         .attr("stroke", "oklch(0.68 0.020 50)")
         .attr("stroke-width", 0.8);
 
-      // Dark mare — large lopsided patch on one side, makes rotation obvious
+      // Dark mare  -  large lopsided patch on one side, makes rotation obvious
       const moonMare = moonG.append("ellipse")
         .attr("cx",  moonR *  0.18)
         .attr("cy",  moonR * -0.05)
@@ -359,7 +359,7 @@ export default function MapPage() {
         .attr("fill", "oklch(0.65 0.028 44)")
         .attr("opacity", 0.65);
 
-      // Craters — positions as fractions of moonR, all within boundary
+      // Craters  -  positions as fractions of moonR, all within boundary
       const craterDefs = [
         { x: -0.30, y: -0.15, r: 0.20 },  // large, on bright side
         { x:  0.28, y:  0.30, r: 0.13 },  // medium, on mare
@@ -475,7 +475,7 @@ export default function MapPage() {
         const mz = Math.sin(moonAngle);
         const moonOp = mz > 0.12 ? 1 : mz < -0.12 ? 0 : (mz + 0.12) / 0.24;
 
-        // Translate group to orbit position — no SVG rotate, use explicit math instead
+        // Translate group to orbit position  -  no SVG rotate, use explicit math instead
         moonG.attr("transform", `translate(${mx},${my})`).attr("opacity", moonOp);
 
         // Rotate features via explicit 2D rotation matrix
