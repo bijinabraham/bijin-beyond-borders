@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bijin Beyond Borders — Logo Options Vol. 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      oklch(0.93 0.016 14);
+    --surface: oklch(0.89 0.020 14);
+    --surface2:oklch(0.85 0.024 14);
+    --ink:     oklch(0.14 0.022 14);
+    --primary: oklch(0.34 0.11 14);
+    --accent:  oklch(0.58 0.19 32);
+    --muted:   oklch(0.44 0.010 14);
+    --rule:    oklch(0.82 0.018 14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--bg); color: var(--ink);
+    padding: 40px 24px 80px;
+  }
+  h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 56px; font-weight: 300; }
+  .concepts { display: flex; flex-direction: column; gap: 80px; }
+  .concept-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted); border-top: 1px solid var(--rule);
+    padding-top: 16px;
+  }
+  .concept-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: 0.05em; color: var(--ink);
+    margin-top: 4px; margin-bottom: 4px;
+  }
+  .concept-desc {
+    font-size: 13px; color: var(--muted); font-weight: 300;
+    line-height: 1.6; max-width: 520px; margin-bottom: 16px;
+  }
+  .variants { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .variant {
+    background: var(--surface);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 48px 32px; gap: 20px; min-height: 250px;
+  }
+  .variant.dark { background: var(--primary); }
+  .variant.ink  { background: var(--ink); }
+  .variant.warm { background: oklch(0.88 0.022 14); }
+  .variant-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-top: 8px;
+  }
+  .variant.dark .variant-tag,
+  .variant.ink  .variant-tag { color: oklch(0.60 0.04 14); }
+  .favicon-strip {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 20px; background: var(--surface2); margin-top: 2px;
+  }
+  .favicon-strip span {
+    font-size: 10px; font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-right: 8px;
+  }
+  .wm {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+  }
+  .wm.on-light { color: oklch(0.34 0.11 14); }
+  .wm.on-dark  { color: oklch(0.93 0.016 14); }
+  .wm.on-ink   { color: oklch(0.93 0.016 14); }
+</style>
+</head>
+<body>
+
+<h1>Bijin Beyond Borders</h1>
+<p class="subtitle">Logo directions Vol. 3 — 5 more concepts × 3 colourways each</p>
+
+<div class="concepts">
+
+  <!-- ══════════════════════════
+       F — MT. FUJI
+  ══════════════════════════ -->
+  <div class="concept">
+    <p class="concept-label">Concept F</p>
+    <p class="concept-name">Fuji Silhouette</p>
+    <p class="concept-desc">The most iconic shape in Japanese geography, reduced to pure geometry. The snow cap breaks the silhouette cleanly. The thin horizon line and faint reflection below give it depth without decoration.</p>
+    <div class="variants">
+
+      <div class="variant">
+        <svg width="100" height="80" viewBox="0 0 120 90" fill="none">
+          <!-- horizon line -->
+          <line x1="0" y1="70" x2="120" y2="70" stroke="oklch(0.34 0.11 14)" stroke-width="0.8" opacity="0.3"/>
+          <!-- mountain body -->
+          <path d="M60 8 L105 70 L15 70 Z" fill="oklch(0.34 0.11 14)"/>
+          <!-- snow cap -->
+          <path d="M60 8 L77 34 L43 34 Z" fill="oklch(0.93 0.016 14)"/>
+          <!-- reflection -->
+          <path d="M60 74 L96 66 L24 66 Z" fill="oklch(0.34 0.11 14)" opacity="0.12"/>
+          <path d="M60 80 L86 74 L34 74 Z" fill="oklch(0.34 0.11 14)" opacity="0.07"/>
+        </svg>
+        <div class="wm on-light">Bijin Beyond Borders</div>
+        <p class="variant-tag">Light</p>
+      </div>
+
+      <div class="variant dark">
+        <svg width="100" height="80" viewBox="0 0 120 90" fill="none">
+          <line x1="0" y1="70" x2="120" y2="70" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.3"/>
+          <path d="M60 8 L105 70 L15 70 Z" fill="oklch(0.93 0.016 14)"/>
+          <path d="M60 8 L77 34 L43 34 Z" fill="oklch(0.34 0.11 14)"/>
+          <path d="M60 74 L96 66 L24 66 Z" fill="oklch(0.93 0.016 14)" opacity="0.12"/>
+          <path d="M60 80 L86 74 L34 74 Z" fill="oklch(0.93 0.016 14)" opacity="0.07"/>
+        </svg>
+        <div class="wm on-dark">Bijin Beyond Borders</div>
+        <p class="variant-tag">Dark</p>
+      </div>
+
+      <div class="variant ink">
+        <svg width="100" height="80" viewBox="0 0 120 90" fill="none">
+          <line x1="0" y1="70" x2="120" y2="70" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.3"/>
+          <path d="M60 8 L105 70 L15 70 Z" fill="oklch(0.93 0.016 14)"/>
+          <!-- accent snow cap -->
+          <path d="M60 8 L77 34 L43 34 Z" fill="oklch(0.58 0.19 32)"/>
+          <path d="M60 74 L96 66 L24 66 Z" fill="oklch(0.93 0.016 14)" opacity="0.1"/>
+        </svg>
+        <div class="wm on-ink">Bijin Beyond Borders</div>
+        <p class="variant-tag">Ink + Accent</p>
+      </div>
+
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <svg width="32" height="32" viewBox="0 0 80 80">
+        <rect width="80" height="80" fill="oklch(0.34 0.11 14)"/>
+        <path d="M40 8 L72 66 L8 66 Z" fill="oklch(0.93 0.016 14)"/>
+        <path d="M40 8 L53 30 L27 30 Z" fill="oklch(0.34 0.11 14)"/>
+      </svg>
+      <svg width="16" height="16" viewBox="0 0 80 80">
+        <rect width="80" height="80" fill="oklch(0.34 0.11 14)"/>
+        <path d="M40 8 L72 66 L8 66 Z" fill="oklch(0.93 0.016 14)"/>
+        <path d="M40 8 L53 28 L27 28 Z" fill="oklch(0.34 0.11 14)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       G — INK BRUSHSTROKE
+  ══════════════════════════ -->
+  <div class="concept">
+    <p class="concept-label">Concept G</p>
+    <p class="concept-name">Ink Brushstroke</p>
+    <p class="concept-desc">A single bold brushstroke — the gesture of Japanese calligraphy, the stroke of a pen signing off on a new adventure. The mark is energy and movement. The name sits below in total contrast.</p>
+    <div class="variants">
+
+      <div class="variant">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;width:180px;">
+          <svg width="180" height="36" viewBox="0 0 200 40" fill="none">
+            <!-- thick tapered brushstroke -->
+            <path d="M4 20 C30 10 80 6 130 14 C160 18 185 22 196 24 C185 28 160 30 130 26 C80 22 30 26 4 20 Z"
+              fill="oklch(0.34 0.11 14)"/>
+            <!-- accent tail -->
+            <path d="M160 18 C178 16 196 20 196 24 C185 26 168 26 156 24 Z"
+              fill="oklch(0.58 0.19 32)" opacity="0.8"/>
+          </svg>
+          <div style="font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:oklch(0.34 0.11 14);">Bijin Beyond Borders</div>
+        </div>
+        <p class="variant-tag">Light</p>
+      </div>
+
+      <div class="variant dark">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;width:180px;">
+          <svg width="180" height="36" viewBox="0 0 200 40" fill="none">
+            <path d="M4 20 C30 10 80 6 130 14 C160 18 185 22 196 24 C185 28 160 30 130 26 C80 22 30 26 4 20 Z"
+              fill="oklch(0.93 0.016 14)"/>
+            <path d="M160 18 C178 16 196 20 196 24 C185 26 168 26 156 24 Z"
+              fill="oklch(0.80 0.12 32)" opacity="0.8"/>
+          </svg>
+          <div style="font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:oklch(0.93 0.016 14);">Bijin Beyond Borders</div>
+        </div>
+        <p class="variant-tag">Dark</p>
+      </div>
+
+      <div class="variant ink">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;width:180px;">
+          <svg width="180" height="36" viewBox="0 0 200 40" fill="none">
+            <path d="M4 20 C30 10 80 6 130 14 C160 18 185 22 196 24 C185 28 160 30 130 26 C80 22 30 26 4 20 Z"
+              fill="oklch(0.93 0.016 14)" opacity="0.9"/>
+            <path d="M160 18 C178 16 196 20 196 24 C185 26 168 26 156 24 Z"
+              fill="oklch(0.58 0.19 32)"/>
+          </svg>
+          <div style="font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:oklch(0.93 0.016 14);">Bijin Beyond Borders</div>
+        </div>
+        <p class="variant-tag">Ink</p>
+      </div>
+
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <svg width="32" height="32" viewBox="0 0 80 80">
+        <rect width="80" height="80" fill="oklch(0.34 0.11 14)"/>
+        <path d="M6 40 C24 28 50 24 65 32 C72 36 76 40 76 40 C76 40 72 44 65 48 C50 56 24 52 6 40 Z"
+          fill="oklch(0.93 0.016 14)"/>
+        <path d="M62 34 C70 32 76 36 76 40 C76 44 70 46 62 46 Z"
+          fill="oklch(0.80 0.12 32)"/>
+      </svg>
+      <svg width="16" height="16" viewBox="0 0 80 80">
+        <rect width="80" height="80" fill="oklch(0.34 0.11 14)"/>
+        <path d="M6 40 C24 28 50 24 65 32 C72 36 76 40 76 40 C76 40 72 44 65 48 C50 56 24 52 6 40 Z"
+          fill="oklch(0.93 0.016 14)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       H — POSTMARK
+  ══════════════════════════ -->
+  <div class="concept">
+    <p class="concept-label">Concept H</p>
+    <p class="concept-name">Postmark</p>
+    <p class="concept-desc">A postal cancellation stamp — the mark left on every letter that crosses a border. Travel and correspondence compressed into one circle. The parallel cancellation lines give it weight and movement.</p>
+    <div class="variants">
+
+      <div class="variant">
+        <svg width="110" height="110" viewBox="0 0 120 120" fill="none">
+          <!-- outer ring -->
+          <circle cx="60" cy="60" r="55" stroke="oklch(0.34 0.11 14)" stroke-width="2.5"/>
+          <!-- inner ring -->
+          <circle cx="60" cy="60" r="48" stroke="oklch(0.34 0.11 14)" stroke-width="0.8" opacity="0.4"/>
+          <!-- cancellation lines (wavy parallel) -->
+          <path d="M8 52 Q20 48 32 52 Q44 56 56 52 Q68 48 80 52 Q92 56 104 52 Q110 50 112 52" stroke="oklch(0.34 0.11 14)" stroke-width="2" fill="none" opacity="0.8" stroke-linecap="round"/>
+          <path d="M8 60 Q20 56 32 60 Q44 64 56 60 Q68 56 80 60 Q92 64 104 60 Q110 58 112 60" stroke="oklch(0.34 0.11 14)" stroke-width="2" fill="none" opacity="0.8" stroke-linecap="round"/>
+          <path d="M8 68 Q20 64 32 68 Q44 72 56 68 Q68 64 80 68 Q92 72 104 68 Q110 66 112 68" stroke="oklch(0.34 0.11 14)" stroke-width="2" fill="none" opacity="0.8" stroke-linecap="round"/>
+          <!-- top arc text -->
+          <path id="top" d="M18 60 A42 42 0 0 1 102 60" fill="none"/>
+          <text font-family="'Josefin Sans',sans-serif" font-size="9" fill="oklch(0.34 0.11 14)" font-weight="700" letter-spacing="5">
+            <textPath href="#top" startOffset="50%" text-anchor="middle">BIJIN · BEYOND</textPath>
+          </text>
+          <!-- bottom arc text -->
+          <path id="bot" d="M18 60 A42 42 0 0 0 102 60" fill="none"/>
+          <text font-family="'Josefin Sans',sans-serif" font-size="9" fill="oklch(0.34 0.11 14)" font-weight="700" letter-spacing="6">
+            <textPath href="#bot" startOffset="50%" text-anchor="middle">BORDERS</textPath>
+          </text>
+        </svg>
+        <p class="variant-tag">Light</p>
+      </div>
+
+      <div class="variant dark">
+        <svg width="110" height="110" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="oklch(0.93 0.016 14)" stroke-width="2.5"/>
+          <circle cx="60" cy="60" r="48" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.4"/>
+          <path d="M8 52 Q20 48 32 52 Q44 56 56 52 Q68 48 80 52 Q92 56 104 52 Q110 50 112 52" stroke="oklch(0.93 0.016 14)" stroke-width="2" fill="none" opacity="0.8" stroke-linecap="round"/>
+          <path d="M8 60 Q20 56 32 60 Q44 64 56 60 Q68 56 80 60 Q92 64 104 60 Q110 58 112 60" stroke="oklch(0.93 0.016 14)" stroke-width="2" fill="none" opacity="0.8" stroke-linecap="round"/>
+          <path d="M8 68 Q20 64 32 68 Q44 72 56 68 Q68 64 80 68 Q92 72 104 68 Q110 66 112 68" stroke="oklch(0.93 0.016 14)" stroke-width="2" fill="none" opacity="0.8" stroke-linecap="round"/>
+          <path id="top2" d="M18 60 A42 42 0 0 1 102 60" fill="none"/>
+          <text font-family="'Josefin Sans',sans-serif" font-size="9" fill="oklch(0.93 0.016 14)" font-weight="700" letter-spacing="5">
+            <textPath href="#top2" startOffset="50%" text-anchor="middle">BIJIN · BEYOND</textPath>
+          </text>
+          <path id="bot2" d="M18 60 A42 42 0 0 0 102 60" fill="none"/>
+          <text font-family="'Josefin Sans',sans-serif" font-size="9" fill="oklch(0.93 0.016 14)" font-weight="700" letter-spacing="6">
+            <textPath href="#bot2" startOffset="50%" text-anchor="middle">BORDERS</textPath>
+          </text>
+        </svg>
+        <p class="variant-tag">Dark</p>
+      </div>
+
+      <div class="variant ink">
+        <svg width="110" height="110" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="oklch(0.58 0.19 32)" stroke-width="2.5"/>
+          <circle cx="60" cy="60" r="48" stroke="oklch(0.58 0.19 32)" stroke-width="0.8" opacity="0.4"/>
+          <path d="M8 52 Q20 48 32 52 Q44 56 56 52 Q68 48 80 52 Q92 56 104 52 Q110 50 112 52" stroke="oklch(0.58 0.19 32)" stroke-width="2" fill="none" opacity="0.9" stroke-linecap="round"/>
+          <path d="M8 60 Q20 56 32 60 Q44 64 56 60 Q68 56 80 60 Q92 64 104 60 Q110 58 112 60" stroke="oklch(0.58 0.19 32)" stroke-width="2" fill="none" opacity="0.9" stroke-linecap="round"/>
+          <path d="M8 68 Q20 64 32 68 Q44 72 56 68 Q68 64 80 68 Q92 72 104 68 Q110 66 112 68" stroke="oklch(0.58 0.19 32)" stroke-width="2" fill="none" opacity="0.9" stroke-linecap="round"/>
+          <path id="top3" d="M18 60 A42 42 0 0 1 102 60" fill="none"/>
+          <text font-family="'Josefin Sans',sans-serif" font-size="9" fill="oklch(0.58 0.19 32)" font-weight="700" letter-spacing="5">
+            <textPath href="#top3" startOffset="50%" text-anchor="middle">BIJIN · BEYOND</textPath>
+          </text>
+          <path id="bot3" d="M18 60 A42 42 0 0 0 102 60" fill="none"/>
+          <text font-family="'Josefin Sans',sans-serif" font-size="9" fill="oklch(0.58 0.19 32)" font-weight="700" letter-spacing="6">
+            <textPath href="#bot3" startOffset="50%" text-anchor="middle">BORDERS</textPath>
+          </text>
+        </svg>
+        <p class="variant-tag">Ink + Accent</p>
+      </div>
+
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <svg width="32" height="32" viewBox="0 0 80 80">
+        <rect width="80" height="80" fill="oklch(0.34 0.11 14)"/>
+        <circle cx="40" cy="40" r="36" stroke="oklch(0.93 0.016 14)" stroke-width="3"/>
+        <line x1="8" y1="34" x2="72" y2="34" stroke="oklch(0.93 0.016 14)" stroke-width="2.5"/>
+        <line x1="8" y1="42" x2="72" y2="42" stroke="oklch(0.93 0.016 14)" stroke-width="2.5"/>
+        <line x1="8" y1="50" x2="72" y2="50" stroke="oklch(0.93 0.016 14)" stroke-width="2.5"/>
+      </svg>
+      <svg width="16" height="16" viewBox="0 0 80 80">
+        <rect width="80" height="80" fill="oklch(0.34 0.11 14)"/>
+        <circle cx="40" cy="40" r="36" stroke="oklch(0.93 0.016 14)" stroke-width="4"/>
+        <line x1="8" y1="34" x2="72" y2="34" stroke="oklch(0.93 0.016 14)" stroke-width="3.5"/>
+        <line x1="8" y1="42" x2="72" y2="42" stroke="oklch(0.93 0.016 14)" stroke-width="3.5"/>
+        <line x1="8" y1="50" x2="72" y2="50" stroke="oklch(0.93 0.016 14)" stroke-width="3.5"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       I — DIAGONAL SPLIT
+  ══════════════════════════ -->
+  <div class="concept">
+    <p class="concept-label">Concept I</p>
+    <p class="concept-name">Diagonal Split</p>
+    <p class="concept-desc">Two worlds, one frame — the diagonal cut is the border being crossed. Oxblood and terracotta are the two sides. Bold, graphic, instantly distinctive. Works as an app icon, a stamp, a sticker.</p>
+    <div class="variants">
+
+      <div class="variant" style="padding:0;overflow:hidden;">
+        <svg width="100%" height="250" viewBox="0 0 240 250" fill="none" style="display:block;">
+          <!-- left half: oxblood -->
+          <path d="M0 0 L165 0 L75 250 L0 250 Z" fill="oklch(0.34 0.11 14)"/>
+          <!-- right half: accent -->
+          <path d="M165 0 L240 0 L240 250 L75 250 Z" fill="oklch(0.58 0.19 32)"/>
+          <!-- B on left -->
+          <text x="62" y="150" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="100" font-weight="700" fill="oklch(0.93 0.016 14)" opacity="0.9">B</text>
+          <!-- BB on right, small -->
+          <text x="185" y="130" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="36" font-weight="700" fill="oklch(0.93 0.016 14)" opacity="0.7" letter-spacing="-2">BB</text>
+          <!-- name bottom -->
+          <text x="120" y="232" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="8" font-weight="700" fill="oklch(0.93 0.016 14)" letter-spacing="5" opacity="0.8">BIJIN BEYOND BORDERS</text>
+        </svg>
+        <p class="variant-tag" style="margin-bottom:12px;">Oxblood / Terracotta</p>
+      </div>
+
+      <div class="variant dark" style="padding:0;overflow:hidden;">
+        <svg width="100%" height="250" viewBox="0 0 240 250" fill="none" style="display:block;">
+          <path d="M0 0 L165 0 L75 250 L0 250 Z" fill="oklch(0.93 0.016 14)" opacity="0.12"/>
+          <path d="M165 0 L240 0 L240 250 L75 250 Z" fill="oklch(0.93 0.016 14)" opacity="0.06"/>
+          <!-- big B -->
+          <text x="62" y="150" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="100" font-weight="700" fill="oklch(0.93 0.016 14)" opacity="0.9">B</text>
+          <text x="185" y="130" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="36" font-weight="700" fill="oklch(0.80 0.12 32)" opacity="0.8" letter-spacing="-2">BB</text>
+          <!-- diagonal line -->
+          <line x1="165" y1="0" x2="75" y2="250" stroke="oklch(0.93 0.016 14)" stroke-width="1" opacity="0.3"/>
+          <text x="120" y="232" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="8" font-weight="700" fill="oklch(0.93 0.016 14)" letter-spacing="5" opacity="0.5">BIJIN BEYOND BORDERS</text>
+        </svg>
+        <p class="variant-tag" style="margin-bottom:12px;">Dark (line only)</p>
+      </div>
+
+      <div class="variant ink" style="padding:0;overflow:hidden;">
+        <svg width="100%" height="250" viewBox="0 0 240 250" fill="none" style="display:block;">
+          <path d="M0 0 L165 0 L75 250 L0 250 Z" fill="oklch(0.93 0.016 14)" opacity="0.08"/>
+          <path d="M165 0 L240 0 L240 250 L75 250 Z" fill="oklch(0.58 0.19 32)" opacity="0.9"/>
+          <text x="62" y="150" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="100" font-weight="700" fill="oklch(0.93 0.016 14)" opacity="0.9">B</text>
+          <text x="185" y="130" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="36" font-weight="700" fill="oklch(0.14 0.022 14)" opacity="0.5" letter-spacing="-2">BB</text>
+          <line x1="165" y1="0" x2="75" y2="250" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.2"/>
+          <text x="120" y="232" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="8" font-weight="700" fill="oklch(0.93 0.016 14)" letter-spacing="5" opacity="0.6">BIJIN BEYOND BORDERS</text>
+        </svg>
+        <p class="variant-tag" style="margin-bottom:12px;">Ink / Accent</p>
+      </div>
+
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <svg width="32" height="32" viewBox="0 0 80 80">
+        <path d="M0 0 L55 0 L25 80 L0 80 Z" fill="oklch(0.34 0.11 14)"/>
+        <path d="M55 0 L80 0 L80 80 L25 80 Z" fill="oklch(0.58 0.19 32)"/>
+        <text x="20" y="56" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="44" font-weight="700" fill="oklch(0.93 0.016 14)">B</text>
+      </svg>
+      <svg width="16" height="16" viewBox="0 0 80 80">
+        <path d="M0 0 L55 0 L25 80 L0 80 Z" fill="oklch(0.34 0.11 14)"/>
+        <path d="M55 0 L80 0 L80 80 L25 80 Z" fill="oklch(0.58 0.19 32)"/>
+        <text x="20" y="56" text-anchor="middle" font-family="'Josefin Sans',sans-serif" font-size="44" font-weight="700" fill="oklch(0.93 0.016 14)">B</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       J — MAP PIN + KANJI
+  ══════════════════════════ -->
+  <div class="concept">
+    <p class="concept-label">Concept J</p>
+    <p class="concept-name">Pin Drop</p>
+    <p class="concept-desc">A location pin with 美 at its heart — you are here, and here is beautiful. Every travel site uses a pin; none put 美人 inside one. The shadow dot below grounds it. Instantly readable at small sizes.</p>
+    <div class="variants">
+
+      <div class="variant">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <svg width="60" height="80" viewBox="0 0 60 82" fill="none">
+            <!-- pin teardrop -->
+            <path d="M30 4 C14 4 4 15 4 28 C4 46 30 78 30 78 C30 78 56 46 56 28 C56 15 46 4 30 4 Z" fill="oklch(0.34 0.11 14)"/>
+            <!-- inner circle -->
+            <circle cx="30" cy="27" r="14" fill="oklch(0.93 0.016 14)" opacity="0.15"/>
+            <!-- kanji -->
+            <text x="30" y="33" text-anchor="middle" font-size="16" fill="oklch(0.93 0.016 14)" font-family="serif" font-weight="400">美</text>
+            <!-- shadow dot -->
+            <ellipse cx="30" cy="80" rx="8" ry="2.5" fill="oklch(0.34 0.11 14)" opacity="0.2"/>
+          </svg>
+          <div>
+            <div style="font-family:'Josefin Sans',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:oklch(0.34 0.11 14);text-align:center;">Bijin</div>
+            <div style="font-family:'Josefin Sans',sans-serif;font-size:7px;font-weight:400;letter-spacing:0.3em;text-transform:uppercase;color:oklch(0.44 0.010 14);text-align:center;margin-top:2px;">Beyond Borders</div>
+          </div>
+        </div>
+        <p class="variant-tag">Light</p>
+      </div>
+
+      <div class="variant dark">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <svg width="60" height="80" viewBox="0 0 60 82" fill="none">
+            <path d="M30 4 C14 4 4 15 4 28 C4 46 30 78 30 78 C30 78 56 46 56 28 C56 15 46 4 30 4 Z" fill="oklch(0.93 0.016 14)"/>
+            <circle cx="30" cy="27" r="14" fill="oklch(0.34 0.11 14)" opacity="0.12"/>
+            <text x="30" y="33" text-anchor="middle" font-size="16" fill="oklch(0.34 0.11 14)" font-family="serif">美</text>
+            <ellipse cx="30" cy="80" rx="8" ry="2.5" fill="oklch(0.93 0.016 14)" opacity="0.2"/>
+          </svg>
+          <div>
+            <div style="font-family:'Josefin Sans',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:oklch(0.93 0.016 14);text-align:center;">Bijin</div>
+            <div style="font-family:'Josefin Sans',sans-serif;font-size:7px;font-weight:400;letter-spacing:0.3em;text-transform:uppercase;color:oklch(0.70 0.05 14);text-align:center;margin-top:2px;">Beyond Borders</div>
+          </div>
+        </div>
+        <p class="variant-tag">Dark</p>
+      </div>
+
+      <div class="variant ink">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <svg width="60" height="80" viewBox="0 0 60 82" fill="none">
+            <path d="M30 4 C14 4 4 15 4 28 C4 46 30 78 30 78 C30 78 56 46 56 28 C56 15 46 4 30 4 Z" fill="oklch(0.58 0.19 32)"/>
+            <circle cx="30" cy="27" r="14" fill="oklch(0.93 0.016 14)" opacity="0.15"/>
+            <text x="30" y="33" text-anchor="middle" font-size="16" fill="oklch(0.93 0.016 14)" font-family="serif">美</text>
+            <ellipse cx="30" cy="80" rx="8" ry="2.5" fill="oklch(0.58 0.19 32)" opacity="0.25"/>
+          </svg>
+          <div>
+            <div style="font-family:'Josefin Sans',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:oklch(0.93 0.016 14);text-align:center;">Bijin</div>
+            <div style="font-family:'Josefin Sans',sans-serif;font-size:7px;font-weight:400;letter-spacing:0.3em;text-transform:uppercase;color:oklch(0.60 0.010 14);text-align:center;margin-top:2px;">Beyond Borders</div>
+          </div>
+        </div>
+        <p class="variant-tag">Ink + Accent</p>
+      </div>
+
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <svg width="32" height="32" viewBox="0 0 60 82">
+        <rect x="-10" y="-10" width="80" height="102" fill="oklch(0.34 0.11 14)"/>
+        <path d="M30 4 C14 4 4 15 4 28 C4 46 30 78 30 78 C30 78 56 46 56 28 C56 15 46 4 30 4 Z" fill="oklch(0.93 0.016 14)"/>
+        <text x="30" y="34" text-anchor="middle" font-size="16" fill="oklch(0.34 0.11 14)" font-family="serif">美</text>
+      </svg>
+      <svg width="16" height="16" viewBox="0 0 60 82">
+        <rect x="-10" y="-10" width="80" height="102" fill="oklch(0.34 0.11 14)"/>
+        <path d="M30 4 C14 4 4 15 4 28 C4 46 30 78 30 78 C30 78 56 46 56 28 C56 15 46 4 30 4 Z" fill="oklch(0.93 0.016 14)"/>
+        <text x="30" y="36" text-anchor="middle" font-size="20" fill="oklch(0.34 0.11 14)" font-family="serif">美</text>
+      </svg>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:80px;padding-top:24px;border-top:1px solid oklch(0.82 0.018 14);">
+  <p style="font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:oklch(0.60 0.010 14);">
+    Bijin Beyond Borders — Logo Sketches Vol. 3 · Blanc Ox Design System
+  </p>
+</div>
+
+</body>
+</html>

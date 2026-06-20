@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 
 interface Props {
   children: React.ReactNode;
@@ -36,7 +37,7 @@ export default function TiltCard({ children, className = "", href }: Props) {
   };
 
   if (href) {
-    return <a href={href} {...shared}>{children}</a>;
+    return <Link href={href} {...shared}>{children}</Link>;
   }
 
   return <div {...shared}>{children}</div>;

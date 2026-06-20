@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bijin Beyond Borders — Logo Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      oklch(0.93 0.016 14);
+    --surface: oklch(0.89 0.020 14);
+    --ink:     oklch(0.14 0.022 14);
+    --primary: oklch(0.34 0.11 14);
+    --accent:  oklch(0.58 0.19 32);
+    --muted:   oklch(0.44 0.010 14);
+    --rule:    oklch(0.82 0.018 14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 40px 24px;
+  }
+
+  h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 56px;
+    font-weight: 300;
+  }
+
+  .concepts {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  .concept {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .concept-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+  }
+
+  .concept-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .concept-desc {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 8px;
+  }
+
+  .variants {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .variant {
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+    gap: 20px;
+    min-height: 220px;
+  }
+
+  .variant.dark {
+    background: var(--primary);
+  }
+
+  .variant.accent-bg {
+    background: var(--accent);
+  }
+
+  .variant-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  .variant.dark .variant-tag { color: oklch(0.70 0.05 14); }
+  .variant.accent-bg .variant-tag { color: oklch(0.85 0.06 32); }
+
+  /* ── FAVICON STRIP ── */
+  .favicon-strip {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--surface);
+    margin-top: 2px;
+  }
+
+  .favicon-strip span {
+    font-size: 10px;
+    font-family: 'Josefin Sans', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 8px;
+  }
+
+  /* ════════════════════════════════════════
+     CONCEPT 1 — KANJI MARK
+  ════════════════════════════════════════ */
+
+  .kanji-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .kanji-box {
+    width: 64px;
+    height: 64px;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .kanji-box .kanji {
+    font-size: 28px;
+    color: var(--bg);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .dark .kanji-box {
+    background: oklch(0.93 0.016 14);
+  }
+
+  .dark .kanji-box .kanji {
+    color: var(--primary);
+  }
+
+  .accent-bg .kanji-box {
+    background: oklch(0.93 0.016 14);
+  }
+
+  .wordmark-a {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+
+  .dark .wordmark-a { color: var(--bg); }
+  .accent-bg .wordmark-a { color: oklch(0.93 0.016 14); }
+
+  .wordmark-sub {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: -6px;
+  }
+
+  .dark .wordmark-sub { color: oklch(0.70 0.05 14); }
+  .accent-bg .wordmark-sub { color: oklch(0.85 0.06 32); }
+
+  /* ════════════════════════════════════════
+     CONCEPT 2 — COMPASS MARK
+  ════════════════════════════════════════ */
+
+  .compass-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .wordmark-b {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dark .wordmark-b { color: var(--bg); }
+  .accent-bg .wordmark-b { color: oklch(0.93 0.016 14); }
+
+  .wordmark-b::before,
+  .wordmark-b::after {
+    content: '';
+    height: 1px;
+    width: 24px;
+    background: currentColor;
+    opacity: 0.4;
+  }
+
+  /* ════════════════════════════════════════
+     CONCEPT 3 — MERIDIAN B
+  ════════════════════════════════════════ */
+
+  .meridian-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .meridian-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .meridian-line {
+    height: 2px;
+    background: var(--primary);
+    border-radius: 0;
+  }
+
+  .dark .meridian-line { background: var(--bg); }
+  .accent-bg .meridian-line { background: oklch(0.93 0.016 14); }
+
+  .wordmark-c {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wordmark-c-top {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+    line-height: 1;
+  }
+
+  .dark .wordmark-c-top { color: var(--bg); }
+  .accent-bg .wordmark-c-top { color: oklch(0.93 0.016 14); }
+
+  .wordmark-c-sub {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 7px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 3px;
+  }
+
+  .dark .wordmark-c-sub { color: oklch(0.80 0.12 32); }
+  .accent-bg .wordmark-c-sub { color: oklch(0.93 0.016 14); }
+
+  /* ════════════════════════════════════════
+     CONCEPT 4 — HORIZON MONOGRAM
+  ════════════════════════════════════════ */
+
+  .horizon-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .wordmark-d {
+    font-family: 'Josefin Sans', sans-serif;
+    color: var(--primary);
+    text-align: center;
+  }
+
+  .dark .wordmark-d { color: var(--bg); }
+  .accent-bg .wordmark-d { color: oklch(0.93 0.016 14); }
+
+  .wordmark-d-big {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1;
+    display: block;
+  }
+
+  .wordmark-d-rule {
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.3;
+    margin: 6px 0;
+  }
+
+  .wordmark-d-small {
+    font-size: 7px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    display: block;
+    opacity: 0.7;
+  }
+
+  /* ════════════════════════════════════════
+     CONCEPT 5 — SEAL / STAMP
+  ════════════════════════════════════════ */
+
+  .seal-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .seal-ring {
+    width: 72px;
+    height: 72px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .dark .seal-ring { border-color: var(--bg); }
+  .accent-bg .seal-ring { border-color: oklch(0.93 0.016 14); }
+
+  .seal-inner {
+    font-size: 20px;
+    color: var(--primary);
+    line-height: 1;
+  }
+
+  .dark .seal-inner { color: var(--bg); }
+  .accent-bg .seal-inner { color: oklch(0.93 0.016 14); }
+
+  .seal-text-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .wordmark-e {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+
+  .dark .wordmark-e { color: var(--bg); }
+  .accent-bg .wordmark-e { color: oklch(0.93 0.016 14); }
+
+  /* ── FAVICON SIZE PREVIEWS ── */
+  .fav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>Bijin Beyond Borders</h1>
+<p class="subtitle">Logo directions — 5 concepts × light / dark / accent</p>
+
+<div class="concepts">
+
+  <!-- ══════════════════════════════════
+       CONCEPT 1 — KANJI MARK
+  ══════════════════════════════════ -->
+  <div class="concept">
+    <div>
+      <p class="concept-label">Concept 01</p>
+      <p class="concept-name">Kanji Mark</p>
+      <p class="concept-desc">The kanji 美人 as a contained icon — the meaning of the name made literal. Clean, distinctive, carries the Japanese connection without being decorative. Strong at small sizes.</p>
+    </div>
+    <div class="variants">
+      <div class="variant">
+        <div class="kanji-icon">
+          <div class="kanji-box"><span class="kanji">美人</span></div>
+          <div>
+            <div class="wordmark-a">Bijin</div>
+            <div class="wordmark-sub">Beyond Borders</div>
+          </div>
+        </div>
+        <p class="variant-tag">Light</p>
+      </div>
+      <div class="variant dark">
+        <div class="kanji-icon">
+          <div class="kanji-box"><span class="kanji">美人</span></div>
+          <div>
+            <div class="wordmark-a">Bijin</div>
+            <div class="wordmark-sub">Beyond Borders</div>
+          </div>
+        </div>
+        <p class="variant-tag">Dark</p>
+      </div>
+      <div class="variant accent-bg">
+        <div class="kanji-icon">
+          <div class="kanji-box"><span class="kanji">美人</span></div>
+          <div>
+            <div class="wordmark-a">Bijin</div>
+            <div class="wordmark-sub">Beyond Borders</div>
+          </div>
+        </div>
+        <p class="variant-tag">Accent</p>
+      </div>
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <!-- 32px -->
+      <div class="fav" style="width:32px;height:32px;background:oklch(0.34 0.11 14);display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:14px;color:oklch(0.93 0.016 14);">美</span>
+      </div>
+      <!-- 16px -->
+      <div class="fav" style="width:16px;height:16px;background:oklch(0.34 0.11 14);display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:8px;color:oklch(0.93 0.016 14);">美</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       CONCEPT 2 — COMPASS MARK
+  ══════════════════════════════════ -->
+  <div class="concept">
+    <div>
+      <p class="concept-label">Concept 02</p>
+      <p class="concept-name">Compass Rose</p>
+      <p class="concept-desc">Echoes the animated compass already in the site nav — unifies brand identity with UI. The needle points north, the name flanked by rules. Feels like a classic travel marque.</p>
+    </div>
+    <div class="variants">
+      <div class="variant">
+        <div class="compass-mark">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="26" stroke="oklch(0.34 0.11 14)" stroke-width="1.2"/>
+            <circle cx="28" cy="28" r="3" fill="oklch(0.34 0.11 14)"/>
+            <polygon points="28,6 25,28 31,28" fill="oklch(0.34 0.11 14)"/>
+            <polygon points="28,50 25,28 31,28" fill="oklch(0.58 0.19 32)" opacity="0.6"/>
+            <line x1="28" y1="3" x2="28" y2="10" stroke="oklch(0.34 0.11 14)" stroke-width="1.5"/>
+            <line x1="28" y1="46" x2="28" y2="53" stroke="oklch(0.34 0.11 14)" stroke-width="0.8" opacity="0.4"/>
+            <line x1="3" y1="28" x2="10" y2="28" stroke="oklch(0.34 0.11 14)" stroke-width="0.8" opacity="0.4"/>
+            <line x1="46" y1="28" x2="53" y2="28" stroke="oklch(0.34 0.11 14)" stroke-width="0.8" opacity="0.4"/>
+          </svg>
+          <div class="wordmark-b">Bijin Beyond Borders</div>
+        </div>
+        <p class="variant-tag">Light</p>
+      </div>
+      <div class="variant dark">
+        <div class="compass-mark">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="26" stroke="oklch(0.93 0.016 14)" stroke-width="1.2"/>
+            <circle cx="28" cy="28" r="3" fill="oklch(0.93 0.016 14)"/>
+            <polygon points="28,6 25,28 31,28" fill="oklch(0.93 0.016 14)"/>
+            <polygon points="28,50 25,28 31,28" fill="oklch(0.80 0.12 32)" opacity="0.7"/>
+            <line x1="28" y1="3" x2="28" y2="10" stroke="oklch(0.93 0.016 14)" stroke-width="1.5"/>
+            <line x1="28" y1="46" x2="28" y2="53" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.4"/>
+            <line x1="3" y1="28" x2="10" y2="28" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.4"/>
+            <line x1="46" y1="28" x2="53" y2="28" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.4"/>
+          </svg>
+          <div class="wordmark-b">Bijin Beyond Borders</div>
+        </div>
+        <p class="variant-tag">Dark</p>
+      </div>
+      <div class="variant accent-bg">
+        <div class="compass-mark">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="26" stroke="oklch(0.93 0.016 14)" stroke-width="1.2"/>
+            <circle cx="28" cy="28" r="3" fill="oklch(0.93 0.016 14)"/>
+            <polygon points="28,6 25,28 31,28" fill="oklch(0.93 0.016 14)"/>
+            <polygon points="28,50 25,28 31,28" fill="oklch(0.34 0.11 14)" opacity="0.5"/>
+            <line x1="28" y1="3" x2="28" y2="10" stroke="oklch(0.93 0.016 14)" stroke-width="1.5"/>
+            <line x1="28" y1="46" x2="28" y2="53" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.4"/>
+            <line x1="3" y1="28" x2="10" y2="28" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.4"/>
+            <line x1="46" y1="28" x2="53" y2="28" stroke="oklch(0.93 0.016 14)" stroke-width="0.8" opacity="0.4"/>
+          </svg>
+          <div class="wordmark-b">Bijin Beyond Borders</div>
+        </div>
+        <p class="variant-tag">Accent</p>
+      </div>
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <svg width="32" height="32" viewBox="0 0 56 56" fill="none">
+        <rect width="56" height="56" fill="oklch(0.34 0.11 14)"/>
+        <circle cx="28" cy="28" r="22" stroke="oklch(0.93 0.016 14)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="3.5" fill="oklch(0.93 0.016 14)"/>
+        <polygon points="28,8 24,28 32,28" fill="oklch(0.93 0.016 14)"/>
+        <polygon points="28,48 24,28 32,28" fill="oklch(0.80 0.12 32)" opacity="0.8"/>
+      </svg>
+      <svg width="16" height="16" viewBox="0 0 56 56" fill="none">
+        <rect width="56" height="56" fill="oklch(0.34 0.11 14)"/>
+        <circle cx="28" cy="28" r="22" stroke="oklch(0.93 0.016 14)" stroke-width="2"/>
+        <circle cx="28" cy="28" r="4" fill="oklch(0.93 0.016 14)"/>
+        <polygon points="28,8 24,28 32,28" fill="oklch(0.93 0.016 14)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       CONCEPT 3 — MERIDIAN LINES
+  ══════════════════════════════════ -->
+  <div class="concept">
+    <div>
+      <p class="concept-label">Concept 03</p>
+      <p class="concept-name">Three Borders</p>
+      <p class="concept-desc">Three horizontal lines of descending width — a typographic abstraction of "Beyond Borders." BBB initials encoded as geometry. Minimal, architectural, scales perfectly to a favicon bar.</p>
+    </div>
+    <div class="variants">
+      <div class="variant">
+        <div class="meridian-mark">
+          <div class="meridian-stack">
+            <div class="meridian-line" style="width:40px;"></div>
+            <div class="meridian-line" style="width:28px;"></div>
+            <div class="meridian-line" style="width:16px;"></div>
+          </div>
+          <div class="wordmark-c">
+            <span class="wordmark-c-top">Bijin</span>
+            <span class="wordmark-c-sub">Beyond Borders</span>
+          </div>
+        </div>
+        <p class="variant-tag">Light</p>
+      </div>
+      <div class="variant dark">
+        <div class="meridian-mark">
+          <div class="meridian-stack">
+            <div class="meridian-line" style="width:40px;"></div>
+            <div class="meridian-line" style="width:28px;"></div>
+            <div class="meridian-line" style="width:16px;"></div>
+          </div>
+          <div class="wordmark-c">
+            <span class="wordmark-c-top">Bijin</span>
+            <span class="wordmark-c-sub">Beyond Borders</span>
+          </div>
+        </div>
+        <p class="variant-tag">Dark</p>
+      </div>
+      <div class="variant accent-bg">
+        <div class="meridian-mark">
+          <div class="meridian-stack">
+            <div class="meridian-line" style="width:40px;"></div>
+            <div class="meridian-line" style="width:28px;"></div>
+            <div class="meridian-line" style="width:16px;"></div>
+          </div>
+          <div class="wordmark-c">
+            <span class="wordmark-c-top">Bijin</span>
+            <span class="wordmark-c-sub">Beyond Borders</span>
+          </div>
+        </div>
+        <p class="variant-tag">Accent</p>
+      </div>
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <div style="width:32px;height:32px;background:oklch(0.34 0.11 14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;">
+        <div style="width:20px;height:2px;background:oklch(0.93 0.016 14);"></div>
+        <div style="width:14px;height:2px;background:oklch(0.93 0.016 14);"></div>
+        <div style="width:8px;height:2px;background:oklch(0.93 0.016 14);"></div>
+      </div>
+      <div style="width:16px;height:16px;background:oklch(0.34 0.11 14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;">
+        <div style="width:10px;height:1.5px;background:oklch(0.93 0.016 14);"></div>
+        <div style="width:7px;height:1.5px;background:oklch(0.93 0.016 14);"></div>
+        <div style="width:4px;height:1.5px;background:oklch(0.93 0.016 14);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       CONCEPT 4 — STACKED WORDMARK
+  ══════════════════════════════════ -->
+  <div class="concept">
+    <div>
+      <p class="concept-label">Concept 04</p>
+      <p class="concept-name">Editorial Stack</p>
+      <p class="concept-desc">Pure typography — BIJIN large and dominant, a thin rule, BEYOND BORDERS small beneath. No icon needed. Confident, editorial, works as its own mark. The name carries the weight.</p>
+    </div>
+    <div class="variants">
+      <div class="variant">
+        <div class="horizon-mark">
+          <div class="wordmark-d">
+            <span class="wordmark-d-big">Bijin</span>
+            <div class="wordmark-d-rule"></div>
+            <span class="wordmark-d-small">Beyond Borders</span>
+          </div>
+        </div>
+        <p class="variant-tag">Light</p>
+      </div>
+      <div class="variant dark">
+        <div class="horizon-mark">
+          <div class="wordmark-d">
+            <span class="wordmark-d-big">Bijin</span>
+            <div class="wordmark-d-rule"></div>
+            <span class="wordmark-d-small">Beyond Borders</span>
+          </div>
+        </div>
+        <p class="variant-tag">Dark</p>
+      </div>
+      <div class="variant" style="background:oklch(0.14 0.022 14);">
+        <div class="horizon-mark">
+          <div class="wordmark-d" style="color:oklch(0.93 0.016 14);">
+            <span class="wordmark-d-big">Bijin</span>
+            <div class="wordmark-d-rule"></div>
+            <span class="wordmark-d-small">Beyond Borders</span>
+          </div>
+        </div>
+        <p class="variant-tag" style="color:oklch(0.55 0.010 14);">Ink</p>
+      </div>
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <div style="width:32px;height:32px;background:oklch(0.34 0.11 14);display:flex;align-items:center;justify-content:center;">
+        <span style="font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:700;color:oklch(0.93 0.016 14);letter-spacing:-0.02em;">B</span>
+      </div>
+      <div style="width:16px;height:16px;background:oklch(0.34 0.11 14);display:flex;align-items:center;justify-content:center;">
+        <span style="font-family:'Josefin Sans',sans-serif;font-size:9px;font-weight:700;color:oklch(0.93 0.016 14);">B</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       CONCEPT 5 — SEAL STAMP
+  ══════════════════════════════════ -->
+  <div class="concept">
+    <div>
+      <p class="concept-label">Concept 05</p>
+      <p class="concept-name">Wax Seal</p>
+      <p class="concept-desc">A circular seal with 美人 at the centre — the kind stamped onto travel documents, passports, letters. Carries heritage and authenticity. Works as a standalone badge or favicon.</p>
+    </div>
+    <div class="variants">
+      <div class="variant">
+        <div class="seal-mark">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <!-- outer ring -->
+            <circle cx="40" cy="40" r="37" stroke="oklch(0.34 0.11 14)" stroke-width="1.2"/>
+            <!-- inner ring -->
+            <circle cx="40" cy="40" r="31" stroke="oklch(0.34 0.11 14)" stroke-width="0.5" stroke-dasharray="2 2"/>
+            <!-- kanji centre -->
+            <text x="40" y="47" text-anchor="middle" font-size="20" fill="oklch(0.34 0.11 14)" font-family="serif">美人</text>
+            <!-- arc text top -->
+            <path id="topArc" d="M 10 40 A 30 30 0 0 1 70 40" fill="none"/>
+            <text font-family="'Josefin Sans',sans-serif" font-size="6.5" fill="oklch(0.34 0.11 14)" font-weight="600" letter-spacing="3.5">
+              <textPath href="#topArc" startOffset="50%" text-anchor="middle">BIJIN · BEYOND</textPath>
+            </text>
+            <!-- arc text bottom -->
+            <path id="botArc" d="M 10 40 A 30 30 0 0 0 70 40" fill="none"/>
+            <text font-family="'Josefin Sans',sans-serif" font-size="6.5" fill="oklch(0.34 0.11 14)" font-weight="600" letter-spacing="5">
+              <textPath href="#botArc" startOffset="50%" text-anchor="middle">BORDERS</textPath>
+            </text>
+          </svg>
+        </div>
+        <p class="variant-tag">Light</p>
+      </div>
+      <div class="variant dark">
+        <div class="seal-mark">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="37" stroke="oklch(0.93 0.016 14)" stroke-width="1.2"/>
+            <circle cx="40" cy="40" r="31" stroke="oklch(0.93 0.016 14)" stroke-width="0.5" stroke-dasharray="2 2"/>
+            <text x="40" y="47" text-anchor="middle" font-size="20" fill="oklch(0.93 0.016 14)" font-family="serif">美人</text>
+            <path id="topArc2" d="M 10 40 A 30 30 0 0 1 70 40" fill="none"/>
+            <text font-family="'Josefin Sans',sans-serif" font-size="6.5" fill="oklch(0.93 0.016 14)" font-weight="600" letter-spacing="3.5">
+              <textPath href="#topArc2" startOffset="50%" text-anchor="middle">BIJIN · BEYOND</textPath>
+            </text>
+            <path id="botArc2" d="M 10 40 A 30 30 0 0 0 70 40" fill="none"/>
+            <text font-family="'Josefin Sans',sans-serif" font-size="6.5" fill="oklch(0.93 0.016 14)" font-weight="600" letter-spacing="5">
+              <textPath href="#botArc2" startOffset="50%" text-anchor="middle">BORDERS</textPath>
+            </text>
+          </svg>
+        </div>
+        <p class="variant-tag">Dark</p>
+      </div>
+      <div class="variant accent-bg">
+        <div class="seal-mark">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="37" stroke="oklch(0.93 0.016 14)" stroke-width="1.2"/>
+            <circle cx="40" cy="40" r="31" stroke="oklch(0.93 0.016 14)" stroke-width="0.5" stroke-dasharray="2 2"/>
+            <text x="40" y="47" text-anchor="middle" font-size="20" fill="oklch(0.93 0.016 14)" font-family="serif">美人</text>
+            <path id="topArc3" d="M 10 40 A 30 30 0 0 1 70 40" fill="none"/>
+            <text font-family="'Josefin Sans',sans-serif" font-size="6.5" fill="oklch(0.93 0.016 14)" font-weight="600" letter-spacing="3.5">
+              <textPath href="#topArc3" startOffset="50%" text-anchor="middle">BIJIN · BEYOND</textPath>
+            </text>
+            <path id="botArc3" d="M 10 40 A 30 30 0 0 0 70 40" fill="none"/>
+            <text font-family="'Josefin Sans',sans-serif" font-size="6.5" fill="oklch(0.93 0.016 14)" font-weight="600" letter-spacing="5">
+              <textPath href="#botArc3" startOffset="50%" text-anchor="middle">BORDERS</textPath>
+            </text>
+          </svg>
+        </div>
+        <p class="variant-tag">Accent</p>
+      </div>
+    </div>
+    <div class="favicon-strip">
+      <span>Favicon</span>
+      <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
+        <rect width="80" height="80" fill="oklch(0.34 0.11 14)"/>
+        <circle cx="40" cy="40" r="34" stroke="oklch(0.93 0.016 14)" stroke-width="2"/>
+        <text x="40" y="49" text-anchor="middle" font-size="26" fill="oklch(0.93 0.016 14)" font-family="serif">美</text>
+      </svg>
+      <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
+        <rect width="80" height="80" fill="oklch(0.34 0.11 14)"/>
+        <circle cx="40" cy="40" r="34" stroke="oklch(0.93 0.016 14)" stroke-width="3"/>
+        <text x="40" y="52" text-anchor="middle" font-size="34" fill="oklch(0.93 0.016 14)" font-family="serif">美</text>
+      </svg>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:80px;padding-top:24px;border-top:1px solid oklch(0.82 0.018 14);">
+  <p style="font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:oklch(0.60 0.010 14);">
+    Bijin Beyond Borders — Logo Sketches · Blanc Ox Design System
+  </p>
+</div>
+
+</body>
+</html>
