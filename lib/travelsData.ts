@@ -191,6 +191,8 @@ export const destinations: Record<string, Destination> = {
       "iPhone launch day queue: got a water bottle for standing in it",
     ],
     gallerySeed: "la", nextSlug: "san-francisco", nextName: "San Francisco",
+    heroPhoto: "hero.jpeg",
+    photos: ["20240919_110832 Large.jpeg","20240919_112422 Large.jpeg","20240919_132117 Large.jpeg","20240919_134814 Large.jpeg","20240919_143720 Large.jpeg","20240920_184553 Large.jpeg","20240920_184643 Large.jpeg","20240920_184800 Large.jpeg","20240920_194541 Large.jpeg","20240930_050641 Large.jpeg","IMG_7332 Large.jpeg","IMG_7374 Large.jpeg","IMG_7380 Large.jpeg","IMG_7409 Large.jpeg","IMG_7422 Large.jpeg","IMG_7458 Large.jpeg","IMG_7472 Large.jpeg","IMG_7488 Large.jpeg","IMG_7494 Large.jpeg","IMG_7497 Large.jpeg","IMG_7504 Large.jpeg","IMG_7529 Large.jpeg","IMG_7531 Large.jpeg","IMG_7544 Large.jpeg"],
   },
 
   "san-francisco": {
