@@ -27,7 +27,7 @@ export default function DestinationContent({ dest }: { dest: Destination }) {
 
       {/* ── HERO ── */}
       <div className={styles.hero}>
-        <motion.img
+        <motion.img draggable={false}
           src={heroSrc}
           alt={dest.name}
           className={styles.heroImg}
@@ -136,7 +136,7 @@ export default function DestinationContent({ dest }: { dest: Destination }) {
             onClick={() => setLightboxIndex(i)}
             style={{ cursor: "zoom-in" }}
           >
-            <img
+            <img draggable={false}
               src={src}
               alt={`${dest.name} ${i + 1}`}
               loading={i < 3 ? "eager" : "lazy"}

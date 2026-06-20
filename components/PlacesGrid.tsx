@@ -61,7 +61,7 @@ export default function PlacesGrid() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: i * 0.08, duration: 0.9, ease }}
             >
-              <img
+              <img draggable={false}
                 src={placeHero(p.slug)}
                 alt={`${p.city}, ${p.country}`}
                 className={styles.img}

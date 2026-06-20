@@ -34,7 +34,7 @@ export default function Lightbox({ photos, index, onClose, onPrev, onNext }: Pro
           transition={{ duration: 0.25 }}
           onClick={onClose}
         >
-          <motion.img
+          <motion.img draggable={false}
             key={index}
             src={photos[index]}
             alt=""
