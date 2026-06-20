@@ -3,16 +3,31 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { photo } from "@/lib/basePath";
+import { destinations } from "@/lib/travelsData";
 import TiltCard from "./TiltCard";
 import styles from "./PlacesGrid.module.css";
 
+const FALLBACK_SEEDS: Record<string, string> = {
+  "tokyo":     "tokyo-jp/900/1100",
+  "las-vegas": "vegas-us/900/1100",
+  "new-york":  "ny-us/900/1100",
+  "kyoto":     "wb-kyoto/600/500",
+  "dubai":     "dubai-ae/600/500",
+};
+
 const places = [
-  { city: "Tokyo",         country: "Japan",         img: "https://picsum.photos/seed/tokyo-jp/900/1100",    slug: "tokyo" },
-  { city: "Las Vegas",     country: "United States", img: "/photos/las-vegas/hero.jpeg",                     slug: "las-vegas" },
-  { city: "New York",      country: "United States", img: "/photos/new-york/hero.jpeg",                      slug: "new-york" },
-  { city: "Kyoto",         country: "Japan",         img: "https://picsum.photos/seed/wb-kyoto/600/500",     slug: "kyoto" },
-  { city: "Dubai",         country: "UAE",           img: "/photos/dubai/hero.png",                          slug: "dubai" },
+  { city: "Tokyo",     country: "Japan",         slug: "tokyo"     },
+  { city: "Las Vegas", country: "United States", slug: "las-vegas" },
+  { city: "New York",  country: "United States", slug: "new-york"  },
+  { city: "Kyoto",     country: "Japan",         slug: "kyoto"     },
+  { city: "Dubai",     country: "UAE",           slug: "dubai"     },
 ];
+
+function placeHero(slug: string): string {
+  const dest = destinations[slug];
+  if (dest?.heroPhoto) return photo(`/photos/${slug}/${dest.heroPhoto}`);
+  return `https://picsum.photos/seed/${FALLBACK_SEEDS[slug] ?? slug}`;
+}
 
 const ease = [0.76, 0, 0.24, 1] as const;
 
@@ -47,7 +62,7 @@ export default function PlacesGrid() {
               transition={{ delay: i * 0.08, duration: 0.9, ease }}
             >
               <img
-                src={photo(p.img)}
+                src={placeHero(p.slug)}
                 alt={`${p.city}, ${p.country}`}
                 className={styles.img}
                 loading={i === 0 ? "eager" : "lazy"}

@@ -4,7 +4,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { photo } from "@/lib/basePath";
+import { destinations } from "@/lib/travelsData";
 import styles from "./travels.module.css";
+
+function destHero(slug: string, seed: string, size: string): string {
+  const dest = destinations[slug];
+  if (dest?.heroPhoto) return photo(`/photos/${slug}/${dest.heroPhoto}`);
+  return `https://picsum.photos/seed/${seed}/${size}`;
+}
 
 // ── DATA ──────────────────────────────────────────────────────────────────────
 
@@ -139,7 +146,7 @@ const byTrip = [
     seed: "vegas-us", slug: "las-vegas", img: "/photos/las-vegas/hero.jpeg",
   },
   {
-    year: "2024", season: "Feb (layover)", country: "UAE",
+    year: "2024", season: "Feb", country: "UAE",
     title: "8 Hours in Dubai",
     cities: ["Dubai"],
     seed: "dubai-ae", slug: "dubai", img: "/photos/dubai/hero.png",
@@ -265,7 +272,7 @@ export default function TravelsPage() {
                     >
                       <div className={styles.cityTint} />
                       <img
-                        src={photo((city as any).img || `https://picsum.photos/seed/${city.seed}/400/520`)}
+                        src={destHero(city.name.toLowerCase().replace(/[\s.]+/g, "-"), city.seed, "400/520")}
                         alt={city.name}
                         className={styles.cityImg}
                         loading="lazy"
@@ -304,7 +311,7 @@ export default function TravelsPage() {
                           <div className={styles.tripImgWrap}>
                             <div className={styles.tripTint} />
                             <img
-                              src={photo((trip as any).img || `https://picsum.photos/seed/${trip.seed}/320/220`)}
+                              src={destHero(trip.slug, trip.seed, "320/220")}
                               alt={trip.country}
                               className={styles.tripImg}
                               loading="lazy"
