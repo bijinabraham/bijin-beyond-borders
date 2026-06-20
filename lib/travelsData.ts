@@ -305,6 +305,19 @@ export const destinations: Record<string, Destination> = {
     photos: ["1.jpeg","2 Large.jpeg","3 Large.jpeg","4 Large.jpeg","5 Large.jpeg","6 Large.jpeg","7 Large.jpeg","8 Large.jpeg","9.jpeg","10.jpeg","11 Large.jpeg","12 Large.jpeg","20240206_161233_IMG_3868_remastered Large.jpeg","20240206_172409 Large.jpeg","20240207_122913 Large.jpeg"],
   },
 
+  "new-york-sep-2024": {
+    slug: "new-york-sep-2024", name: "New York", country: "United States", region: "New York State",
+    lat: 40.7128, lng: -74.0060, visitDate: "Sep 2024", duration: "Sep 2024",
+    heroSeed: "ny-sep-hero",
+    story: [
+      "Second visit to New York.",
+    ],
+    highlights: [],
+    gallerySeed: "ny-sep", nextSlug: "new-york", nextName: "New York (Feb 2024)",
+    heroPhoto: "hero.jpeg",
+    photos: ["20240923_102046 Large.jpeg","20240923_123043 Large.jpeg","IMG_7899 Large.jpeg","IMG_7907 Large.jpeg","IMG_7913 Large.jpeg","IMG_7915 Large.jpeg","IMG_7916 Large.jpeg","IMG_7918 Large.jpeg"],
+  },
+
   "miami": {
     slug: "miami", name: "Miami", country: "United States", region: "Florida",
     lat: 25.7617, lng: -80.1918, visitDate: "2024", duration: "3 days",
