@@ -37,7 +37,7 @@ export const destinations: Record<string, Destination> = {
     ],
     gallerySeed: "kyoto", nextSlug: "osaka", nextName: "Osaka",
     heroPhoto: "hero.jpeg",
-    photos: ["IMG-20250201-WA0005 Large.jpeg","IMG-20250201-WA0010 Large.jpeg","IMG-20250201-WA0016 Large.jpeg","IMG-20250201-WA0017 Large.jpeg"],
+    photos: ["20250128_163510 Large.jpeg","20250128_165629 Large.jpeg","20250128_173149 Large.jpeg","20250128_173338 Large.jpeg","20250128_190135 Large.jpeg","20250129_081931 Large.jpeg","Image-1738060929534 Large.jpeg","IMG-20250201-WA0005 Large.jpeg","IMG-20250201-WA0010 Large.jpeg","IMG-20250201-WA0016 Large.jpeg","IMG-20250201-WA0017 Large.jpeg"],
   },
 
   "tokyo-2025": {
