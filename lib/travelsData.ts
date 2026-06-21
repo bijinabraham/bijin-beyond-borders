@@ -36,6 +36,8 @@ export const destinations: Record<string, Destination> = {
       "Yodobashi Camera and the man from Shiga",
     ],
     gallerySeed: "kyoto", nextSlug: "osaka", nextName: "Osaka",
+    heroPhoto: "hero.jpeg",
+    photos: ["IMG-20250201-WA0005 Large.jpeg","IMG-20250201-WA0010 Large.jpeg","IMG-20250201-WA0016 Large.jpeg","IMG-20250201-WA0017 Large.jpeg"],
   },
 
   "tokyo-2025": {
