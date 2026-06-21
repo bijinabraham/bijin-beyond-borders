@@ -39,7 +39,7 @@ export default function Adrenaline() {
             href={a.horizon ? undefined : `/adrenaline/${a.name.toLowerCase()}`}
             className={styles.card}
           >
-            <img
+            <img draggable={false}
               src={`https://picsum.photos/seed/${a.seed}/600/700`}
               alt={a.name}
               className={styles.img}

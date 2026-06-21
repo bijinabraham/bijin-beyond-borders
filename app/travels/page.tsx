@@ -274,7 +274,7 @@ export default function TravelsPage() {
                         className={styles.cityCard}
                       >
                         <div className={styles.cityTint} />
-                        <img
+                        <img draggable={false}
                           src={destHero(city.slug, city.seed, "400/520")}
                           alt={city.name}
                           className={styles.cityImg}
@@ -315,7 +315,7 @@ export default function TravelsPage() {
                         <div className={styles.tripRight}>
                           <div className={styles.tripImgWrap}>
                             <div className={styles.tripTint} />
-                            <img
+                            <img draggable={false}
                               src={destHero(trip.slug, trip.seed, "320/220")}
                               alt={trip.country}
                               className={styles.tripImg}

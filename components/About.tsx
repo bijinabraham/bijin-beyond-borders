@@ -77,7 +77,7 @@ export default function About() {
         viewport={{ once: true, margin: "-80px" }}
         transition={{ delay: 0.15, duration: 0.8 }}
       >
-        <img
+        <img draggable={false}
           src="https://picsum.photos/seed/wb-portrait/700/900"
           alt="Portrait"
           className={styles.portrait}

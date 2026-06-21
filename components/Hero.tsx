@@ -110,7 +110,7 @@ export default function Hero() {
 
       <div className={styles.imagePanel}>
         <div className={styles.imageWrap}>
-          <motion.img
+          <motion.img draggable={false}
             ref={imgRef}
             src={photo("/photos/hero.jpeg")}
             alt="A place"

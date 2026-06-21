@@ -57,7 +57,7 @@ export default function AboutPage() {
           </motion.p>
         </div>
         <div className={styles.heroImage}>
-          <motion.img
+          <motion.img draggable={false}
             src="https://picsum.photos/seed/wb-portrait/800/1000"
             alt="Portrait"
             className={styles.heroImg}
@@ -153,7 +153,7 @@ export default function AboutPage() {
             >
               {/* Tint overlay */}
               <div className={styles.adventureTint} />
-              <img
+              <img draggable={false}
                 src={`https://picsum.photos/seed/${a.seed}/400/500`}
                 alt={a.name}
                 className={styles.adventureImg}

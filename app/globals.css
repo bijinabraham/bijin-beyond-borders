@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 /* ── DESIGN TOKENS ── */
 :root {
   --bg:       oklch(0.93 0.016 14);

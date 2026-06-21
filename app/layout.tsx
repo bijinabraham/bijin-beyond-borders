@@ -4,6 +4,7 @@ import Nav from "@/components/Nav";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import Loader from "@/components/Loader";
+import ImageProtection from "@/components/ImageProtection";
 import "./globals.css";
 
 const josefinSans = Josefin_Sans({
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${josefinSans.variable} ${nunitoSans.variable}`}>
         <SmoothScroll>
+          <ImageProtection />
           <Loader />
           <Cursor />
           <Nav />
