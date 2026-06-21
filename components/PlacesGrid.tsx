@@ -54,13 +54,7 @@ export default function PlacesGrid() {
             href={`/travels/${p.slug}`}
             className={`${styles.card} ${i === 0 ? styles.cardLarge : ""}`}
           >
-            <motion.div
-              className={styles.imgWrap}
-              initial={{ clipPath: "inset(0 0 100% 0)" }}
-              whileInView={{ clipPath: "inset(0 0 0% 0)" }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.08, duration: 0.9, ease }}
-            >
+            <div className={styles.imgWrap}>
               <img draggable={false}
                 src={placeHero(p.slug)}
                 alt={`${p.city}, ${p.country}`}
@@ -68,7 +62,7 @@ export default function PlacesGrid() {
                 loading={i === 0 ? "eager" : "lazy"}
                 decoding="async"
               />
-            </motion.div>
+            </div>
             <div className={styles.label}>
               <span className={styles.city}>{p.city}</span>
               <span className={styles.country}>{p.country}</span>
