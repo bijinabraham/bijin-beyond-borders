@@ -8,7 +8,7 @@ import TiltCard from "./TiltCard";
 import styles from "./PlacesGrid.module.css";
 
 const FALLBACK_SEEDS: Record<string, string> = {
-  "tokyo":     "tokyo-jp/900/1100",
+  "tokyo-2025": "tokyo-jp/900/1100",
   "las-vegas": "vegas-us/900/1100",
   "new-york":  "ny-us/900/1100",
   "kyoto":     "wb-kyoto/600/500",
@@ -16,7 +16,7 @@ const FALLBACK_SEEDS: Record<string, string> = {
 };
 
 const places = [
-  { city: "Tokyo",     country: "Japan",         slug: "tokyo"     },
+  { city: "Tokyo",     country: "Japan",         slug: "tokyo-2025" },
   { city: "Las Vegas", country: "United States", slug: "las-vegas" },
   { city: "New York",  country: "United States", slug: "new-york"  },
   { city: "Kyoto",     country: "Japan",         slug: "kyoto"     },

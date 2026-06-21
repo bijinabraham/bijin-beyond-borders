@@ -19,7 +19,8 @@ const byCountry = [
   {
     country: "Japan", region: "Asia", count: 13, countryCount: 1,
     cities: [
-      { name: "Tokyo",         slug: "tokyo",          seed: "tokyo-jp"      },
+      { name: "Tokyo",         slug: "tokyo-2025",     seed: "tokyo-jp"      },
+      { name: "Tokyo",         slug: "tokyo-2026",     seed: "tokyo-jp"      },
       { name: "Kyoto",         slug: "kyoto",          seed: "wb-kyoto"      },
       { name: "Osaka",         slug: "osaka",          seed: "osaka-jp"      },
       { name: "Nara",          slug: "nara",           seed: "nara-jp"       },
@@ -168,7 +169,7 @@ const byTrip = [
     year: "2025", season: "January", country: "Japan",
     title: "First Time in Japan",
     cities: ["Tokyo", "Mt. Fuji", "Kyoto", "Nara", "Osaka"],
-    seed: "tokyo-hero", slug: "tokyo",
+    seed: "tokyo-hero", slug: "tokyo-2025",
   },
   {
     year: "2025", season: "2025", country: "Ireland",

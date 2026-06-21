@@ -38,8 +38,8 @@ export const destinations: Record<string, Destination> = {
     gallerySeed: "kyoto", nextSlug: "osaka", nextName: "Osaka",
   },
 
-  "tokyo": {
-    slug: "tokyo", name: "Tokyo", country: "Japan", region: "Kanto Region, Honshu",
+  "tokyo-2025": {
+    slug: "tokyo-2025", name: "Tokyo", country: "Japan", region: "Kanto Region, Honshu",
     lat: 35.6762, lng: 139.6503, visitDate: "January 2025", duration: "5 days",
     heroSeed: "tokyo-hero",
     story: [
@@ -55,7 +55,9 @@ export const destinations: Record<string, Destination> = {
       "London Sports in Kanda for first ski jacket and pants",
       "Seiko and G-Shock solar watches",
     ],
-    gallerySeed: "tokyo", nextSlug: "mt-fuji", nextName: "Mt. Fuji",
+    gallerySeed: "tokyo-2025", nextSlug: "mt-fuji", nextName: "Mt. Fuji",
+    heroPhoto: "hero.jpeg",
+    photos: ["20250124_172919 Large.jpeg","20250124_192659 Large.jpeg","20250124_215251 Large.jpeg","20250124_220232 Large.jpeg","20250124_220250 Large.jpeg","20250125_115252 Large.jpeg","20250125_120324 Large.jpeg","20250125_140416 Large.jpeg","20250125_140537 Large.jpeg","20250125_141710 Large.jpeg","20250125_143641 Large.jpeg","20250125_144912 Large.jpeg","20250126_170004 Large.jpeg","20250126_171443 Large.jpeg","20250126_193028 Large.jpeg","20250126_210259 Large.jpeg","IMG-20250126-WA0005 Large.jpeg"],
   },
 
   "osaka": {
@@ -663,7 +665,7 @@ export function getAllSlugs(): string[] {
 // All city slugs across the site — includes placeholder destinations not yet written
 export const allCitySlugs: string[] = [
   // Japan
-  "tokyo","kyoto","osaka","nara","kobe","sakai","nikko","kamakura","enoshima","otaru","sapporo","mt-fuji","chuzenji-lake",
+  "tokyo-2025","tokyo-2026","kyoto","osaka","nara","kobe","sakai","nikko","kamakura","enoshima","otaru","sapporo","mt-fuji","chuzenji-lake",
   // United States
   "san-francisco","los-angeles","yosemite","seattle","snoqualmie","las-vegas","horseshoe-bend","antelope-canyon","austin","miami","jupiter-beach","washington-dc","new-york","new-york-sep-2024","philadelphia",
   // Canada
