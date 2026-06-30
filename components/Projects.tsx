@@ -1,13 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import styles from "./Projects.module.css";
 
 const projects = [
-  { num: "01", name: "Project One",   desc: "A short description of what this project does and why it exists.", tag: "Web App", year: "2024", slug: "project-one" },
-  { num: "02", name: "Project Two",   desc: "Something built from scratch: what problem it solves, who uses it.", tag: "Mobile",  year: "2024", slug: "project-two" },
-  { num: "03", name: "Project Three", desc: "Another build: the context, the stack, the outcome.",               tag: "Tool",    year: "2023", slug: "project-three" },
+  { num: "01", name: "Sculptura",     desc: "Marketing site for a foam tool insert manufacturer. Built with Next.js, Framer Motion, and Sanity CMS.", tag: "Website", year: "2025", url: "https://dsculptura.in/" },
+  { num: "02", name: "Project Two",   desc: "Something built from scratch: what problem it solves, who uses it.", tag: "Mobile",  year: "2024", url: null },
+  { num: "03", name: "Project Three", desc: "Another build: the context, the stack, the outcome.",               tag: "Tool",    year: "2023", url: null },
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -25,13 +24,14 @@ export default function Projects() {
         >
           Projects
         </motion.h2>
-        <Link href="/projects" className={styles.seeAll}>All &rarr;</Link>
       </div>
 
       {projects.map((p, i) => (
         <motion.a
-          key={p.slug}
-          href={`/projects/${p.slug}`}
+          key={p.num}
+          href={p.url ?? "#"}
+          target={p.url ? "_blank" : undefined}
+          rel={p.url ? "noopener noreferrer" : undefined}
           className={styles.item}
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
