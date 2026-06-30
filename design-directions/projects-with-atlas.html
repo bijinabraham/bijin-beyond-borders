@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Projects + Atlas mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: oklch(0.93 0.016 14);
+    --ink: oklch(0.18 0.04 14);
+    --muted: oklch(0.42 0.04 14);
+    --rule: oklch(0.78 0.02 14);
+    --primary: oklch(0.34 0.11 14);
+    --accent: oklch(0.58 0.19 32);
+    --dark-surface: oklch(0.16 0.012 14);
+    --page-px: clamp(1.5rem, 4vw, 3.5rem);
+    --font-display: "Josefin Sans";
+    --font-body: "Nunito Sans";
+    --text-xs: 0.72rem;
+    --text-sm: 0.85rem;
+    --text-base: 0.95rem;
+    --text-3xl: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); }
+  body { font-family: var(--font-body), sans-serif; font-weight: 300; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+  .mockNote {
+    background: var(--ink); color: var(--bg);
+    padding: 0.6rem var(--page-px);
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+    display: flex; gap: 1.2rem; align-items: center; justify-content: space-between;
+  }
+  .mockNote span { opacity: 0.6; }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 3rem var(--page-px) 2.5rem;
+    border-block-end: 1px solid var(--rule);
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-3xl); letter-spacing: -0.025em;
+    text-transform: uppercase; line-height: 1;
+  }
+  .subtitle {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-xs); letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ── FEATURED (Sculptura, wide cap) ── */
+  .featured { border-block-end: 1px solid var(--rule); }
+  .screenshotWrap {
+    width: 100%; aspect-ratio: 16 / 7; overflow: hidden;
+    position: relative; border-block-end: 1px solid var(--rule);
+    background: oklch(0.88 0.015 14);
+  }
+  .screenshot { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .screenshotOverlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, oklch(0.93 0.016 14 / 0.25) 100%);
+    pointer-events: none;
+  }
+
+  .featuredInfo { display: grid; grid-template-columns: 1fr 320px; gap: 0; }
+  .featuredLeft {
+    padding: 3rem var(--page-px);
+    border-inline-end: 1px solid var(--rule);
+    display: flex; align-items: flex-start; gap: 2.5rem;
+  }
+  .featuredNum {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-sm); letter-spacing: 0.1em;
+    color: var(--muted); flex-shrink: 0; padding-top: 0.3rem;
+  }
+  .featuredName {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.8rem); letter-spacing: -0.025em;
+    text-transform: uppercase; line-height: 1; margin-bottom: 1.2rem;
+  }
+  .featuredDesc {
+    font-size: var(--text-base); color: var(--muted);
+    font-weight: 300; line-height: 1.8; max-width: 56ch;
+  }
+  .featuredRight {
+    padding: 3rem 2.5rem;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
+  }
+  .metaBlock { display: flex; flex-direction: column; }
+  .metaRow {
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 1rem; padding: 0.75rem 0;
+    border-block-end: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .metaRow:first-child { border-block-start: 1px solid var(--rule); }
+  .metaLabel {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 0.58rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .metaValue { font-size: 0.82rem; font-weight: 300; line-height: 1.5; }
+  .liveValue { display: inline-flex; align-items: center; gap: 0.45rem; }
+  .liveDot {
+    width: 0.45rem; height: 0.45rem; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px oklch(0.58 0.19 32 / 0.25);
+  }
+  .visitBtn {
+    display: inline-block;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-sm); letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    background: var(--accent); color: oklch(1 0 0);
+    text-decoration: none;
+  }
+  .seeMoreBtn {
+    display: inline-block;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-sm); letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--ink);
+    text-decoration: none;
+  }
+
+  /* ── ATLAS FEATURED (phone container variant) ── */
+  .featuredPhone { border-block-end: 1px solid var(--rule); }
+  .phoneStage {
+    width: 100%;
+    background: var(--dark-surface);
+    border-block-end: 1px solid var(--rule);
+    padding: clamp(2rem, 5vw, 4rem) var(--page-px);
+    display: grid;
+    grid-template-columns: minmax(220px, 280px) 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .phoneStage::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(
+      ellipse at 25% 50%,
+      oklch(0.58 0.19 32 / 0.08) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+  .phoneFrame {
+    width: 100%;
+    aspect-ratio: 1080 / 2216;
+    background: #000;
+    border: 1px solid oklch(0.32 0.012 14);
+    box-shadow:
+      0 30px 60px oklch(0 0 0 / 0.5),
+      0 0 0 8px oklch(0.20 0.012 14);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+  .phoneFrame img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .phoneCopy {
+    color: oklch(0.92 0.01 14);
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 1.5rem;
+    max-width: 56ch;
+  }
+  .phoneEyebrow {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .phoneName {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2rem, 4.5vw, 3.4rem); letter-spacing: -0.025em;
+    text-transform: uppercase; line-height: 1; color: oklch(0.98 0.005 14);
+  }
+  .phoneDesc {
+    font-size: var(--text-base); color: oklch(0.78 0.01 14);
+    font-weight: 300; line-height: 1.8;
+  }
+
+  /* Info strip below phone stage, same structure as Sculptura's */
+  .featuredInfoAtlas { display: grid; grid-template-columns: 1fr 320px; gap: 0; }
+  .featuredInfoAtlas .featuredLeft { padding: 3rem var(--page-px); }
+
+  /* ── REMAINING LIST ── */
+  .list { flex: 1; }
+  .listItem {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr auto auto;
+    align-items: center; gap: 2rem;
+    padding: 2rem var(--page-px);
+    border-block-end: 1px solid var(--rule);
+  }
+  .listItem:last-child { border-block-end: none; }
+  .listNum {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-sm); letter-spacing: 0.1em; color: var(--muted);
+  }
+  .listInfo { display: flex; flex-direction: column; gap: 0.3rem; }
+  .listName {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1rem, 2vw, 1.3rem); letter-spacing: -0.01em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .listDesc { font-size: var(--text-sm); color: var(--rule); font-weight: 300; }
+  .listTag {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--rule); border: 1px solid var(--rule);
+    padding: 0.2rem 0.55rem;
+  }
+  .listYear {
+    font-size: 0.7rem; color: var(--rule); letter-spacing: 0.08em;
+    font-family: var(--font-display);
+  }
+
+  /* ── HOMEPAGE PROJECTS LIST (showing click-routing rule) ── */
+  .homeProjects {
+    margin-top: 4rem;
+    border-block-start: 6px double var(--rule);
+    padding: 3rem var(--page-px);
+    background: oklch(0.91 0.014 14);
+  }
+  .homeHeader {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 2rem;
+  }
+  .homeTitle {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.025em;
+    text-transform: uppercase; line-height: 1;
+  }
+  .seeAll {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-xs); letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent); text-decoration: none;
+  }
+  .homeItem {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr auto auto;
+    align-items: center; gap: 2rem;
+    padding: 1.75rem 0;
+    border-block-end: 1px solid var(--rule);
+    color: var(--ink); text-decoration: none;
+    position: relative;
+  }
+  .homeItem:last-child { border-block-end: none; }
+  .homeNum {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-sm); color: var(--muted); letter-spacing: 0.1em;
+  }
+  .homeInfo { display: flex; flex-direction: column; gap: 0.4rem; }
+  .homeName {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1.2rem; letter-spacing: -0.01em; text-transform: uppercase;
+  }
+  .homeDesc { font-size: var(--text-sm); color: var(--muted); }
+  .chipRow { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.35rem; }
+  .chip {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.25rem 0.5rem; border: 1px solid var(--rule); color: var(--muted);
+  }
+  .chipLive {
+    background: var(--accent); color: oklch(1 0 0); border-color: var(--accent);
+    display: inline-flex; align-items: center; gap: 0.35rem;
+  }
+  .chipLive::before {
+    content: ""; width: 0.35rem; height: 0.35rem; border-radius: 50%;
+    background: oklch(1 0 0);
+  }
+  .homeMeta {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .homeExt { color: var(--accent); }
+  .homeRoute {
+    color: var(--muted); font-weight: 400; font-style: italic;
+    text-transform: none; letter-spacing: 0.04em;
+  }
+  .homeArrow { font-size: 1.4rem; color: var(--muted); }
+
+  .calloutTag {
+    position: absolute;
+    top: 0; right: 0;
+    transform: translate(0.5rem, -1.2rem);
+    background: var(--accent); color: oklch(1 0 0);
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+  }
+
+  @media (max-width: 900px) {
+    .featuredInfo, .featuredInfoAtlas { grid-template-columns: 1fr; }
+    .featuredLeft { border-inline-end: none; border-block-end: 1px solid var(--rule); }
+    .phoneStage { grid-template-columns: 1fr; text-align: center; padding-block: 3rem; }
+    .phoneFrame { max-width: 240px; margin: 0 auto; }
+    .phoneCopy { align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mockNote">
+  <span>Mockup &middot; /projects with Atlas added</span>
+  <span>2026-07-01</span>
+</div>
+
+<!-- ── PROJECTS PAGE HEADER ── -->
+<div class="header">
+  <h1 class="title">Projects</h1>
+  <p class="subtitle">2 live &middot; 3 total</p>
+</div>
+
+<!-- ── FEATURED 01: SCULPTURA (existing, unchanged) ── -->
+<div class="featured">
+  <div class="screenshotWrap" aria-hidden="true">
+    <!-- Stand-in for screenshot — kept neutral so the mockup focuses on layout -->
+    <div style="
+      width:100%;height:100%;
+      background:
+        linear-gradient(135deg, oklch(0.82 0.04 30) 0%, oklch(0.88 0.02 14) 60%, oklch(0.78 0.05 25) 100%);
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--font-display);font-weight:700;letter-spacing:0.2em;
+      color:oklch(0.34 0.11 14);font-size:0.75rem;text-transform:uppercase;
+    ">[ sculptura.png — wide landing cap, unchanged ]</div>
+    <div class="screenshotOverlay"></div>
+  </div>
+
+  <div class="featuredInfo">
+    <div class="featuredLeft">
+      <span class="featuredNum">01</span>
+      <div>
+        <h2 class="featuredName">Sculptura</h2>
+        <p class="featuredDesc">
+          Built for Foam-D Sculptura, a precision foam tool insert manufacturer based in India. Full marketing site with product showcase, Sanity-powered content management, and Framer Motion animations throughout. Designed and developed end-to-end.
+        </p>
+      </div>
+    </div>
+    <div class="featuredRight">
+      <div class="metaBlock">
+        <div class="metaRow"><span class="metaLabel">Type</span><span class="metaValue">Website</span></div>
+        <div class="metaRow"><span class="metaLabel">Year</span><span class="metaValue">2025</span></div>
+        <div class="metaRow"><span class="metaLabel">Role</span><span class="metaValue">Design + Development</span></div>
+        <div class="metaRow"><span class="metaLabel">Stack</span><span class="metaValue">Next.js, Framer Motion, Sanity CMS, Tailwind</span></div>
+        <div class="metaRow"><span class="metaLabel">Status</span><span class="metaValue"><span class="liveValue"><span class="liveDot"></span>Live</span></span></div>
+      </div>
+      <a href="https://dsculptura.in/" class="visitBtn">Visit site &nearr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEATURED 02: ATLAS (new phone-stage variant) ── -->
+<div class="featuredPhone">
+  <div class="phoneStage">
+    <div class="phoneFrame">
+      <img src="../public/projects/atlas.jpg" alt="Atlas splash screen" />
+    </div>
+    <div class="phoneCopy">
+      <span class="phoneEyebrow">02 &middot; Native mobile</span>
+      <h2 class="phoneName">Atlas</h2>
+      <p class="phoneDesc">
+        Personal workout tracker built for daily gym use. Logs sets with auto rest timer, detects PRs via Epley 1RM, tracks body measurements alongside health metrics (WHtR, WHR, BMI), and ships a round timer for boxing and BJJ. Fully offline, zero cloud, zero cost.
+      </p>
+    </div>
+  </div>
+
+  <div class="featuredInfoAtlas">
+    <div class="featuredLeft">
+      <span class="featuredNum">02</span>
+      <div>
+        <h2 class="featuredName">Atlas</h2>
+        <p class="featuredDesc">
+          Track your strength. Offline mobile app for strength training, cardio, and body composition. Built solo end-to-end.
+        </p>
+      </div>
+    </div>
+    <div class="featuredRight">
+      <div class="metaBlock">
+        <div class="metaRow"><span class="metaLabel">Type</span><span class="metaValue">Mobile</span></div>
+        <div class="metaRow"><span class="metaLabel">Year</span><span class="metaValue">2026</span></div>
+        <div class="metaRow"><span class="metaLabel">Role</span><span class="metaValue">Design + Development</span></div>
+        <div class="metaRow"><span class="metaLabel">Stack</span><span class="metaValue">React Native, Expo, SQLite, TypeScript</span></div>
+        <div class="metaRow"><span class="metaLabel">Status</span><span class="metaValue"><span class="liveValue"><span class="liveDot"></span>Live &middot; not on store</span></span></div>
+      </div>
+      <span class="seeMoreBtn">Personal build</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── REMAINING LIST: just project 03 now ── -->
+<div class="list">
+  <div class="listItem">
+    <span class="listNum">03</span>
+    <span class="listInfo">
+      <span class="listName">Project Three</span>
+      <span class="listDesc">Another build: the context, the stack, the outcome.</span>
+    </span>
+    <span class="listTag">Tool</span>
+    <span class="listYear">2023</span>
+  </div>
+</div>
+
+<!-- ── HOMEPAGE PROJECTS LIST (separate component, showing click rule) ── -->
+<div class="homeProjects">
+  <div class="homeHeader">
+    <h2 class="homeTitle">Projects</h2>
+    <a href="/projects" class="seeAll">All &rarr;</a>
+  </div>
+
+  <a href="https://dsculptura.in/" class="homeItem">
+    <span class="homeNum">01</span>
+    <span class="homeInfo">
+      <span class="homeName">Sculptura</span>
+      <span class="homeDesc">Marketing site for a foam tool insert manufacturer.</span>
+      <span class="chipRow">
+        <span class="chip chipLive">Live</span>
+        <span class="chip">Next.js</span><span class="chip">Framer Motion</span>
+        <span class="chip">Sanity CMS</span><span class="chip">Tailwind</span>
+      </span>
+    </span>
+    <span class="homeMeta">
+      <span>Website &middot; 2025</span>
+      <span class="homeExt">&nearr; dsculptura.in</span>
+    </span>
+    <span class="homeArrow">&rarr;</span>
+  </a>
+
+  <a href="/projects" class="homeItem">
+    <span class="calloutTag">Click rule change</span>
+    <span class="homeNum">02</span>
+    <span class="homeInfo">
+      <span class="homeName">Atlas</span>
+      <span class="homeDesc">Offline mobile app for tracking strength training, cardio, and body composition.</span>
+      <span class="chipRow">
+        <span class="chip chipLive">Live</span>
+        <span class="chip">React Native</span><span class="chip">Expo</span>
+        <span class="chip">SQLite</span><span class="chip">TypeScript</span>
+      </span>
+    </span>
+    <span class="homeMeta">
+      <span>Mobile &middot; 2026</span>
+      <span class="homeRoute">No public link &rarr; routes to /projects</span>
+    </span>
+    <span class="homeArrow">&rarr;</span>
+  </a>
+
+  <a href="/projects" class="homeItem">
+    <span class="homeNum">03</span>
+    <span class="homeInfo">
+      <span class="homeName">Project Three</span>
+      <span class="homeDesc">Another build: the context, the stack, the outcome.</span>
+    </span>
+    <span class="homeMeta">
+      <span>Tool &middot; 2023</span>
+      <span class="homeRoute">No public link &rarr; routes to /projects</span>
+    </span>
+    <span class="homeArrow">&rarr;</span>
+  </a>
+</div>
+
+</body>
+</html>

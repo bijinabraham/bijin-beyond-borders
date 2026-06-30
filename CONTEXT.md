@@ -146,6 +146,15 @@ Or set up a shell alias. The fetch URL works fine. Only push is blocked. The rem
 
 Most recent significant work (newest first):
 
+- **2026-07-01:**
+  - Project 02 is **Atlas** (mobile workout and strength tracker, React Native + Expo + SQLite, lives at `~/Atlas`). Live but not on store.
+  - `/projects` now supports a `layout: "wide" | "phone"` field per project. Sculptura uses the existing wide-cap featured block; Atlas gets a new **phone-stage** variant: dark surface, screenshot inside a phone frame on the left, name + copy on the right, then the same meta-strip pattern below. Both featured blocks now show a **Status** meta row with a pulsing accent live dot (`statusNote` appends a qualifier like "Not on store").
+  - Selection is now `projects.filter(p => p.screenshot)` for featured, rest fall to the list — drop a screenshot path + layout on any project to promote it.
+  - CTA slot is conditional: `url` → MagneticBtn "Visit site ↗". No url → quiet "Personal build" pill.
+  - Homepage `Projects` component: clicks on rows without a `url` now route to `/projects` instead of `#`. External rows still open `target="_blank"`.
+  - Atlas splash screenshot lives at `/public/projects/atlas.jpg` (1080×2216, dark splash with orange wheel logo + "Track your strength").
+  - Mockup file: `design-directions/projects-with-atlas.html`.
+
 - **2026-06-30 late evening:**
   - Fixed right/top edge flicker on adrenaline hero. Film grain texture was translating ±4% via `grainShift` animation, exposing the un-grained image edge on each frame. Extended `.heroGrain` (and homepage `.bgGrain`) `inset: 0` → `inset: -8%` so the animated bounds always extend past the visible viewport. Pattern to remember: any animated `transform: translate` texture overlay needs bounds extended past its container.
 

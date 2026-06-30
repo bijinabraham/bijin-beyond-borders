@@ -1,3 +1,5 @@
+export type ProjectLayout = "wide" | "phone";
+
 export const projects = [
   {
     num: "01",
@@ -9,22 +11,27 @@ export const projects = [
     year: "2025",
     url: "https://dsculptura.in/",
     screenshot: "/projects/sculptura.png",
+    layout: "wide" as ProjectLayout,
     stack: ["Next.js", "Framer Motion", "Sanity CMS", "Tailwind"],
     role: "Design + Development",
     live: true,
+    statusNote: null as string | null,
   },
   {
     num: "02",
-    name: "Project Two",
-    desc: "Something built from scratch: what problem it solves, who uses it.",
-    longDesc: null,
+    name: "Atlas",
+    desc: "Offline mobile app for tracking strength training, cardio, and body composition.",
+    longDesc:
+      "Personal workout tracker built for daily gym use. Logs sets with auto rest timer, detects PRs via Epley 1RM, tracks body measurements alongside health metrics (WHtR, WHR, BMI), and ships a round timer for boxing and BJJ. Fully offline, zero cloud, zero cost.",
     tag: "Mobile",
-    year: "2024",
+    year: "2026",
     url: null,
-    screenshot: null,
-    stack: [],
-    role: null,
-    live: false,
+    screenshot: "/projects/atlas.jpg",
+    layout: "phone" as ProjectLayout,
+    stack: ["React Native", "Expo", "SQLite", "TypeScript"],
+    role: "Design + Development",
+    live: true,
+    statusNote: "Not on store",
   },
   {
     num: "03",
@@ -35,8 +42,10 @@ export const projects = [
     year: "2023",
     url: null,
     screenshot: null,
+    layout: "wide" as ProjectLayout,
     stack: [],
     role: null,
     live: false,
+    statusNote: null as string | null,
   },
 ];

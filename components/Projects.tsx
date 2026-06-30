@@ -26,7 +26,7 @@ export default function Projects() {
       {projects.map((p, i) => (
         <motion.a
           key={p.num}
-          href={p.url ?? "#"}
+          href={p.url ?? "/projects"}
           target={p.url ? "_blank" : undefined}
           rel={p.url ? "noopener noreferrer" : undefined}
           className={styles.item}
