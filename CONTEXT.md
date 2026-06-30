@@ -146,6 +146,9 @@ Or set up a shell alias. The fetch URL works fine. Only push is blocked. The rem
 
 Most recent significant work (newest first):
 
+- **2026-06-30 late evening:**
+  - Fixed right/top edge flicker on adrenaline hero. Film grain texture was translating ±4% via `grainShift` animation, exposing the un-grained image edge on each frame. Extended `.heroGrain` (and homepage `.bgGrain`) `inset: 0` → `inset: -8%` so the animated bounds always extend past the visible viewport. Pattern to remember: any animated `transform: translate` texture overlay needs bounds extended past its container.
+
 - **2026-06-30 evening (Opus 4.7):**
   - Built `ActivityContent` component and `/adrenaline/[slug]` dynamic route per sport
   - Moved tab switcher from bottom of /adrenaline to top of each sport page
