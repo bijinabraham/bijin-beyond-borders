@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adrenaline Page — Creative Ideas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: oklch(0.93 0.016 14); --surface: oklch(0.89 0.020 14);
+  --ink: oklch(0.14 0.022 14); --primary: oklch(0.34 0.11 14);
+  --accent: oklch(0.58 0.19 32); --muted: oklch(0.44 0.010 14);
+  --rule: oklch(0.82 0.018 14); --dark: oklch(0.10 0.018 14);
+  --fd: 'Josefin Sans'; --fb: 'Nunito Sans'; --px: 3rem;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--fb); font-weight: 300; }
+.page-header { background: var(--primary); color: #fff; padding: 2rem var(--px); }
+.page-header h1 { font-family: var(--fd); font-weight: 700; font-size: clamp(1rem,2vw,1.4rem); letter-spacing: .15em; text-transform: uppercase; }
+.page-header p { font-size: .82rem; opacity: .65; margin-top: .3rem; }
+.idea-wrap { border-top: 1px solid var(--rule); padding: 4rem var(--px) 0; }
+.chip { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.idea-title { font-family: var(--fd); font-size: clamp(1.3rem,2.5vw,2rem); font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; margin-bottom: .4rem; }
+.idea-desc { font-size: .85rem; color: var(--muted); max-width: 60ch; margin-bottom: 2rem; line-height: 1.75; }
+.idea-desc strong { color: var(--ink); font-weight: 500; }
+.info-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--rule); border-top: none; margin-bottom: 5rem; }
+.ic { padding: 1rem 1.25rem; border-right: 1px solid var(--rule); }
+.ic:last-child { border-right: none; }
+.ic-label { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.ic-val { font-size: .78rem; line-height: 1.5; }
+.badge { display: inline-block; font-family: var(--fd); font-size: .52rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .4rem; }
+.hl { background: var(--accent); color: #fff; }
+.hm { background: var(--primary); color: #fff; }
+
+/* ════════════════════════════════
+   IDEA 1 — Text Scramble
+════════════════════════════════ */
+.scramble-demo {
+  background: var(--dark); padding: 3rem; border: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.scramble-name {
+  font-family: var(--fd); font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 700; letter-spacing: -.03em; text-transform: uppercase;
+  color: #fff; line-height: .9; cursor: pointer; user-select: none;
+  min-height: 1em;
+}
+.scramble-hint { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .3); }
+.scramble-tabs { display: flex; gap: .5rem; flex-wrap: wrap; }
+.stab {
+  font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .4rem 1rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .4); cursor: pointer;
+  transition: all .2s;
+}
+.stab.active { border-color: var(--accent); color: var(--accent); }
+
+/* ════════════════════════════════
+   IDEA 2 — Crosshair cursor
+════════════════════════════════ */
+.cursor-arena {
+  height: 280px; background: var(--dark); position: relative; overflow: hidden;
+  border: 1px solid var(--rule); cursor: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.cursor-arena * { cursor: none; }
+.xhair {
+  position: absolute; pointer-events: none; z-index: 20;
+  transform: translate(-50%, -50%);
+  width: 44px; height: 44px;
+}
+.xhair-h, .xhair-v {
+  position: absolute; background: var(--accent); opacity: .9;
+}
+.xhair-h { width: 44px; height: 1.5px; top: 50%; transform: translateY(-50%); }
+.xhair-v { height: 44px; width: 1.5px; left: 50%; transform: translateX(-50%); }
+.xhair-dot { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.xhair-ring {
+  position: absolute; width: 16px; height: 16px;
+  border: 1.5px solid var(--accent); border-radius: 50%;
+  top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: .6;
+}
+/* scanning ring */
+.xhair-scan {
+  position: absolute; width: 80px; height: 80px;
+  border: 1px solid oklch(.58 .19 32 / .25); border-radius: 50%;
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  animation: scanPulse 1.8s ease-in-out infinite;
+}
+@keyframes scanPulse {
+  0%,100% { width: 60px; height: 60px; opacity: .5; }
+  50%      { width: 90px; height: 90px; opacity: .15; }
+}
+.arena-text {
+  font-family: var(--fd); font-size: clamp(3rem,8vw,5.5rem);
+  font-weight: 700; letter-spacing: -.03em; text-transform: uppercase;
+  color: #fff; user-select: none;
+}
+/* corner brackets */
+.corners { position: absolute; inset: 0; pointer-events: none; }
+.corner {
+  position: absolute; width: 16px; height: 16px;
+  border-color: oklch(1 0 0 / .15); border-style: solid;
+}
+.corner.tl { top:12px; left:12px; border-width: 1px 0 0 1px; }
+.corner.tr { top:12px; right:12px; border-width: 1px 1px 0 0; }
+.corner.bl { bottom:12px; left:12px; border-width: 0 0 1px 1px; }
+.corner.br { bottom:12px; right:12px; border-width: 0 1px 1px 0; }
+
+/* ════════════════════════════════
+   IDEA 3 — HUD stats readout
+════════════════════════════════ */
+.hud-demo {
+  background: var(--dark); padding: 3rem; border: 1px solid var(--rule);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+}
+.hud-panel { display: flex; flex-direction: column; gap: 1.5rem; }
+.hud-label { font-family: var(--fd); font-size: .56rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: oklch(1 0 0 / .3); }
+.hud-stat {
+  display: flex; align-items: baseline; gap: .5rem;
+}
+.hud-val {
+  font-family: var(--fd); font-size: 2.2rem; font-weight: 700;
+  letter-spacing: -.03em; color: #fff; line-height: 1;
+  min-width: 3.5rem; text-align: right;
+}
+.hud-unit { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: oklch(1 0 0 / .35); }
+.hud-bar-wrap { display: flex; gap: 3px; margin-top: .4rem; }
+.hud-bar { height: 3px; flex: 1; background: oklch(1 0 0 / .1); }
+.hud-bar.on { background: var(--accent); transition: background .05s; }
+/* scan line */
+.hud-scan-line {
+  width: 100%; height: 1px; background: var(--accent); opacity: .4;
+  animation: scanLine 2.4s linear infinite;
+  position: relative;
+}
+@keyframes scanLine {
+  0%   { transform: translateY(0); opacity: .6; }
+  100% { transform: translateY(120px); opacity: 0; }
+}
+.hud-divider { width: 1px; background: oklch(1 0 0 / .08); }
+.hud-title { font-family: var(--fd); font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; color: #fff; }
+.hud-tag { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-top: .3rem; }
+.hud-since { font-family: var(--fd); font-size: .7rem; letter-spacing: .08em; color: oklch(1 0 0 / .4); margin-top: 1rem; padding-top: 1rem; border-top: 1px solid oklch(1 0 0 / .08); }
+.hud-since span { color: #fff; }
+
+/* ════════════════════════════════
+   IDEA 4 — Drag wipe transition
+════════════════════════════════ */
+.wipe-demo {
+  height: 300px; position: relative; overflow: hidden; border: 1px solid var(--rule);
+  cursor: ew-resize;
+}
+.wipe-a, .wipe-b {
+  position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 2rem;
+}
+.wipe-a {
+  background: linear-gradient(135deg, oklch(.18 .03 14) 0%, oklch(.12 .02 14) 100%);
+  z-index: 1;
+}
+.wipe-b {
+  background: linear-gradient(135deg, oklch(.15 .06 32) 0%, oklch(.10 .04 14) 100%);
+  z-index: 0;
+}
+.wipe-a img, .wipe-b img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5;
+}
+.wipe-handle {
+  position: absolute; top: 0; bottom: 0; width: 2px; background: var(--accent); z-index: 10;
+  left: 50%;
+}
+.wipe-handle::after {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--accent); border: 2px solid #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.wipe-handle::before {
+  content: '⟵  ⟶'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: .5rem; color: #fff; font-weight: 700; white-space: nowrap; z-index: 2;
+  font-family: var(--fd); letter-spacing: .05em;
+}
+.wipe-name {
+  font-family: var(--fd); font-size: clamp(2rem,6vw,4rem); font-weight: 700;
+  text-transform: uppercase; letter-spacing: -.02em; color: #fff;
+  position: relative; z-index: 2;
+}
+.wipe-tag { font-family: var(--fd); font-size: .56rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .45); margin-top: .3rem; }
+
+/* ════════════════════════════════
+   IDEA 5 — Intensity wave
+════════════════════════════════ */
+.wave-demo {
+  background: var(--dark); padding: 0; border: 1px solid var(--rule);
+  overflow: hidden; position: relative;
+}
+.wave-content { padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.wave-label { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .35); margin-bottom: .5rem; }
+.wave-name { font-family: var(--fd); font-size: 1.8rem; font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; color: #fff; }
+.wave-canvas-wrap { flex: 1; height: 80px; position: relative; }
+canvas { width: 100%; height: 100%; display: block; }
+.wave-tabs { display: flex; }
+.wave-tab {
+  font-family: var(--fd); font-size: .56rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .8rem 1.2rem; background: none;
+  border: none; border-right: 1px solid oklch(1 0 0 / .08);
+  color: oklch(1 0 0 / .3); cursor: pointer; transition: all .2s;
+}
+.wave-tab.on { color: var(--accent); background: oklch(1 0 0 / .03); }
+.wave-tab:last-child { border-right: none; }
+
+/* ════════════════════════════════
+   IDEA 6 — Parallax mouse depth
+════════════════════════════════ */
+.parallax-demo {
+  height: 320px; position: relative; overflow: hidden; border: 1px solid var(--rule);
+  cursor: none;
+}
+.parallax-demo * { cursor: none; }
+.p-layer { position: absolute; inset: -30px; will-change: transform; }
+.p-layer img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.p-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, oklch(.1 .018 14 / .9) 0%, oklch(.1 .018 14 / .4) 60%, transparent 100%);
+}
+.p-text { position: absolute; inset: 0; display: flex; align-items: center; padding: 3rem; z-index: 5; }
+.p-name { font-family: var(--fd); font-size: clamp(3rem,8vw,5rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; line-height: .9; will-change: transform; }
+.p-hint { position: absolute; bottom: 1rem; right: 1.5rem; font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: oklch(1 0 0 / .3); }
+.p-cursor { position: absolute; width: 40px; height: 40px; border: 1.5px solid var(--accent); border-radius: 50%; pointer-events: none; translate: -50% -50%; z-index: 20; transition: width .2s, height .2s; }
+.p-cursor-dot { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); pointer-events: none; translate: -50% -50%; z-index: 21; }
+
+/* summary */
+.summary { padding: 2rem var(--px) 0; }
+.sum-table { border: 1px solid var(--rule); margin-bottom: 5rem; }
+.sr { display: grid; grid-template-columns: 3rem 1fr 1fr 6rem; border-bottom: 1px solid var(--rule); }
+.sr:last-child { border-bottom: none; }
+.sr.head { background: var(--surface); }
+.sc { padding: .9rem 1.1rem; border-right: 1px solid var(--rule); font-size: .78rem; }
+.sc:last-child { border-right: none; }
+.sr.head .sc { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.sn { font-family: var(--fd); font-weight: 700; font-size: .7rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Adrenaline Page — Creative Ideas</h1>
+  <p>Six upgrades. Interact with every demo below.</p>
+</header>
+
+<!-- ═══ IDEA 1: Text Scramble ═══ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 01</p>
+  <h2 class="idea-title">Text Scramble on Activity Switch</h2>
+  <p class="idea-desc">
+    When you click a new activity, the name doesn't just fade — it <strong>scrambles through random characters</strong>
+    before resolving into the real word. Feels like a signal locking on. Click the tabs below.
+  </p>
+  <div class="scramble-demo">
+    <div class="scramble-hint">Click an activity</div>
+    <div class="scramble-name" id="scramble-el">MMA</div>
+    <div class="scramble-tabs">
+      <button class="stab active" onclick="scrambleTo('MMA', this)">MMA</button>
+      <button class="stab" onclick="scrambleTo('SKI', this)">Ski</button>
+      <button class="stab" onclick="scrambleTo('SURF', this)">Surf</button>
+      <button class="stab" onclick="scrambleTo('SNORKEL', this)">Snorkel</button>
+      <button class="stab" onclick="scrambleTo('SKYDIVE', this)">Skydive</button>
+      <button class="stab" onclick="scrambleTo('SCUBA', this)">Scuba</button>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">21st.dev</div><div class="ic-val">Text scramble / glitch animation</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~30 min — ~40 lines of JS, runs on every activity switch</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">Showstopper</span> — makes every tab click feel like a transmission</div></div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 2: Crosshair cursor ═══ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 02</p>
+  <h2 class="idea-title">Tactical Crosshair Cursor</h2>
+  <p class="idea-desc">
+    On the adrenaline page only, the cursor transforms into a <strong>targeting crosshair</strong> —
+    with a pulsing outer ring that breathes with the page intensity. Move your cursor in the box.
+  </p>
+  <div class="cursor-arena" id="cursor-arena">
+    <div class="xhair" id="xhair">
+      <div class="xhair-h"></div>
+      <div class="xhair-v"></div>
+      <div class="xhair-dot"></div>
+      <div class="xhair-ring"></div>
+      <div class="xhair-scan"></div>
+    </div>
+    <div class="corners">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+    </div>
+    <span class="arena-text">SURF</span>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">21st.dev</div><div class="ic-val">Custom cursor / crosshair component</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~20 min — extend existing Cursor.tsx with a page-specific mode flag</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">High</span> — completely changes the mood of the page from first hover</div></div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 3: HUD stats ═══ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 03</p>
+  <h2 class="idea-title">Live HUD Data Readout</h2>
+  <p class="idea-desc">
+    Stats don't just appear — they <strong>count up from zero</strong> like a biometric scanner locking on.
+    Intensity bars fill one by one. A scan line sweeps the panel. Click "Scan" to trigger.
+  </p>
+  <div class="hud-demo">
+    <div class="hud-panel">
+      <div class="hud-title">MMA</div>
+      <div class="hud-tag">Combat · Training</div>
+      <div class="hud-since">Active since <span>2021</span></div>
+    </div>
+    <div class="hud-divider"></div>
+    <div class="hud-panel">
+      <div>
+        <div class="hud-label">Sessions per week</div>
+        <div class="hud-stat">
+          <div class="hud-val" id="hud-num">0</div>
+          <div class="hud-unit">× / wk</div>
+        </div>
+      </div>
+      <div>
+        <div class="hud-label">Intensity</div>
+        <div class="hud-bar-wrap" id="hud-bars">
+          <div class="hud-bar"></div><div class="hud-bar"></div>
+          <div class="hud-bar"></div><div class="hud-bar"></div><div class="hud-bar"></div>
+        </div>
+      </div>
+      <div class="hud-scan-line" id="scan-line" style="display:none"></div>
+      <button class="stab" onclick="triggerHUD()" style="margin-top:.5rem; color:var(--accent); border-color:var(--accent);">▶ Scan</button>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">21st.dev</div><div class="ic-val">Animated counter, progress bar, scan line</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~45 min — triggered by AnimatePresence enter, each stat has a staggered counter animation</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">High</span> — data feels alive instead of static. Pairs perfectly with the dark aesthetic</div></div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 4: Drag wipe ═══ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 04</p>
+  <h2 class="idea-title">Drag-to-Reveal Activity Wipe</h2>
+  <p class="idea-desc">
+    Drag left or right to <strong>physically wipe between activities</strong>. The transition follows the
+    cursor exactly — release and it snaps to the nearest activity with momentum. Drag the handle below.
+  </p>
+  <div class="wipe-demo" id="wipe-demo">
+    <div class="wipe-a" id="wipe-a">
+      <img src="https://picsum.photos/seed/mma-gym-fighter/800/300" alt="" />
+      <div>
+        <div class="wipe-name">MMA</div>
+        <div class="wipe-tag">Combat · Training</div>
+      </div>
+    </div>
+    <div class="wipe-b" id="wipe-b">
+      <img src="https://picsum.photos/seed/ski-slope-mountain/800/300" alt="" />
+      <div style="position:relative;z-index:2">
+        <div class="wipe-name">Ski</div>
+        <div class="wipe-tag">Mountain · Snow</div>
+      </div>
+    </div>
+    <div class="wipe-handle" id="wipe-handle"></div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">21st.dev</div><div class="ic-val">Image comparison / drag reveal slider</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~1 hr — pointer events on the page, clip-path follows cursor x position</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">Showstopper</span> — replaces passive tab clicking with a physical gesture</div></div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 5: Intensity wave ═══ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 05</p>
+  <h2 class="idea-title">Live Intensity Wave</h2>
+  <p class="idea-desc">
+    A <strong>real-time sine wave</strong> runs across the bottom of the page — its frequency and amplitude
+    driven by the current activity's intensity. MMA = chaotic high-freq wave. Snorkel = slow gentle swell. Click each activity.
+  </p>
+  <div class="wave-demo">
+    <div class="wave-content">
+      <div>
+        <div class="wave-label">Currently tracking</div>
+        <div class="wave-name" id="wave-name">MMA</div>
+      </div>
+      <div class="wave-canvas-wrap">
+        <canvas id="wave-canvas"></canvas>
+      </div>
+    </div>
+    <div class="wave-tabs">
+      <button class="wave-tab on" onclick="setWave('MMA',5,this)">MMA</button>
+      <button class="wave-tab" onclick="setWave('Ski',4,this)">Ski</button>
+      <button class="wave-tab" onclick="setWave('Surf',3,this)">Surf</button>
+      <button class="wave-tab" onclick="setWave('Snorkel',2,this)">Snorkel</button>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Where</div><div class="ic-val">Fixed to the bottom edge of the activity background, always visible</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~45 min — canvas requestAnimationFrame loop, parameters driven by activity data</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">High</span> — gives the page a heartbeat. Responds to the sport even when you're not interacting</div></div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 6: Parallax depth ═══ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 06</p>
+  <h2 class="idea-title">Mouse Parallax — Depth Layers</h2>
+  <p class="idea-desc">
+    The background image and the activity name text move at <strong>different speeds</strong> as the cursor moves —
+    creating a real sense of 3D depth. The image shifts slower, the name shifts faster. Move your cursor below.
+  </p>
+  <div class="parallax-demo" id="par-demo">
+    <div class="p-cursor" id="par-cursor"></div>
+    <div class="p-cursor-dot" id="par-dot"></div>
+    <div class="p-layer" id="par-bg">
+      <img src="https://picsum.photos/seed/ski-slope-mountain/1200/400" alt="" />
+    </div>
+    <div class="p-overlay"></div>
+    <div class="p-text">
+      <div class="p-name" id="par-text">SKI</div>
+    </div>
+    <div class="p-hint">Move cursor to feel depth</div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">21st.dev</div><div class="ic-val">Parallax tilt / depth layers</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~30 min — mousemove listener on page, two translateX/Y at different factors</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">High</span> — makes the whole page feel physical and alive, not flat</div></div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary">
+  <div class="sum-table">
+    <div class="sr head">
+      <div class="sc">#</div><div class="sc">Idea</div><div class="sc">Framer / 21st.dev hook</div><div class="sc">Effort</div>
+    </div>
+    <div class="sr">
+      <div class="sc sn">01</div><div class="sc">Text scramble on switch</div><div class="sc">AnimatePresence + character loop</div><div class="sc">30 min</div>
+    </div>
+    <div class="sr">
+      <div class="sc sn">02</div><div class="sc">Tactical crosshair cursor</div><div class="sc">Extend Cursor.tsx, page-level mode</div><div class="sc">20 min</div>
+    </div>
+    <div class="sr">
+      <div class="sc sn">03</div><div class="sc">HUD data readout</div><div class="sc">Animated counter + scan line</div><div class="sc">45 min</div>
+    </div>
+    <div class="sr">
+      <div class="sc sn">04</div><div class="sc">Drag-to-reveal wipe</div><div class="sc">Pointer events + clip-path</div><div class="sc">1 hr</div>
+    </div>
+    <div class="sr">
+      <div class="sc sn">05</div><div class="sc">Live intensity wave</div><div class="sc">Canvas RAF loop</div><div class="sc">45 min</div>
+    </div>
+    <div class="sr">
+      <div class="sc sn">06</div><div class="sc">Mouse parallax depth</div><div class="sc">mousemove → two translateX/Y layers</div><div class="sc">30 min</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Idea 1: Scramble ── */
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*?';
+function scrambleTo(word, btn) {
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const el = document.getElementById('scramble-el');
+  let iter = 0;
+  const len = Math.max(word.length, el.textContent.length);
+  const id = setInterval(() => {
+    el.textContent = word.split('').map((c, i) =>
+      i < Math.floor(iter / 2) ? c : CHARS[Math.floor(Math.random() * CHARS.length)]
+    ).join('').padEnd(len, CHARS[Math.floor(Math.random()*CHARS.length)]).slice(0, Math.max(len, word.length));
+    iter++;
+    if (iter > word.length * 2 + 4) { el.textContent = word; clearInterval(id); }
+  }, 45);
+}
+
+/* ── Idea 2: Crosshair ── */
+(function() {
+  const arena = document.getElementById('cursor-arena');
+  const xhair = document.getElementById('xhair');
+  if (!arena || !xhair) return;
+  let rx = 200, ry = 140, tx = 200, ty = 140;
+  arena.addEventListener('mousemove', e => {
+    const r = arena.getBoundingClientRect();
+    tx = e.clientX - r.left; ty = e.clientY - r.top;
+    xhair.style.left = tx + 'px'; xhair.style.top = ty + 'px';
+  });
+  arena.addEventListener('mouseleave', () => { tx = 200; ty = 140; });
+})();
+
+/* ── Idea 3: HUD scan ── */
+function triggerHUD() {
+  const numEl = document.getElementById('hud-num');
+  const bars = document.querySelectorAll('#hud-bars .hud-bar');
+  const scanEl = document.getElementById('scan-line');
+  let n = 0, target = 3;
+  numEl.textContent = '0';
+  bars.forEach(b => b.classList.remove('on'));
+  scanEl.style.display = 'block';
+  const ci = setInterval(() => {
+    n += .18;
+    numEl.textContent = Math.min(Math.round(n), target);
+    if (n >= target) clearInterval(ci);
+  }, 60);
+  bars.forEach((b, i) => {
+    setTimeout(() => b.classList.add('on'), i * 160 + 200);
+  });
+  setTimeout(() => { scanEl.style.display = 'none'; }, 2400);
+}
+
+/* ── Idea 4: Drag wipe ── */
+(function() {
+  const demo  = document.getElementById('wipe-demo');
+  const aEl   = document.getElementById('wipe-a');
+  const hEl   = document.getElementById('wipe-handle');
+  if (!demo) return;
+  let dragging = false, pct = 50;
+
+  function setPct(p) {
+    pct = Math.max(5, Math.min(95, p));
+    aEl.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    hEl.style.left = pct + '%';
+  }
+  setPct(50);
+
+  demo.addEventListener('pointerdown', e => { dragging = true; demo.setPointerCapture(e.pointerId); });
+  demo.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const r = demo.getBoundingClientRect();
+    setPct(((e.clientX - r.left) / r.width) * 100);
+  });
+  demo.addEventListener('pointerup', () => {
+    dragging = false;
+    setPct(pct < 50 ? 5 : 95);
+    setTimeout(() => setPct(50), 800);
+  });
+})();
+
+/* ── Idea 5: Wave ── */
+(function() {
+  const canvas = document.getElementById('wave-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let intensity = 5, t = 0, targetIntensity = 5;
+
+  function resize() { canvas.width = canvas.offsetWidth * 2; canvas.height = canvas.offsetHeight * 2; }
+  resize(); window.addEventListener('resize', resize);
+
+  function draw() {
+    intensity += (targetIntensity - intensity) * 0.04;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const w = canvas.width, h = canvas.height;
+    const amp = (intensity / 5) * h * 0.38;
+    const freq = 0.008 + (intensity / 5) * 0.025;
+    const speed = 0.04 + (intensity / 5) * 0.08;
+    t += speed;
+
+    ctx.beginPath();
+    ctx.moveTo(0, h / 2);
+    for (let x = 0; x <= w; x++) {
+      const y = h / 2 + Math.sin(x * freq + t) * amp
+                       + Math.sin(x * freq * 1.7 + t * 1.3) * amp * 0.3;
+      ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'oklch(0.58 0.19 32 / 0.7)';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Glow
+    ctx.beginPath();
+    ctx.moveTo(0, h / 2);
+    for (let x = 0; x <= w; x++) {
+      const y = h / 2 + Math.sin(x * freq + t) * amp
+                       + Math.sin(x * freq * 1.7 + t * 1.3) * amp * 0.3;
+      ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'oklch(0.58 0.19 32 / 0.2)';
+    ctx.lineWidth = 8;
+    ctx.stroke();
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  window.setWave = function(name, level, btn) {
+    targetIntensity = level;
+    document.getElementById('wave-name').textContent = name;
+    document.querySelectorAll('.wave-tab').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  };
+})();
+
+/* ── Idea 6: Parallax ── */
+(function() {
+  const demo   = document.getElementById('par-demo');
+  const bg     = document.getElementById('par-bg');
+  const text   = document.getElementById('par-text');
+  const cursor = document.getElementById('par-cursor');
+  const dot    = document.getElementById('par-dot');
+  if (!demo) return;
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  demo.addEventListener('mousemove', e => {
+    const r = demo.getBoundingClientRect();
+    mx = (e.clientX - r.left) / r.width  - 0.5;
+    my = (e.clientY - r.top)  / r.height - 0.5;
+    cursor.style.left = (e.clientX - r.left) + 'px';
+    cursor.style.top  = (e.clientY - r.top)  + 'px';
+    dot.style.left = (e.clientX - r.left) + 'px';
+    dot.style.top  = (e.clientY - r.top)  + 'px';
+  });
+
+  function tick() {
+    rx += (mx - rx) * 0.07;
+    ry += (my - ry) * 0.07;
+    bg.style.transform   = `translate(${rx * -18}px, ${ry * -12}px)`;
+    text.style.transform = `translate(${rx *  28}px, ${ry *  18}px)`;
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

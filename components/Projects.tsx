@@ -1,13 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { projects } from "@/lib/projectsData";
 import styles from "./Projects.module.css";
-
-const projects = [
-  { num: "01", name: "Sculptura",     desc: "Marketing site for a foam tool insert manufacturer. Built with Next.js, Framer Motion, and Sanity CMS.", tag: "Website", year: "2025", url: "https://dsculptura.in/" },
-  { num: "02", name: "Project Two",   desc: "Something built from scratch: what problem it solves, who uses it.", tag: "Mobile",  year: "2024", url: null },
-  { num: "03", name: "Project Three", desc: "Another build: the context, the stack, the outcome.",               tag: "Tool",    year: "2023", url: null },
-];
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -24,6 +20,7 @@ export default function Projects() {
         >
           Projects
         </motion.h2>
+        <Link href="/projects" className={styles.seeAll}>All &rarr;</Link>
       </div>
 
       {projects.map((p, i) => (
@@ -37,17 +34,30 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ delay: i * 0.08, duration: 0.55, ease }}
+          data-cursor="card"
         >
           <span className={styles.num}>{p.num}</span>
+
           <span className={styles.info}>
             <span className={styles.name}>{p.name}</span>
             <span className={styles.desc}>{p.desc}</span>
+            {p.stack.length > 0 && (
+              <span className={styles.chips}>
+                {p.live && <span className={`${styles.chip} ${styles.chipLive}`}>Live</span>}
+                {p.stack.map(s => (
+                  <span key={s} className={styles.chip}>{s}</span>
+                ))}
+              </span>
+            )}
           </span>
+
           <span className={styles.meta}>
             <span className={styles.tag}>{p.tag}</span>
             <span className={styles.year}>{p.year}</span>
+            {p.url && <span className={styles.extLink}>↗ {new URL(p.url).hostname}</span>}
           </span>
-          <span className={styles.arrow}>&rarr;</span>
+
+          <span className={styles.arrow}>→</span>
         </motion.a>
       ))}
     </section>

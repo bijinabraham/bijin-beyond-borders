@@ -1,7 +1,25 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { photo } from "@/lib/basePath";
 import styles from "./map.module.css";
+
+// Cities with real local photos — used for polaroid hover
+const cityPhotoMap: Record<string, string> = {
+  "Tokyo":         photo("/photos/tokyo-2025/hero.jpeg"),
+  "Kyoto":         photo("/photos/kyoto/hero.jpeg"),
+  "Las Vegas":     photo("/photos/las-vegas/hero.jpeg"),
+  "Los Angeles":   photo("/photos/los-angeles/hero.jpeg"),
+  "Montreal":      photo("/photos/montreal-2024/hero.jpg"),
+  "New York":      photo("/photos/new-york/hero.jpeg"),
+  "Niagara Falls": photo("/photos/niagara-falls/hero.jpeg"),
+  "Philadelphia":  photo("/photos/philadelphia/hero.jpg"),
+  "Quebec City":   photo("/photos/quebec-city-2024/hero.jpeg"),
+  "San Francisco": photo("/photos/san-francisco/hero.jpeg"),
+  "Toronto":       photo("/photos/toronto-2024/hero.jpeg"),
+  "Yosemite":      photo("/photos/yosemite/hero.jpeg"),
+  "Dubai":         photo("/photos/dubai/hero.png"),
+};
 
 const visitedByRegion = [
   {
@@ -265,16 +283,17 @@ export default function MapPage() {
             .attr("class", "globe-country")
             .attr("fill", (d: any) =>
               VISITED_IDS.has(+d.id)
-                ? "oklch(0.76 0.07 14)"   // warm rose  -  visited
-                : "oklch(0.89 0.020 14)"  // default land
+                ? "oklch(0.76 0.07 14)"
+                : "oklch(0.89 0.020 14)"
             )
             .attr("stroke", (d: any) =>
               VISITED_IDS.has(+d.id)
-                ? "oklch(0.58 0.09 14)"   // slightly deeper border on visited
+                ? "oklch(0.58 0.09 14)"
                 : "oklch(0.82 0.018 14)"
             )
             .attr("stroke-width", 0.5)
             .attr("d", path as any);
+
         });
 
       // ── ATMOSPHERE RING ──
@@ -334,9 +353,6 @@ export default function MapPage() {
           .attr("fill", "oklch(0.34 0.11 14)").attr("transform", "translate(0,-6)");
       });
 
-      cityGs
-        .on("mouseenter", function () { d3.select(this).select(".city-lbl").attr("opacity", 1); })
-        .on("mouseleave", function () { d3.select(this).select(".city-lbl").attr("opacity", 0); });
 
       // ── MOON ── orbits above everything
       let moonR = Math.max(10, Math.min(18, radius * 0.055));
@@ -520,7 +536,7 @@ export default function MapPage() {
         animId = requestAnimationFrame(animate);
       }
 
-      // ── CSS PULSE ANIMATION ──
+      // ── CSS PULSE + ARC ANIMATIONS ──
       const styleEl = document.createElement("style");
       styleEl.textContent = `
         @keyframes globePulse {
@@ -532,6 +548,50 @@ export default function MapPage() {
         .city-pulse-2 { animation: globePulse 2.4s ease-out 1.6s infinite; }
       `;
       document.head.appendChild(styleEl);
+
+      // ── POLAROID HOVER CARD ──
+      const polaroid = document.createElement("div");
+      polaroid.className = styles.polaroid;
+      const polImg = document.createElement("img");
+      polImg.className = styles.polImg;
+      const polCaption = document.createElement("div");
+      polCaption.className = styles.polCaption;
+      polaroid.appendChild(polImg);
+      polaroid.appendChild(polCaption);
+      wrapRef.current?.appendChild(polaroid);
+
+      // City hover — polaroid for cities with photos, text label otherwise
+      // Also freezes globe rotation while polaroid is visible
+      cityGs
+        .on("mouseenter", function (_event: MouseEvent, d: typeof allCities[0]) {
+          const photoSrc = cityPhotoMap[d.name];
+          if (photoSrc) {
+            const coords = projection([d.lng, d.lat]);
+            if (coords) {
+              const [cx, cy] = coords;
+              const rot = (Math.random() - 0.5) * 14;
+              polImg.src = photoSrc;
+              polCaption.textContent = d.name;
+              polaroid.style.left = (cx + 16) + "px";
+              polaroid.style.top  = (cy - 185) + "px";
+              polaroid.style.setProperty("--polaroidRot", rot + "deg");
+              polaroid.classList.add(styles.polVisible);
+              // Freeze globe so polaroid stays pinned to the city
+              autoRotate = false;
+              velX = 0;
+              velY = 0;
+              if (idleTimer) clearTimeout(idleTimer);
+            }
+          } else {
+            d3.select(this).select(".city-lbl").attr("opacity", 1);
+          }
+        })
+        .on("mouseleave", function () {
+          polaroid.classList.remove(styles.polVisible);
+          d3.select(this).select(".city-lbl").attr("opacity", 0);
+          // Resume auto-rotation after the normal idle delay
+          startIdle();
+        });
 
       // ── RESIZE ──
       function onResize() {
@@ -554,6 +614,7 @@ export default function MapPage() {
         window.removeEventListener("resize", onResize);
         if (idleTimer) clearTimeout(idleTimer);
         styleEl.remove();
+        polaroid.remove();
       };
     }
 

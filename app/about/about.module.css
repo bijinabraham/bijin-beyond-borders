@@ -16,7 +16,14 @@
   justify-content: flex-end;
   padding: 4rem var(--page-px);
   border-inline-end: 1px solid var(--rule);
+  position: relative;
+  overflow: hidden;
 }
+
+/* Keep all hero text above the photo trail (z-index 0) */
+.heroOverline,
+.heroTitle,
+.heroDesc { position: relative; z-index: 1; }
 
 .heroOverline {
   font-family: var(--font-display), sans-serif;

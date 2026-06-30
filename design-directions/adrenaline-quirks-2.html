@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adrenaline Quirks — Round 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: oklch(0.93 0.016 14); --surface: oklch(0.89 0.020 14);
+  --ink: oklch(0.14 0.022 14); --primary: oklch(0.34 0.11 14);
+  --accent: oklch(0.58 0.19 32); --muted: oklch(0.44 0.010 14);
+  --rule: oklch(0.82 0.018 14); --dark: oklch(0.10 0.018 14);
+  --fd: 'Josefin Sans'; --fb: 'Nunito Sans'; --fm: 'JetBrains Mono'; --px: 3rem;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--fb); font-weight: 300; }
+.page-header { background: var(--primary); color: #fff; padding: 2rem var(--px); }
+.page-header h1 { font-family: var(--fd); font-weight: 700; font-size: clamp(1rem,2vw,1.4rem); letter-spacing: .15em; text-transform: uppercase; }
+.page-header p { font-size: .82rem; opacity: .65; margin-top: .3rem; }
+.idea-wrap { border-top: 1px solid var(--rule); padding: 4rem var(--px) 0; }
+.chip { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.idea-title { font-family: var(--fd); font-size: clamp(1.3rem,2.5vw,2rem); font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; margin-bottom: .4rem; }
+.idea-desc { font-size: .85rem; color: var(--muted); max-width: 60ch; margin-bottom: 2rem; line-height: 1.75; }
+.idea-desc strong { color: var(--ink); font-weight: 500; }
+.info-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--rule); border-top: none; margin-bottom: 5rem; }
+.ic { padding: 1rem 1.25rem; border-right: 1px solid var(--rule); }
+.ic:last-child { border-right: none; }
+.ic-label { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.ic-val { font-size: .78rem; line-height: 1.5; }
+.badge { display: inline-block; font-family: var(--fd); font-size: .52rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .4rem; }
+.hl { background: var(--accent); color: #fff; }
+.hm { background: var(--primary); color: #fff; }
+
+/* ════════════════════
+   IDEA 1 — Personality hover
+════════════════════ */
+.pers-demo {
+  height: 320px; background: var(--dark); border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 2rem; padding: 2rem;
+}
+.pers-hint { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .35); }
+.pers-name {
+  font-family: var(--fd); font-size: clamp(3rem, 9vw, 6rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff; line-height: 1;
+  cursor: default;
+  display: inline-flex;
+}
+.pers-letter {
+  display: inline-block;
+  transition: transform .15s ease;
+}
+.pers-tabs { display: flex; gap: .5rem; }
+.ptab {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .35rem 1rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .5); cursor: pointer;
+  transition: all .2s;
+}
+.ptab.on { border-color: var(--accent); color: var(--accent); }
+
+/* ════════════════════
+   IDEA 2 — Type-to-search
+════════════════════ */
+.type-demo {
+  height: 260px; background: var(--dark); border: 1px solid var(--rule);
+  padding: 2rem; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.2rem;
+  outline: none;
+}
+.type-demo.focused { box-shadow: inset 0 0 0 1px var(--accent); }
+.type-name {
+  font-family: var(--fd); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff;
+}
+.type-input-line {
+  display: flex; align-items: center; gap: .5rem;
+  font-family: var(--fm); font-size: .8rem; color: oklch(1 0 0 / .5);
+}
+.type-input-line span { color: var(--accent); }
+.type-caret {
+  display: inline-block; width: 8px; height: 1em; background: var(--accent);
+  animation: blink 1s steps(2) infinite; vertical-align: middle;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.type-matches { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: oklch(1 0 0 / .3); }
+.type-matches span { color: var(--accent); }
+.type-hint-strip {
+  position: absolute; bottom: 1rem; left: 1rem; right: 1rem;
+  display: flex; justify-content: center; gap: .8rem;
+}
+.type-key {
+  font-family: var(--fm); font-size: .55rem;
+  padding: .2rem .5rem; background: oklch(1 0 0 / .06);
+  border: 1px solid oklch(1 0 0 / .15); color: oklch(1 0 0 / .55);
+}
+.type-key.match { background: oklch(.58 .19 32 / .25); border-color: var(--accent); color: #fff; }
+
+/* ════════════════════
+   IDEA 3 — Camera shake
+════════════════════ */
+.shake-demo {
+  height: 250px; background: var(--dark); border: 1px solid var(--rule);
+  padding: 2rem; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.5rem;
+}
+.shake-wrap { will-change: transform; }
+.shake-name {
+  font-family: var(--fd); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff;
+  text-align: center;
+}
+.shake-tag { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); text-align: center; margin-top: .3rem; }
+.shake-tabs { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+.shake-btn {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .4rem .9rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .5); cursor: pointer;
+  transition: all .2s;
+}
+.shake-btn.on { border-color: var(--accent); color: var(--accent); }
+.shake-btn.high { border-color: oklch(1 0 0 / .35); color: oklch(1 0 0 / .7); }
+.shake-btn.high.on { border-color: var(--accent); color: var(--accent); }
+.shake-active {
+  animation: shake .4s cubic-bezier(.36, .07, .19, .97);
+}
+@keyframes shake {
+  10%, 90% { transform: translate(-1px, 0); }
+  20%, 80% { transform: translate(2px, 0); }
+  30%, 50%, 70% { transform: translate(-3px, 1px); }
+  40%, 60% { transform: translate(3px, -1px); }
+}
+
+/* ════════════════════
+   IDEA 4 — Achievement toasts
+════════════════════ */
+.ach-demo {
+  height: 300px; background: var(--dark); border: 1px solid var(--rule);
+  padding: 2rem; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1rem;
+  overflow: hidden;
+}
+.ach-name {
+  font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff;
+}
+.ach-counter {
+  font-family: var(--fm); font-size: .7rem; color: oklch(1 0 0 / .4);
+  letter-spacing: .05em;
+}
+.ach-actions { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+.ach-act {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .4rem .9rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .5); cursor: pointer;
+  transition: all .2s;
+}
+.ach-act:hover { border-color: var(--accent); color: var(--accent); }
+.ach-toast {
+  position: absolute; top: 1rem; right: 1rem;
+  background: var(--dark); border: 1px solid var(--accent);
+  padding: .8rem 1rem; display: flex; align-items: center; gap: .8rem;
+  transform: translateX(120%); opacity: 0;
+  transition: transform .4s cubic-bezier(.16,1,.3,1), opacity .3s;
+  min-width: 220px;
+}
+.ach-toast.show { transform: translateX(0); opacity: 1; }
+.ach-icon {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fd); font-size: .9rem; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.ach-text { display: flex; flex-direction: column; gap: .1rem; }
+.ach-label-small { font-family: var(--fd); font-size: .5rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.ach-title { font-family: var(--fd); font-size: .75rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #fff; }
+.ach-list {
+  position: absolute; bottom: 1rem; left: 1rem;
+  display: flex; gap: .35rem;
+}
+.ach-pip {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1px solid oklch(1 0 0 / .15);
+  transition: all .3s;
+}
+.ach-pip.on { background: var(--accent); border-color: var(--accent); }
+
+/* ════════════════════
+   IDEA 5 — Idle breathing
+════════════════════ */
+.breath-demo {
+  height: 280px; background: var(--dark); border: 1px solid var(--rule);
+  padding: 2rem; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1rem;
+}
+.breath-bg {
+  position: absolute; inset: -20px;
+  background: radial-gradient(ellipse at center, oklch(.18 .04 14) 0%, oklch(.08 .015 14) 70%);
+  animation: breathe 4.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: .85; }
+  50%      { transform: scale(1.04); opacity: 1; }
+}
+.breath-name {
+  font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff;
+  position: relative; z-index: 2;
+}
+.breath-info { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .35); position: relative; z-index: 2; }
+.breath-scan {
+  position: absolute; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent 0%, var(--accent) 50%, transparent 100%);
+  opacity: .35; z-index: 1;
+  animation: scanLine 7s linear infinite;
+}
+@keyframes scanLine {
+  0% { top: -2px; opacity: 0; }
+  10%, 90% { opacity: .4; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ════════════════════
+   IDEA 6 — Tagline shuffle
+════════════════════ */
+.tag-demo {
+  height: 260px; background: var(--dark); border: 1px solid var(--rule);
+  padding: 2rem; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.2rem;
+}
+.tag-name {
+  font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff;
+}
+.tag-rotator {
+  font-family: var(--fd); font-size: .85rem; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--accent); min-height: 1.2rem;
+  display: flex; gap: .5rem;
+}
+.tag-word {
+  display: inline-block;
+  animation: tagWord 4s ease-in-out infinite;
+}
+.tag-word:nth-child(1) { animation-delay: 0s; }
+.tag-word:nth-child(2) { animation-delay: 1s; }
+.tag-word:nth-child(3) { animation-delay: 2s; }
+.tag-word:nth-child(4) { animation-delay: 3s; }
+@keyframes tagWord {
+  0%, 20%, 100% { opacity: .35; transform: translateY(0); }
+  25%, 40% { opacity: 1; transform: translateY(-2px); color: #fff; }
+}
+.tag-divider {
+  font-family: var(--fd); font-size: .85rem; font-weight: 700; color: oklch(1 0 0 / .15);
+  display: inline-block;
+}
+.tag-info { font-family: var(--fm); font-size: .55rem; color: oklch(1 0 0 / .3); letter-spacing: .05em; }
+
+/* summary */
+.summary { padding: 2rem var(--px) 0; }
+.sum-table { border: 1px solid var(--rule); margin-bottom: 5rem; }
+.sr { display: grid; grid-template-columns: 3rem 1fr 1fr 6rem; border-bottom: 1px solid var(--rule); }
+.sr:last-child { border-bottom: none; }
+.sr.head { background: var(--surface); }
+.sc { padding: .9rem 1.1rem; border-right: 1px solid var(--rule); font-size: .78rem; }
+.sc:last-child { border-right: none; }
+.sr.head .sc { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.sn { font-family: var(--fd); font-weight: 700; font-size: .7rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Adrenaline Quirks — Round 2</h1>
+  <p>Six more ideas. Different angle from the first batch. Interact with each demo.</p>
+</header>
+
+<!-- IDEA 1 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 01</p>
+  <h2 class="idea-title">Personality Hover — Letters That Behave Like the Sport</h2>
+  <p class="idea-desc">
+    Each activity name has its <strong>own micro-animation when you hover</strong> it.
+    MMA vibrates aggressively. Ski letters glide. Surf bobs in a wave. Snorkel floats gently.
+    Each sport literally moves like itself. Click a tab, then hover the name.
+  </p>
+  <div class="pers-demo">
+    <div class="pers-hint">Hover the name ↓</div>
+    <div class="pers-name" id="pers-name" data-activity="mma"></div>
+    <div class="pers-tabs">
+      <button class="ptab on" onclick="setPers('MMA','mma',this)">MMA</button>
+      <button class="ptab" onclick="setPers('SKI','ski',this)">Ski</button>
+      <button class="ptab" onclick="setPers('SURF','surf',this)">Surf</button>
+      <button class="ptab" onclick="setPers('SNORKEL','snorkel',this)">Snorkel</button>
+      <button class="ptab" onclick="setPers('SKYDIVE','skydive',this)">Skydive</button>
+      <button class="ptab" onclick="setPers('SCUBA','scuba',this)">Scuba</button>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Behaviours</div><div class="ic-val">MMA = jitter / Ski = drift / Surf = wave bob / Snorkel = float / Skydive = drop / Scuba = bubble</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~1 hr — split name into spans, per-activity animation profile, rAF loop on hover</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">Showstopper</span> — each sport feels different on a physical level</div></div>
+  </div>
+</div>
+
+<!-- IDEA 2 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 02</p>
+  <h2 class="idea-title">Type-to-Search</h2>
+  <p class="idea-desc">
+    Start typing any letter. The page <strong>fuzzy-matches an activity name</strong> and switches to it instantly.
+    No tabs to click, no menu to open. Click the demo to focus it, then start typing.
+  </p>
+  <div class="type-demo" id="type-demo" tabindex="0">
+    <div class="type-name" id="type-name">MMA</div>
+    <div class="type-input-line">Type: <span id="type-buf"></span><span class="type-caret"></span></div>
+    <div class="type-matches" id="type-matches">Matching: <span>MMA</span></div>
+    <div class="type-hint-strip">
+      <span class="type-key" data-letter="m">M</span>
+      <span class="type-key" data-letter="s">S</span>
+      <span class="type-key" data-letter="k">K</span>
+      <span class="type-key" data-letter="u">U</span>
+      <span class="type-key" data-letter="o">O</span>
+      <span class="type-key" data-letter="c">C</span>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~25 min — keydown listener, fuzzy match against activity names, 800ms buffer reset</div></div>
+    <div class="ic"><div class="ic-label">Discoverability</div><div class="ic-val">Caret + hint strip showing matching letters teaches the interaction</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">Power-user</span> — feels like a command palette, rewards typing</div></div>
+  </div>
+</div>
+
+<!-- IDEA 3 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 03</p>
+  <h2 class="idea-title">Camera Shake on High-Intensity Switch</h2>
+  <p class="idea-desc">
+    Switching to a <strong>high-intensity activity (MMA, Skydive)</strong> triggers a brief screen shake.
+    Snorkel and Ski switch gently. Subtle but felt. The page reacts physically to what it's showing.
+    Click MMA or Skydive vs Snorkel below.
+  </p>
+  <div class="shake-demo">
+    <div class="shake-wrap" id="shake-wrap">
+      <div class="shake-name" id="shake-name">SNORKEL</div>
+      <div class="shake-tag" id="shake-tag">Beneath the surface</div>
+    </div>
+    <div class="shake-tabs">
+      <button class="shake-btn high" onclick="doShake('MMA','Combat training',5,this)">MMA · 5</button>
+      <button class="shake-btn" onclick="doShake('SKI','On the mountain',4,this)">SKI · 4</button>
+      <button class="shake-btn" onclick="doShake('SURF','In the water',3,this)">SURF · 3</button>
+      <button class="shake-btn on" onclick="doShake('SNORKEL','Beneath the surface',2,this)">SNORKEL · 2</button>
+      <button class="shake-btn high" onclick="doShake('SKYDIVE','Freefall · sky',5,this)">SKYDIVE · 5</button>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Trigger</div><div class="ic-val">Only fires for intensity ≥ 4. Lower-intensity activities switch silently</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~15 min — CSS keyframe + class toggle on switch</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">High</span> — the page literally has an opinion about how intense each sport is</div></div>
+  </div>
+</div>
+
+<!-- IDEA 4 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 04</p>
+  <h2 class="idea-title">Achievement Unlocks</h2>
+  <p class="idea-desc">
+    Hidden milestones unlock as you explore. Visit all 6 activities = <strong>EXPLORER</strong>.
+    Switch 10+ times = <strong>RESTLESS</strong>. Spend 30s on one activity = <strong>WITNESS</strong>.
+    Each unlock fires a small HUD toast. Click the buttons below to trigger them.
+  </p>
+  <div class="ach-demo">
+    <div class="ach-counter">Achievements: <span id="ach-count">0</span> / 3</div>
+    <div class="ach-name">MMA</div>
+    <div class="ach-actions">
+      <button class="ach-act" onclick="fireAchievement('EXPLORER','Visited all 6','E', 0)">Trigger Explorer</button>
+      <button class="ach-act" onclick="fireAchievement('RESTLESS','Switched 10+ times','R', 1)">Trigger Restless</button>
+      <button class="ach-act" onclick="fireAchievement('WITNESS','30s on one activity','W', 2)">Trigger Witness</button>
+    </div>
+    <div class="ach-toast" id="ach-toast">
+      <div class="ach-icon" id="ach-toast-icon">E</div>
+      <div class="ach-text">
+        <span class="ach-label-small">Unlocked</span>
+        <span class="ach-title" id="ach-toast-title">EXPLORER</span>
+      </div>
+    </div>
+    <div class="ach-list">
+      <div class="ach-pip" id="ach-p0" title="Explorer"></div>
+      <div class="ach-pip" id="ach-p1" title="Restless"></div>
+      <div class="ach-pip" id="ach-p2" title="Witness"></div>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Storage</div><div class="ic-val">localStorage so they persist across visits. Discovered, not announced</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~1 hr — state tracking + toast component + persistence</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Replayable</span> — rewards return visits, makes exploration meaningful</div></div>
+  </div>
+</div>
+
+<!-- IDEA 5 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 05</p>
+  <h2 class="idea-title">Idle Breathing + Scan Line</h2>
+  <p class="idea-desc">
+    Two ambient quirks. The background subtly <strong>pulses like breath</strong> (4.5s cycle).
+    Every ~7s, a <strong>faint accent-coloured scan line</strong> sweeps top-to-bottom.
+    Together they make the page feel alive during long idle moments. Just watch below.
+  </p>
+  <div class="breath-demo">
+    <div class="breath-bg"></div>
+    <div class="breath-scan"></div>
+    <div class="breath-info">Idle · Waiting</div>
+    <div class="breath-name">SCUBA</div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Pairs with</div><div class="ic-val">Existing glitch pulse. Scan line / breath are ambient, glitch is sharp</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~10 min — two CSS animations, both pause on interaction</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Subtle</span> — invisible to fast users, atmospheric for lingerers</div></div>
+  </div>
+</div>
+
+<!-- IDEA 6 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 06</p>
+  <h2 class="idea-title">Tagline Word Rotator</h2>
+  <p class="idea-desc">
+    The activity tag isn't static. Each activity has <strong>4 alternate descriptors that pulse one at a time</strong>,
+    so the tagline subtly cycles even when no one switches activities. Watch the highlight rotate below.
+  </p>
+  <div class="tag-demo">
+    <div class="tag-name">MMA</div>
+    <div class="tag-rotator">
+      <span class="tag-word">Combat</span><span class="tag-divider">·</span>
+      <span class="tag-word">Discipline</span><span class="tag-divider">·</span>
+      <span class="tag-word">Chaos</span><span class="tag-divider">·</span>
+      <span class="tag-word">Training</span>
+    </div>
+    <div class="tag-info">All 4 words always visible, highlight cycles every second</div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Per-activity</div><div class="ic-val">MMA: Combat · Discipline · Chaos · Training / Ski: Speed · Snow · Silence · Line</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~15 min — pure CSS staggered animation, no JS needed</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Quiet</span> — gives the tagline a heartbeat without being distracting</div></div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary">
+  <div class="sum-table">
+    <div class="sr head"><div class="sc">#</div><div class="sc">Quirk</div><div class="sc">Vibe</div><div class="sc">Effort</div></div>
+    <div class="sr"><div class="sc sn">01</div><div class="sc">Personality hover — sport-specific letter motion</div><div class="sc">Each sport feels physical</div><div class="sc">1 hr</div></div>
+    <div class="sr"><div class="sc sn">02</div><div class="sc">Type-to-search (any letter switches)</div><div class="sc">Power-user, fast</div><div class="sc">25 min</div></div>
+    <div class="sr"><div class="sc sn">03</div><div class="sc">Camera shake on high-intensity switch</div><div class="sc">Physical reaction</div><div class="sc">15 min</div></div>
+    <div class="sr"><div class="sc sn">04</div><div class="sc">Achievement unlocks (3 hidden badges)</div><div class="sc">Replayable, rewarding</div><div class="sc">1 hr</div></div>
+    <div class="sr"><div class="sc sn">05</div><div class="sc">Idle breathing + scan line</div><div class="sc">Page is alive</div><div class="sc">10 min</div></div>
+    <div class="sr"><div class="sc sn">06</div><div class="sc">Tagline word rotator</div><div class="sc">Subtle heartbeat</div><div class="sc">15 min</div></div>
+  </div>
+</div>
+
+<script>
+/* IDEA 1: Personality hover */
+const personalityProfiles = {
+  mma:     { type: 'jitter',  intensity: 4 },
+  ski:     { type: 'drift',   intensity: 2 },
+  surf:    { type: 'wave',    intensity: 3 },
+  snorkel: { type: 'float',   intensity: 1.5 },
+  skydive: { type: 'drop',    intensity: 3 },
+  scuba:   { type: 'bubble',  intensity: 2 },
+};
+
+function setPers(name, activity, btn) {
+  if (btn) {
+    document.querySelectorAll('.ptab').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+  const el = document.getElementById('pers-name');
+  el.dataset.activity = activity;
+  el.innerHTML = name.split('').map(c =>
+    `<span class="pers-letter">${c === ' ' ? '&nbsp;' : c}</span>`
+  ).join('');
+}
+
+setPers('MMA', 'mma');
+
+(function() {
+  const el = document.getElementById('pers-name');
+  let hovering = false;
+  let t = 0;
+
+  el.addEventListener('mouseenter', () => hovering = true);
+  el.addEventListener('mouseleave', () => {
+    hovering = false;
+    el.querySelectorAll('.pers-letter').forEach(l => l.style.transform = '');
+  });
+
+  function tick() {
+    if (hovering) {
+      const profile = personalityProfiles[el.dataset.activity];
+      const letters = el.querySelectorAll('.pers-letter');
+      t += 0.05;
+
+      letters.forEach((l, i) => {
+        let x = 0, y = 0;
+        const p = profile.intensity;
+        if (profile.type === 'jitter') {
+          x = (Math.random() - .5) * p * 2;
+          y = (Math.random() - .5) * p * 2;
+        } else if (profile.type === 'drift') {
+          x = Math.sin(t + i * .3) * p * 3;
+        } else if (profile.type === 'wave') {
+          y = Math.sin(t * 2 + i * .6) * p * 3;
+        } else if (profile.type === 'float') {
+          y = Math.sin(t * .8 + i * .4) * p * 2;
+          x = Math.sin(t * .5 + i * .2) * p;
+        } else if (profile.type === 'drop') {
+          y = (Math.sin(t * 1.5 + i * .3) + 1) * p * 2;
+        } else if (profile.type === 'bubble') {
+          y = Math.sin(t * 1.2 + i * .8) * p * 2 - Math.abs(Math.sin(t + i)) * p;
+        }
+        l.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* IDEA 2: Type-to-search */
+(function() {
+  const demo = document.getElementById('type-demo');
+  const nameEl = document.getElementById('type-name');
+  const bufEl = document.getElementById('type-buf');
+  const matchEl = document.getElementById('type-matches');
+  if (!demo) return;
+  const activities = ['MMA','SKI','SURF','SNORKEL','SKYDIVE','SCUBA'];
+  let buf = '';
+  let resetTimer;
+
+  demo.addEventListener('focus', () => demo.classList.add('focused'));
+  demo.addEventListener('blur', () => demo.classList.remove('focused'));
+
+  demo.addEventListener('keydown', e => {
+    if (!/^[a-zA-Z]$/.test(e.key)) return;
+    e.preventDefault();
+    buf += e.key.toUpperCase();
+    bufEl.textContent = buf;
+    const match = activities.find(a => a.startsWith(buf));
+    if (match) {
+      nameEl.textContent = match;
+      matchEl.innerHTML = 'Matching: <span>' + match + '</span>';
+      document.querySelectorAll('.type-key').forEach(k => {
+        k.classList.toggle('match', k.dataset.letter.toUpperCase() === e.key.toUpperCase());
+      });
+    } else {
+      buf = e.key.toUpperCase();
+      bufEl.textContent = buf;
+      const m2 = activities.find(a => a.startsWith(buf));
+      if (m2) {
+        nameEl.textContent = m2;
+        matchEl.innerHTML = 'Matching: <span>' + m2 + '</span>';
+      }
+    }
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => { buf = ''; bufEl.textContent = ''; }, 800);
+  });
+})();
+
+/* IDEA 3: Camera shake */
+function doShake(name, tag, intensity, btn) {
+  document.querySelectorAll('.shake-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('shake-name').textContent = name;
+  document.getElementById('shake-tag').textContent = tag;
+  if (intensity >= 4) {
+    const wrap = document.getElementById('shake-wrap');
+    wrap.classList.remove('shake-active');
+    void wrap.offsetWidth;
+    wrap.classList.add('shake-active');
+  }
+}
+
+/* IDEA 4: Achievement toast */
+let unlocked = 0;
+function fireAchievement(title, desc, letter, idx) {
+  const toast = document.getElementById('ach-toast');
+  document.getElementById('ach-toast-title').textContent = title;
+  document.getElementById('ach-toast-icon').textContent = letter;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2600);
+  const pip = document.getElementById('ach-p' + idx);
+  if (pip && !pip.classList.contains('on')) {
+    pip.classList.add('on');
+    unlocked++;
+    document.getElementById('ach-count').textContent = unlocked;
+  }
+}
+</script>
+</body>
+</html>

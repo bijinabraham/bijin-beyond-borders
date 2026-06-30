@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adrenaline — Per-Activity Quirks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: oklch(0.93 0.016 14); --surface: oklch(0.89 0.020 14);
+  --ink: oklch(0.14 0.022 14); --primary: oklch(0.34 0.11 14);
+  --accent: oklch(0.58 0.19 32); --muted: oklch(0.44 0.010 14);
+  --rule: oklch(0.82 0.018 14); --dark: oklch(0.10 0.018 14);
+  --fd: 'Josefin Sans'; --fb: 'Nunito Sans'; --fm: 'JetBrains Mono'; --px: 3rem;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--fb); font-weight: 300; }
+.page-header { background: var(--primary); color: #fff; padding: 2rem var(--px); }
+.page-header h1 { font-family: var(--fd); font-weight: 700; font-size: clamp(1rem,2vw,1.4rem); letter-spacing: .15em; text-transform: uppercase; }
+.page-header p { font-size: .82rem; opacity: .65; margin-top: .3rem; }
+.idea-wrap { border-top: 1px solid var(--rule); padding: 4rem var(--px) 0; }
+.chip { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.idea-title { font-family: var(--fd); font-size: clamp(1.5rem,3vw,2.4rem); font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; margin-bottom: .4rem; }
+.idea-desc { font-size: .87rem; color: var(--muted); max-width: 64ch; margin-bottom: 2rem; line-height: 1.75; }
+.idea-desc strong { color: var(--ink); font-weight: 500; }
+.quirk-list {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  border: 1px solid var(--rule); border-top: none;
+  margin-bottom: 5rem;
+}
+.ql { padding: 1rem 1.25rem; border-right: 1px solid var(--rule); }
+.ql:last-child { border-right: none; }
+.ql-label { font-family: var(--fd); font-size: .56rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: .3rem; }
+.ql-val { font-size: .8rem; line-height: 1.55; color: var(--ink); }
+.ql-val small { color: var(--muted); display: block; margin-top: .25rem; font-size: .68rem; }
+
+/* ──────────────────────
+   Shared demo styles
+────────────────────── */
+.scene {
+  height: 380px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden;
+}
+.scene-name {
+  position: absolute; bottom: 4rem; left: 2.5rem;
+  font-family: var(--fd); font-size: clamp(3rem, 8vw, 6rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff; line-height: 1;
+  z-index: 5; user-select: none;
+}
+.scene-tag {
+  position: absolute; bottom: 2.5rem; left: 2.5rem;
+  font-family: var(--fd); font-size: .65rem; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: oklch(1 0 0 / .55);
+  z-index: 5;
+}
+.scene-num {
+  position: absolute; top: 1.5rem; left: 2.5rem;
+  font-family: var(--fd); font-size: .65rem; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--accent);
+  z-index: 5;
+}
+.scene-trigger {
+  position: absolute; bottom: 1.5rem; right: 1.5rem; z-index: 10;
+  font-family: var(--fd); font-size: .55rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  background: var(--accent); color: #fff; border: none;
+  padding: .4rem .9rem; cursor: pointer; transition: opacity .2s;
+}
+.scene-trigger:hover { opacity: .85; }
+
+/* ── MMA ── */
+.shockwave {
+  position: absolute; top: 50%; left: 50%;
+  width: 20px; height: 20px;
+  border: 2px solid var(--accent); border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0); opacity: 1;
+  pointer-events: none; z-index: 4;
+}
+.shockwave.active { animation: shock .8s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes shock {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: .9; border-width: 4px; }
+  100% { transform: translate(-50%,-50%) scale(60); opacity: 0; border-width: 0.5px; }
+}
+.flash {
+  position: absolute; inset: 0; background: oklch(1 0 0); opacity: 0;
+  pointer-events: none; z-index: 3;
+}
+.flash.active { animation: flash .15s ease-out; }
+@keyframes flash { 0% { opacity: 0; } 30% { opacity: .14; } 100% { opacity: 0; } }
+.round-indicator {
+  position: absolute; top: 1.5rem; right: 1.5rem; z-index: 5;
+  font-family: var(--fm); font-size: .58rem; color: oklch(1 0 0 / .5); letter-spacing: .05em;
+  display: flex; gap: .5rem; align-items: center;
+}
+.round-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: roundPulse .8s ease-in-out infinite; }
+@keyframes roundPulse { 50% { opacity: .35; } }
+
+.heartbeat-wrap {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 50px; z-index: 4;
+}
+
+/* ── SKI ── */
+.snowflake {
+  position: absolute; width: 4px; height: 4px; background: oklch(1 0 0 / .85);
+  border-radius: 50%; pointer-events: none;
+  filter: blur(0.5px);
+}
+.mountain-silhouette {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
+  z-index: 2; opacity: .35;
+}
+.temp-readout {
+  position: absolute; top: 1.5rem; right: 1.5rem; z-index: 5;
+  font-family: var(--fm); font-size: .7rem; color: oklch(1 0 0 / .65); letter-spacing: .05em;
+  display: flex; flex-direction: column; align-items: flex-end; gap: .3rem;
+}
+.temp-readout small { font-family: var(--fd); font-size: .5rem; letter-spacing: .16em; text-transform: uppercase; opacity: .5; }
+
+/* ── SURF ── */
+.water-droplet {
+  position: absolute; width: 6px; height: 3px; border-radius: 50%;
+  background: oklch(.7 .12 220 / .85);
+  pointer-events: none;
+}
+.barrel-wave-wrap {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+}
+.caustics {
+  position: absolute; inset: 0; opacity: .15; mix-blend-mode: overlay;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0px,
+    oklch(.85 .1 220 / .2) 30px,
+    transparent 60px
+  );
+  animation: causticsMove 8s linear infinite;
+}
+@keyframes causticsMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+.tide-info {
+  position: absolute; top: 1.5rem; right: 1.5rem; z-index: 5;
+  font-family: var(--fm); font-size: .58rem; color: oklch(1 0 0 / .55); letter-spacing: .05em;
+  text-align: right;
+}
+
+/* ── SNORKEL ── */
+.bubble {
+  position: absolute; bottom: -10px;
+  border: 1px solid oklch(.85 .04 220 / .55);
+  background: oklch(.85 .04 220 / .08);
+  border-radius: 50%; pointer-events: none;
+}
+.god-ray {
+  position: absolute; top: -10%; width: 80px; height: 130%;
+  background: linear-gradient(to bottom,
+    oklch(.7 .06 200 / .12) 0%,
+    transparent 100%);
+  transform-origin: top center;
+  pointer-events: none;
+  filter: blur(20px);
+}
+.fish {
+  position: absolute; width: 16px; height: 8px;
+  background: oklch(.3 .02 220 / .8); border-radius: 50% 100% 100% 0;
+  pointer-events: none;
+}
+.depth-readout {
+  position: absolute; top: 1.5rem; right: 1.5rem; z-index: 5;
+  font-family: var(--fm); font-size: .65rem; color: oklch(1 0 0 / .55); letter-spacing: .05em;
+  display: flex; flex-direction: column; align-items: flex-end; gap: .2rem;
+}
+
+/* ── SKYDIVE ── */
+.wind-streak {
+  position: absolute;
+  width: 1px; background: linear-gradient(to bottom, transparent, oklch(1 0 0 / .35), transparent);
+  pointer-events: none;
+}
+.altimeter {
+  position: absolute; top: 1.5rem; right: 1.5rem; z-index: 5;
+  font-family: var(--fm); color: oklch(1 0 0 / .65);
+  text-align: right;
+}
+.altimeter-val { font-size: 1.4rem; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.altimeter-label { font-family: var(--fd); font-size: .55rem; letter-spacing: .16em; text-transform: uppercase; opacity: .5; }
+
+/* ── SCUBA ── */
+.sonar-ping {
+  position: absolute; top: 50%; left: 50%;
+  width: 30px; height: 30px;
+  border: 1px solid oklch(.7 .1 220 / .5); border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0); opacity: 1;
+  pointer-events: none;
+}
+.sonar-ping.active { animation: sonar 3s ease-out infinite; }
+@keyframes sonar {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: .8; }
+  100% { transform: translate(-50%,-50%) scale(15); opacity: 0; }
+}
+.scuba-bubble {
+  position: absolute; bottom: -10px;
+  border: 1px solid oklch(.85 .04 220 / .35);
+  border-radius: 50%; pointer-events: none;
+}
+.dark-creature {
+  position: absolute; opacity: 0;
+  background: oklch(.04 .01 220 / .5); border-radius: 60% 40% 50% 50%;
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+/* summary */
+.summary { padding: 2rem var(--px) 0; }
+.sum-table { border: 1px solid var(--rule); margin-bottom: 5rem; }
+.sr { display: grid; grid-template-columns: 5rem 1fr 1fr; border-bottom: 1px solid var(--rule); }
+.sr:last-child { border-bottom: none; }
+.sr.head { background: var(--surface); }
+.sc { padding: .9rem 1.1rem; border-right: 1px solid var(--rule); font-size: .78rem; }
+.sc:last-child { border-right: none; }
+.sr.head .sc { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.sn { font-family: var(--fd); font-weight: 700; font-size: .8rem; color: var(--accent); letter-spacing: .14em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Adrenaline — Per-Activity Quirks</h1>
+  <p>Each sport gets its own visual signature. Animations that feel like the activity.</p>
+</header>
+
+<!-- ═══════════ MMA ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Activity 01</p>
+  <h2 class="idea-title">MMA — Combat</h2>
+  <p class="idea-desc">
+    Each switch to MMA fires an <strong>impact shockwave</strong> radiating from the centre with a brief white flash.
+    A small <strong>round counter</strong> ticks in the corner (R1, R2). Heart-rate wave occasionally <strong>spikes hard</strong>.
+    Click the trigger to fire the shockwave.
+  </p>
+  <div class="scene" id="mma-scene">
+    <div class="flash" id="mma-flash"></div>
+    <div class="shockwave" id="mma-shock"></div>
+    <div class="round-indicator"><div class="round-dot"></div> R<span id="mma-round">3</span> / 12</div>
+    <div class="scene-num">01 — Combat</div>
+    <div class="scene-name">MMA</div>
+    <div class="scene-tag">Where discipline meets chaos</div>
+    <button class="scene-trigger" onclick="fireShockwave()">↯ Fire Impact</button>
+  </div>
+  <div class="quirk-list">
+    <div class="ql">
+      <div class="ql-label">On Switch</div>
+      <div class="ql-val">Impact shockwave radiates from centre, brief white flash<small>~0.8s, ~10 lines of CSS keyframes</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">Ambient</div>
+      <div class="ql-val">Round counter ticks "R1 → R12" with pulsing red dot<small>Increments every 30s like a fight round</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">Wave behaviour</div>
+      <div class="ql-val">Intensity wave occasionally spikes like a punch landing<small>Every ~8s, brief amplitude doubling</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SKI ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Activity 02</p>
+  <h2 class="idea-title">SKI — Mountain</h2>
+  <p class="idea-desc">
+    A constant <strong>snowfall</strong> drifts across the page when ski is active.
+    A faint <strong>mountain ridgeline silhouette</strong> sits at the bottom of the background.
+    A live <strong>temperature readout</strong> shows in the corner (synced to the location).
+    Click for a powder burst.
+  </p>
+  <div class="scene" id="ski-scene">
+    <div class="temp-readout">
+      <div>−12°C</div>
+      <small>Gulmarg</small>
+    </div>
+    <svg class="mountain-silhouette" viewBox="0 0 600 100" preserveAspectRatio="none">
+      <path d="M0,100 L80,30 L150,60 L230,15 L320,55 L410,25 L500,50 L600,20 L600,100 Z" fill="oklch(0.05 0.012 14)"/>
+      <path d="M0,100 L60,55 L130,80 L200,40 L280,70 L360,35 L440,65 L520,40 L600,55 L600,100 Z" fill="oklch(0.08 0.015 14 / 0.8)"/>
+    </svg>
+    <div class="scene-num">02 — Mountain</div>
+    <div class="scene-name">SKI</div>
+    <div class="scene-tag">Speed and silence</div>
+    <button class="scene-trigger" onclick="powderBurst()">❅ Powder Burst</button>
+  </div>
+  <div class="quirk-list">
+    <div class="ql">
+      <div class="ql-label">Always On</div>
+      <div class="ql-val">Snowflakes drift across the page<small>~30 particles, varied speed/size, subtle blur</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">Background</div>
+      <div class="ql-val">Faint mountain ridgeline silhouette at bottom<small>Two-layer SVG path for depth</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">HUD</div>
+      <div class="ql-val">Live temperature + location<small>Mono font, top-right corner. Real weather via API later</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SURF ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Activity 03</p>
+  <h2 class="idea-title">SURF — Ocean</h2>
+  <p class="idea-desc">
+    Subtle <strong>caustic light patterns</strong> shimmer across the background (underwater reflection texture).
+    Occasional <strong>water droplets</strong> streak diagonally. The wave at the bottom occasionally <strong>swells into a barrel shape</strong>.
+    A tide info HUD shows wave height and direction.
+  </p>
+  <div class="scene" id="surf-scene">
+    <div class="caustics"></div>
+    <div class="tide-info">
+      <div>SET 4ft</div>
+      <div style="opacity:.4; margin-top:.2rem;">SW · 12s</div>
+    </div>
+    <div class="scene-num">03 — Ocean</div>
+    <div class="scene-name">SURF</div>
+    <div class="scene-tag">Patience and timing</div>
+    <button class="scene-trigger" onclick="dropletShower()">💧 Splash</button>
+  </div>
+  <div class="quirk-list">
+    <div class="ql">
+      <div class="ql-label">Background</div>
+      <div class="ql-val">Caustic light patterns shimmer across<small>CSS repeating-linear-gradient with overlay blend</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">Occasional</div>
+      <div class="ql-val">Water droplets streak diagonally across<small>Every ~5s, small batch of 3-5 droplets</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">Wave behaviour</div>
+      <div class="ql-val">Bottom wave occasionally swells into a barrel curl<small>Single dramatic wave morph every ~12s</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SNORKEL ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Activity 04</p>
+  <h2 class="idea-title">SNORKEL — Underwater</h2>
+  <p class="idea-desc">
+    <strong>Bubbles rise continuously</strong> from the bottom of the page.
+    <strong>God rays</strong> filter down from above (subtle light columns). A <strong>fish silhouette</strong> occasionally darts across.
+    Depth meter shows current depth.
+  </p>
+  <div class="scene" id="snorkel-scene">
+    <div class="god-ray" style="left: 18%; transform: rotate(-3deg);"></div>
+    <div class="god-ray" style="left: 50%; transform: rotate(2deg);"></div>
+    <div class="god-ray" style="left: 78%; transform: rotate(-1deg);"></div>
+    <div class="depth-readout">
+      <div>4.2m</div>
+      <div style="opacity:.5; font-size: .5rem; letter-spacing: .16em; text-transform: uppercase; font-family: var(--fd);">DEPTH</div>
+    </div>
+    <div class="scene-num">04 — Underwater</div>
+    <div class="scene-name">SNORKEL</div>
+    <div class="scene-tag">Beneath the surface</div>
+    <button class="scene-trigger" onclick="releaseFish()">🐟 Send Fish</button>
+  </div>
+  <div class="quirk-list">
+    <div class="ql">
+      <div class="ql-label">Always On</div>
+      <div class="ql-val">Bubbles rise from bottom + 3 light columns from above<small>~15 bubbles, sizes 4-12px, varying rise speed</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">Occasional</div>
+      <div class="ql-val">Fish silhouette darts across the page<small>Every ~8s, random Y position, left-to-right or vice versa</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">HUD</div>
+      <div class="ql-val">Depth meter (4.2m, updates with time)<small>Mono font, mimics dive computer</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SKYDIVE ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Activity 05</p>
+  <h2 class="idea-title">SKYDIVE — Sky</h2>
+  <p class="idea-desc">
+    <strong>Vertical wind streaks</strong> rush downward across the page, creating freefall energy.
+    A <strong>spinning altimeter</strong> counts down from 12,000ft.
+    Drifting <strong>cloud silhouettes</strong> pass slowly behind everything. The horizon badge has a subtle dim.
+  </p>
+  <div class="scene" id="skydive-scene">
+    <div class="altimeter">
+      <div class="altimeter-val" id="alt-val">11,847</div>
+      <div class="altimeter-label">ALT · FT</div>
+    </div>
+    <div class="scene-num">05 — Sky</div>
+    <div class="scene-name">SKYDIVE</div>
+    <div class="scene-tag">Stepping off the edge</div>
+  </div>
+  <div class="quirk-list">
+    <div class="ql">
+      <div class="ql-label">Always On</div>
+      <div class="ql-val">Vertical wind streaks rush downward<small>~25 streaks, varying length 30-120px, fast top-to-bottom motion</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">HUD</div>
+      <div class="ql-val">Spinning altimeter counts down from 12,000ft<small>Resets when it reaches 0. Mono numeric typeface</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">Background</div>
+      <div class="ql-val">Cloud silhouettes drift slowly behind<small>Pure SVG paths, very low opacity, parallax depth</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SCUBA ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Activity 06</p>
+  <h2 class="idea-title">SCUBA — Deep</h2>
+  <p class="idea-desc">
+    A <strong>sonar ping</strong> pulses outward from the centre every few seconds (classic submarine sonar).
+    <strong>Slow bubbles</strong> rise (slower than snorkel). A <strong>depth meter descends</strong> as if you're diving.
+    Occasional <strong>dark shadow shapes</strong> drift past in the distance.
+  </p>
+  <div class="scene" id="scuba-scene" style="background: oklch(0.06 0.02 240);">
+    <div class="sonar-ping active"></div>
+    <div class="sonar-ping active" style="animation-delay: 1s;"></div>
+    <div class="sonar-ping active" style="animation-delay: 2s;"></div>
+    <div class="depth-readout">
+      <div id="scuba-depth">22.8m</div>
+      <div style="opacity:.5; font-size: .5rem; letter-spacing: .16em; text-transform: uppercase; font-family: var(--fd);">DEPTH ↓</div>
+    </div>
+    <div class="scene-num">06 — Deep</div>
+    <div class="scene-name">SCUBA</div>
+    <div class="scene-tag">Full submersion</div>
+  </div>
+  <div class="quirk-list">
+    <div class="ql">
+      <div class="ql-label">Always On</div>
+      <div class="ql-val">Sonar ping radiates from centre every 3s<small>3 concentric rings, expanding outward, fade as they grow</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">Background</div>
+      <div class="ql-val">Darker palette + slow rising bubbles<small>Deep navy bg, bubbles half the speed of snorkel</small></div>
+    </div>
+    <div class="ql">
+      <div class="ql-label">HUD</div>
+      <div class="ql-val">Depth meter descends continuously<small>22.8m → 35m+, like an actual dive computer</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary">
+  <div class="sum-table">
+    <div class="sr head"><div class="sc">Activity</div><div class="sc">Signature Quirks</div><div class="sc">Effort (combined)</div></div>
+    <div class="sr"><div class="sc sn">MMA</div><div class="sc">Impact shockwave on switch · round counter HUD · wave punch spikes</div><div class="sc">1.5 hr</div></div>
+    <div class="sr"><div class="sc sn">SKI</div><div class="sc">Snowfall · mountain ridgeline · temperature HUD</div><div class="sc">1.5 hr</div></div>
+    <div class="sr"><div class="sc sn">SURF</div><div class="sc">Caustic shimmer · water droplets · barrel wave swell</div><div class="sc">1.5 hr</div></div>
+    <div class="sr"><div class="sc sn">SNORKEL</div><div class="sc">Bubbles rising · god rays · fish silhouettes · depth meter</div><div class="sc">2 hr</div></div>
+    <div class="sr"><div class="sc sn">SKYDIVE</div><div class="sc">Wind streaks · altimeter countdown · cloud silhouettes</div><div class="sc">1.5 hr</div></div>
+    <div class="sr"><div class="sc sn">SCUBA</div><div class="sc">Sonar ping · slow bubbles · depth descending · dark shadows</div><div class="sc">1.5 hr</div></div>
+  </div>
+</div>
+
+<script>
+/* ── MMA ── */
+function fireShockwave() {
+  document.getElementById('mma-shock').classList.remove('active');
+  document.getElementById('mma-flash').classList.remove('active');
+  void document.getElementById('mma-shock').offsetWidth;
+  document.getElementById('mma-shock').classList.add('active');
+  document.getElementById('mma-flash').classList.add('active');
+}
+// round counter
+let round = 3;
+setInterval(() => {
+  round = (round % 12) + 1;
+  document.getElementById('mma-round').textContent = round;
+}, 4000);
+
+/* ── SKI: snowflakes ── */
+(function() {
+  const scene = document.getElementById('ski-scene');
+  if (!scene) return;
+  for (let i = 0; i < 35; i++) {
+    const flake = document.createElement('div');
+    flake.className = 'snowflake';
+    const size = Math.random() * 4 + 2;
+    flake.style.width = size + 'px';
+    flake.style.height = size + 'px';
+    flake.style.left = Math.random() * 100 + '%';
+    flake.style.top = '-10px';
+    flake.style.opacity = Math.random() * 0.6 + 0.3;
+    const dur = 5 + Math.random() * 8;
+    const drift = (Math.random() - 0.5) * 80;
+    flake.style.animation = `snowfall${i} ${dur}s linear infinite`;
+    flake.style.animationDelay = Math.random() * dur + 's';
+    const style = document.createElement('style');
+    style.textContent = `@keyframes snowfall${i} {
+      from { transform: translate(0, 0); }
+      to { transform: translate(${drift}px, 400px); }
+    }`;
+    document.head.appendChild(style);
+    scene.appendChild(flake);
+  }
+})();
+function powderBurst() {
+  const scene = document.getElementById('ski-scene');
+  for (let i = 0; i < 30; i++) {
+    const flake = document.createElement('div');
+    flake.className = 'snowflake';
+    const size = Math.random() * 6 + 3;
+    flake.style.width = size + 'px';
+    flake.style.height = size + 'px';
+    flake.style.left = '50%';
+    flake.style.top = '50%';
+    flake.style.opacity = '1';
+    const angle = (Math.PI * 2 * i) / 30;
+    const dist = 100 + Math.random() * 200;
+    flake.style.transition = 'transform 1.2s cubic-bezier(.16,1,.3,1), opacity .8s ease-out';
+    scene.appendChild(flake);
+    requestAnimationFrame(() => {
+      flake.style.transform = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist + 150}px)`;
+      flake.style.opacity = '0';
+    });
+    setTimeout(() => flake.remove(), 1300);
+  }
+}
+
+/* ── SURF: droplets ── */
+function dropletShower() {
+  const scene = document.getElementById('surf-scene');
+  for (let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const d = document.createElement('div');
+      d.className = 'water-droplet';
+      d.style.left = (Math.random() * 100) + '%';
+      d.style.top = '-10px';
+      d.style.transform = 'rotate(15deg)';
+      d.style.transition = 'transform 1.2s ease-in, opacity 1.2s';
+      scene.appendChild(d);
+      requestAnimationFrame(() => {
+        d.style.transform = `translate(${20 + Math.random() * 30}px, 400px) rotate(15deg)`;
+        d.style.opacity = '0';
+      });
+      setTimeout(() => d.remove(), 1300);
+    }, i * 60);
+  }
+}
+// background droplets
+setInterval(dropletShower, 5000);
+setTimeout(dropletShower, 1500);
+
+/* ── SNORKEL: bubbles + fish ── */
+(function() {
+  const scene = document.getElementById('snorkel-scene');
+  if (!scene) return;
+  for (let i = 0; i < 18; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = Math.random() * 10 + 4;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    const dur = 4 + Math.random() * 5;
+    const drift = (Math.random() - 0.5) * 60;
+    b.style.animation = `snorkelBubble${i} ${dur}s linear infinite`;
+    b.style.animationDelay = Math.random() * dur + 's';
+    const style = document.createElement('style');
+    style.textContent = `@keyframes snorkelBubble${i} {
+      0% { transform: translate(0, 0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translate(${drift}px, -400px); opacity: 0; }
+    }`;
+    document.head.appendChild(style);
+    scene.appendChild(b);
+  }
+})();
+function releaseFish() {
+  const scene = document.getElementById('snorkel-scene');
+  const f = document.createElement('div');
+  f.className = 'fish';
+  f.style.top = (Math.random() * 60 + 20) + '%';
+  f.style.left = '-30px';
+  f.style.transition = 'transform 4s linear, opacity 4s';
+  scene.appendChild(f);
+  requestAnimationFrame(() => {
+    f.style.transform = 'translateX(' + (scene.offsetWidth + 60) + 'px)';
+  });
+  setTimeout(() => f.remove(), 4100);
+}
+setInterval(releaseFish, 6000);
+setTimeout(releaseFish, 800);
+
+/* ── SKYDIVE: wind streaks + altimeter ── */
+(function() {
+  const scene = document.getElementById('skydive-scene');
+  if (!scene) return;
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement('div');
+    s.className = 'wind-streak';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.height = (30 + Math.random() * 90) + 'px';
+    const dur = 0.4 + Math.random() * 0.8;
+    s.style.animation = `windFall${i} ${dur}s linear infinite`;
+    s.style.animationDelay = Math.random() * dur + 's';
+    const style = document.createElement('style');
+    style.textContent = `@keyframes windFall${i} {
+      from { transform: translateY(-100px); }
+      to { transform: translateY(${scene.offsetHeight + 100}px); }
+    }`;
+    document.head.appendChild(style);
+    scene.appendChild(s);
+  }
+})();
+let alt = 11847;
+setInterval(() => {
+  alt -= Math.floor(Math.random() * 50) + 20;
+  if (alt <= 1000) alt = 12000;
+  document.getElementById('alt-val').textContent = alt.toLocaleString();
+}, 200);
+
+/* ── SCUBA: depth + bubbles ── */
+(function() {
+  const scene = document.getElementById('scuba-scene');
+  if (!scene) return;
+  for (let i = 0; i < 10; i++) {
+    const b = document.createElement('div');
+    b.className = 'scuba-bubble';
+    const size = Math.random() * 8 + 3;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    const dur = 9 + Math.random() * 8;
+    b.style.animation = `scubaBubble${i} ${dur}s linear infinite`;
+    b.style.animationDelay = Math.random() * dur + 's';
+    const style = document.createElement('style');
+    style.textContent = `@keyframes scubaBubble${i} {
+      0% { transform: translate(0, 0); opacity: 0; }
+      10% { opacity: .5; }
+      90% { opacity: .5; }
+      100% { transform: translate(${(Math.random()-.5)*40}px, -400px); opacity: 0; }
+    }`;
+    document.head.appendChild(style);
+    scene.appendChild(b);
+  }
+})();
+let depth = 22.8;
+let depthDir = 1;
+setInterval(() => {
+  depth += depthDir * (Math.random() * 0.4);
+  if (depth > 35) depthDir = -1;
+  if (depth < 18) depthDir = 1;
+  document.getElementById('scuba-depth').textContent = depth.toFixed(1) + 'm';
+}, 400);
+</script>
+</body>
+</html>

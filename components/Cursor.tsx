@@ -3,6 +3,25 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Cursor.module.css";
 
+type CursorState = "card" | "link" | "btn" | null;
+
+function applyState(ring: HTMLDivElement, state: CursorState) {
+  ring.classList.remove(styles.hoverCard, styles.hoverLink, styles.hoverBtn);
+  if (state === "card") ring.classList.add(styles.hoverCard);
+  if (state === "link") ring.classList.add(styles.hoverLink);
+  if (state === "btn")  ring.classList.add(styles.hoverBtn);
+}
+
+function getState(target: Element): CursorState {
+  if (target.closest(".tilt-card")) return "card";
+  const interactive = target.closest("a, button, [data-cursor]");
+  if (!interactive) return null;
+  const attr = (interactive as HTMLElement).dataset?.cursor;
+  if (attr === "btn")  return "btn";
+  if (attr === "card") return "card";
+  return "link";
+}
+
 export default function Cursor() {
   const dotRef  = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
@@ -23,6 +42,8 @@ export default function Cursor() {
         dotRef.current.style.left = mouseX + "px";
         dotRef.current.style.top  = mouseY + "px";
       }
+      // Update state on every move so it's always in sync with what's under the cursor
+      if (ringRef.current) applyState(ringRef.current, getState(e.target as Element));
     };
 
     function animate() {
@@ -35,40 +56,12 @@ export default function Cursor() {
       rafId = requestAnimationFrame(animate);
     }
 
-    // Hover states via event delegation
-    const onEnterCard = (e: MouseEvent) => {
-      const t = e.target as Element;
-      if (t.closest(".tilt-card") && ringRef.current) {
-        ringRef.current.classList.add(styles.hoverCard);
-        ringRef.current.classList.remove(styles.hoverLink);
-      }
-    };
-    const onEnterLink = (e: MouseEvent) => {
-      const t = e.target as Element;
-      if (!t.closest(".tilt-card") && t.closest("a, button") && ringRef.current) {
-        ringRef.current.classList.add(styles.hoverLink);
-        ringRef.current.classList.remove(styles.hoverCard);
-      }
-    };
-    const onLeave = (e: MouseEvent) => {
-      const t = e.target as Element;
-      if (ringRef.current && (t.closest(".tilt-card") || t.closest("a, button"))) {
-        ringRef.current.classList.remove(styles.hoverCard, styles.hoverLink);
-      }
-    };
-
     document.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseover", onEnterCard);
-    document.addEventListener("mouseover", onEnterLink);
-    document.addEventListener("mouseout",  onLeave);
     rafId = requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(rafId);
       document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseover", onEnterCard);
-      document.removeEventListener("mouseover", onEnterLink);
-      document.removeEventListener("mouseout",  onLeave);
     };
   }, [mounted]);
 

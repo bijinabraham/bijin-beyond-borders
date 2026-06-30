@@ -1,15 +1,27 @@
 import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
 import PlacesGrid from "@/components/PlacesGrid";
 import Adrenaline from "@/components/Adrenaline";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
 
+const countries = [
+  "Japan", "India", "United States", "Canada", "Ireland", "Spain",
+  "Italy", "Switzerland", "Netherlands", "Germany", "Brazil", "Hawaii", "UAE", "UK",
+];
+
+const activities = [
+  "MMA", "Skiing", "Surfing", "Snorkelling", "Skydiving", "Scuba",
+];
+
 export default function Home() {
   return (
     <>
       <main>
         <Hero />
+        <Marquee items={countries} direction="left"  variant="primary" />
+        <Marquee items={activities} direction="right" variant="accent"  />
         <PlacesGrid />
         <Adrenaline />
         <Projects />

@@ -1,0 +1,50 @@
+.wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0.9rem 0;
+  border-block-end: 1px solid var(--rule);
+  user-select: none;
+}
+
+.wrap.primary { background: var(--primary); }
+.wrap.accent  { background: var(--accent); }
+
+.track {
+  display: inline-flex;
+  animation: marquee 22s linear infinite;
+  will-change: transform;
+}
+
+.wrap:hover .track { animation-play-state: paused; }
+
+.track.reverse { animation-direction: reverse; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.8rem;
+  padding: 0 1.8rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: oklch(1 0 0 / 0.82);
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: oklch(1 0 0 / 0.45);
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; }
+}

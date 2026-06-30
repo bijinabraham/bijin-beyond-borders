@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adrenaline — Bold Ideas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: oklch(0.93 0.016 14); --surface: oklch(0.89 0.020 14);
+  --ink: oklch(0.14 0.022 14); --primary: oklch(0.34 0.11 14);
+  --accent: oklch(0.58 0.19 32); --muted: oklch(0.44 0.010 14);
+  --rule: oklch(0.82 0.018 14); --dark: oklch(0.10 0.018 14);
+  --fd: 'Josefin Sans'; --fb: 'Nunito Sans'; --fm: 'JetBrains Mono'; --px: 3rem;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--fb); font-weight: 300; }
+.page-header { background: var(--primary); color: #fff; padding: 2rem var(--px); }
+.page-header h1 { font-family: var(--fd); font-weight: 700; font-size: clamp(1rem,2vw,1.4rem); letter-spacing: .15em; text-transform: uppercase; }
+.page-header p { font-size: .82rem; opacity: .65; margin-top: .3rem; }
+.idea-wrap { border-top: 1px solid var(--rule); padding: 4rem var(--px) 0; }
+.chip { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.idea-title { font-family: var(--fd); font-size: clamp(1.5rem,3vw,2.4rem); font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; margin-bottom: .4rem; }
+.idea-desc { font-size: .87rem; color: var(--muted); max-width: 64ch; margin-bottom: 2rem; line-height: 1.75; }
+.idea-desc strong { color: var(--ink); font-weight: 500; }
+.info-row { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-top: none; margin-bottom: 5rem; }
+.ic { padding: 1rem 1.25rem; border-right: 1px solid var(--rule); }
+.ic:last-child { border-right: none; }
+.ic-label { font-family: var(--fd); font-size: .56rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: .3rem; }
+.ic-val { font-size: .8rem; line-height: 1.55; color: var(--ink); }
+
+/* ════════════════════
+   IDEA 1 — POV Flash
+════════════════════ */
+.pov-demo {
+  height: 420px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1rem;
+}
+.pov-name { font-family: var(--fd); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; z-index: 2; }
+.pov-hint { font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .4); z-index: 2; }
+.pov-tabs { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; z-index: 5; position: relative; }
+.pov-tab {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .5rem 1.1rem; background: var(--accent);
+  border: none; color: #fff; cursor: pointer; transition: opacity .2s;
+}
+.pov-tab:hover { opacity: .85; }
+.pov-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  background-size: cover; background-position: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.pov-overlay.show { opacity: 1; }
+.pov-mask {
+  position: absolute; inset: 0; pointer-events: none;
+}
+/* Ski goggles mask */
+.pov-overlay[data-pov="ski"] {
+  background: radial-gradient(ellipse 65% 45% at 30% 45%, transparent 50%, oklch(.05 .01 14) 70%),
+              radial-gradient(ellipse 65% 45% at 70% 45%, transparent 50%, oklch(.05 .01 14) 70%),
+              url('https://picsum.photos/seed/ski-mountain-view/1200/600');
+  background-size: contain, contain, cover;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center, center, center;
+}
+.pov-overlay[data-pov="ski"]::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to right, oklch(.04 .01 14) 0%, transparent 8%, transparent 92%, oklch(.04 .01 14) 100%),
+              linear-gradient(to bottom, transparent 0%, transparent 80%, oklch(.04 .01 14) 100%);
+}
+/* Snorkel mask */
+.pov-overlay[data-pov="snorkel"] {
+  background: radial-gradient(ellipse 55% 60% at 50% 50%, transparent 60%, oklch(.03 .01 220) 75%),
+              url('https://picsum.photos/seed/coral-reef-underwater/1200/600');
+  background-size: contain, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+}
+/* MMA */
+.pov-overlay[data-pov="mma"] {
+  background: url('https://picsum.photos/seed/boxing-ring-gym/1200/600');
+  background-size: cover;
+  background-position: center;
+}
+.pov-overlay[data-pov="mma"]::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, oklch(.05 .03 14 / .85) 90%);
+}
+.pov-overlay[data-pov="mma"]::after {
+  content: ''; position: absolute; left: 8%; bottom: -15%;
+  width: 250px; height: 250px; border-radius: 50% 50% 30% 30%;
+  background: oklch(.15 .04 14);
+  box-shadow: 420px -20px 0 -10px oklch(.15 .04 14);
+  filter: blur(2px);
+}
+/* SURF */
+.pov-overlay[data-pov="surf"] {
+  background: url('https://picsum.photos/seed/surfboard-ocean-wave/1200/600');
+  background-size: cover;
+  background-position: center;
+}
+.pov-overlay[data-pov="surf"]::after {
+  content: ''; position: absolute; left: 35%; right: 35%; bottom: 0; height: 30%;
+  background: linear-gradient(to bottom, transparent, oklch(.95 .02 60) 40%, oklch(.85 .03 60));
+  clip-path: polygon(20% 0%, 80% 0%, 90% 100%, 10% 100%);
+}
+/* Pov HUD */
+.pov-hud {
+  position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  font-family: var(--fm); font-size: .55rem; color: oklch(1 0 0 / .8); letter-spacing: .1em;
+  text-shadow: 0 1px 4px oklch(.04 .01 14);
+  z-index: 15;
+  display: flex; gap: 1rem; align-items: center;
+}
+.pov-hud .pip { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pip 1s ease-in-out infinite; }
+@keyframes pip { 50% { opacity: .3; } }
+
+/* ════════════════════
+   IDEA 2 — Sport cursor
+════════════════════ */
+.cursor-demo {
+  height: 320px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden; cursor: none;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.5rem;
+}
+.cursor-demo * { cursor: none; }
+.cursor-svg {
+  position: absolute; pointer-events: none; z-index: 30;
+  transform: translate(-50%, -50%);
+  transition: transform .12s ease;
+  filter: drop-shadow(0 2px 8px oklch(.04 .01 14 / .5));
+}
+.cursor-tabs { display: flex; gap: .5rem; }
+.ctab {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .4rem 1rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .55); cursor: none;
+  transition: all .2s;
+}
+.ctab.on { border-color: var(--accent); color: var(--accent); }
+.cursor-name { font-family: var(--fd); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; user-select: none; }
+
+/* ════════════════════
+   IDEA 3 — Letter physics
+════════════════════ */
+.physics-demo {
+  height: 360px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+}
+.physics-name {
+  font-family: var(--fd); font-size: clamp(3rem, 8vw, 6rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff; line-height: 1;
+  display: inline-flex;
+  cursor: default;
+  user-select: none;
+}
+.phys-letter {
+  display: inline-block;
+  transition: transform .3s cubic-bezier(.16,1,.3,1);
+  will-change: transform;
+}
+.physics-controls { display: flex; gap: .5rem; }
+.pctab {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .4rem 1rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .55); cursor: pointer;
+  transition: all .2s;
+}
+.pctab.on { border-color: var(--accent); color: var(--accent); }
+.physics-hint { font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .35); }
+
+/* ════════════════════
+   IDEA 4 — Weather storm on switch
+════════════════════ */
+.storm-demo {
+  height: 340px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.5rem;
+}
+.storm-name { font-family: var(--fd); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; z-index: 2; }
+.storm-tabs { display: flex; gap: .5rem; z-index: 5; }
+.stab {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .4rem 1rem; background: var(--accent);
+  border: none; color: #fff; cursor: pointer;
+}
+.storm-particle { position: absolute; pointer-events: none; will-change: transform, opacity; }
+
+/* ════════════════════
+   IDEA 5 — Sport silhouette as big icon
+════════════════════ */
+.silh-demo {
+  height: 360px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative;
+  display: grid; grid-template-columns: 1fr auto; gap: 2rem;
+  padding: 2.5rem;
+  align-items: center;
+}
+.silh-left { display: flex; flex-direction: column; gap: 1rem; }
+.silh-num-mini { font-family: var(--fd); font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.silh-name-mid { font-family: var(--fd); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; line-height: 1; }
+.silh-tag-mid { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: oklch(1 0 0 / .5); margin-top: .3rem; }
+.silh-icon {
+  width: clamp(150px, 22vw, 280px);
+  height: clamp(150px, 22vw, 280px);
+  color: oklch(1 0 0 / .08);
+  stroke: oklch(1 0 0 / .15);
+  fill: none;
+  stroke-width: 1.5;
+  transition: all .4s cubic-bezier(.16,1,.3,1);
+}
+.silh-tabs { position: absolute; bottom: 1rem; left: 1.5rem; display: flex; gap: .4rem; }
+.sitab {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .4rem .9rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .55); cursor: pointer;
+  transition: all .2s;
+}
+.sitab.on { border-color: var(--accent); color: var(--accent); }
+
+/* ════════════════════
+   IDEA 6 — Page tilt per activity
+════════════════════ */
+.tilt-demo {
+  height: 340px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden;
+}
+.tilt-content {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.5rem;
+  transition: transform 1.2s cubic-bezier(.16,1,.3,1);
+  transform-origin: center;
+}
+.tilt-name { font-family: var(--fd); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; }
+.tilt-tag { font-family: var(--fd); font-size: .65rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: oklch(1 0 0 / .55); }
+.tilt-tabs { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+.ttab {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .4rem 1rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .55); cursor: pointer;
+  transition: all .2s;
+}
+.ttab.on { border-color: var(--accent); color: var(--accent); }
+.tilt-horizon {
+  position: absolute; left: -10%; right: -10%; bottom: 30%;
+  height: 1px; background: oklch(1 0 0 / .1);
+  transition: transform 1.2s cubic-bezier(.16,1,.3,1);
+}
+
+/* summary */
+.summary { padding: 2rem var(--px) 0; }
+.sum-table { border: 1px solid var(--rule); margin-bottom: 5rem; }
+.sr { display: grid; grid-template-columns: 3rem 1fr 1fr 7rem; border-bottom: 1px solid var(--rule); }
+.sr:last-child { border-bottom: none; }
+.sr.head { background: var(--surface); }
+.sc { padding: .9rem 1.1rem; border-right: 1px solid var(--rule); font-size: .78rem; }
+.sc:last-child { border-right: none; }
+.sr.head .sc { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.sn { font-family: var(--fd); font-weight: 700; font-size: .7rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Adrenaline — Bold Ideas</h1>
+  <p>Cinematic, ambitious, less literal. Six wild directions to consider.</p>
+</header>
+
+<!-- ═══════════ IDEA 1: First-Person POV Flash ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 01 · POV Flash</p>
+  <h2 class="idea-title">Become The Sport — First-Person Flash</h2>
+  <p class="idea-desc">
+    Hold any tab for 800ms and the page <strong>becomes your first-person view of the sport</strong>.
+    Ski goggles framing a mountain view. Snorkel mask underwater. Boxing ring POV with ropes and lights.
+    Surfboard nose entering frame with the wave horizon. <strong>2-second cinematic moment</strong>, then back to the page.
+  </p>
+  <div class="pov-demo">
+    <div class="pov-overlay" id="pov-overlay"></div>
+    <div class="pov-hud" style="display:none" id="pov-hud">
+      <div class="pip"></div> <span id="pov-hud-text">RECORDING · 00:02</span>
+    </div>
+    <div class="pov-name">SKI</div>
+    <div class="pov-hint">Click any sport to enter its POV</div>
+    <div class="pov-tabs">
+      <button class="pov-tab" onclick="firePov('mma')">MMA</button>
+      <button class="pov-tab" onclick="firePov('ski')">SKI</button>
+      <button class="pov-tab" onclick="firePov('surf')">SURF</button>
+      <button class="pov-tab" onclick="firePov('snorkel')">SNORKEL</button>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="ic">
+      <div class="ic-label">What it shows</div>
+      <div class="ic-val">A pre-composed scene per sport with vignettes/masks that frame your view as if wearing the sport's gear. Real photos or AI-generated environments.</div>
+    </div>
+    <div class="ic">
+      <div class="ic-label">Why bold</div>
+      <div class="ic-val">No personal site does this. It's a film moment inside a portfolio. The trigger feels deliberate (long press, not accidental click).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ IDEA 2: Sport cursor ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 02 · Cursor Transformation</p>
+  <h2 class="idea-title">The Cursor IS The Gear</h2>
+  <p class="idea-desc">
+    Your cursor isn't a dot. It's a <strong>tiny boxing glove</strong> on MMA. A <strong>ski boot</strong> on Ski.
+    A <strong>surfboard outline</strong> on Surf. A <strong>flipper</strong> on Snorkel.
+    Hand-drawn SVG silhouettes, ~32px. Subtle but immediately tells you what sport you're in.
+    Hover the demo and click tabs.
+  </p>
+  <div class="cursor-demo" id="cursor-demo">
+    <svg class="cursor-svg" id="cursor-svg" width="36" height="36" viewBox="0 0 36 36">
+      <!-- MMA glove -->
+      <g id="cur-mma">
+        <path d="M8 12 Q8 6, 14 6 L22 6 Q28 6, 28 12 L28 22 Q28 30, 18 30 Q8 30, 8 22 Z" fill="oklch(0.58 0.19 32)" stroke="#fff" stroke-width="1.5"/>
+        <path d="M10 18 Q10 14, 14 14 Q18 14, 18 18 Q18 22, 14 22 Q10 22, 10 18" fill="oklch(0.4 0.13 14)"/>
+      </g>
+    </svg>
+    <div class="cursor-name" id="cursor-name">MMA</div>
+    <div class="cursor-tabs">
+      <button class="ctab on" onclick="setCursorActivity('mma',this)">MMA</button>
+      <button class="ctab" onclick="setCursorActivity('ski',this)">SKI</button>
+      <button class="ctab" onclick="setCursorActivity('surf',this)">SURF</button>
+      <button class="ctab" onclick="setCursorActivity('snorkel',this)">SNORKEL</button>
+      <button class="ctab" onclick="setCursorActivity('skydive',this)">SKYDIVE</button>
+      <button class="ctab" onclick="setCursorActivity('scuba',this)">SCUBA</button>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="ic">
+      <div class="ic-label">Effort</div>
+      <div class="ic-val">~2 hr — design 6 small SVG cursors, swap based on active activity. Falls back to standard cursor on horizon items.</div>
+    </div>
+    <div class="ic">
+      <div class="ic-label">Impact</div>
+      <div class="ic-val">Memorable. Sells the sport identity instantly. Pure signature detail.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ IDEA 3: Letter physics ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 03 · Title Physics</p>
+  <h2 class="idea-title">The Name Behaves Like The Sport (Always)</h2>
+  <p class="idea-desc">
+    Not on hover. <strong>Constantly</strong>. The activity name has its own physics simulation per sport:
+    MMA letters <strong>jolt from impact</strong> randomly. SURF letters <strong>ride a wave</strong>. SKI letters <strong>slide diagonally</strong>.
+    SNORKEL letters <strong>drift gently</strong>. The name is a tiny living thing.
+  </p>
+  <div class="physics-demo">
+    <div class="physics-hint">All animations are constant. No hover needed.</div>
+    <div class="physics-name" id="physics-name"></div>
+    <div class="physics-controls">
+      <button class="pctab on" onclick="setPhysics('MMA','mma',this)">MMA</button>
+      <button class="pctab" onclick="setPhysics('SKI','ski',this)">SKI</button>
+      <button class="pctab" onclick="setPhysics('SURF','surf',this)">SURF</button>
+      <button class="pctab" onclick="setPhysics('SNORKEL','snorkel',this)">SNORKEL</button>
+      <button class="pctab" onclick="setPhysics('SKYDIVE','skydive',this)">SKYDIVE</button>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="ic">
+      <div class="ic-label">Per-sport behaviour</div>
+      <div class="ic-val">MMA: random punch jolts · SKI: diagonal carve drift · SURF: sine wave bob · SNORKEL: slow float · SKYDIVE: gravity drop with bounce-back</div>
+    </div>
+    <div class="ic">
+      <div class="ic-label">Why bold</div>
+      <div class="ic-val">The name itself becomes the show. No hover required — it's alive the whole time you're on the page.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ IDEA 4: Weather storm on switch ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 04 · Switch Storm</p>
+  <h2 class="idea-title">Page-Wide Storm on Switch</h2>
+  <p class="idea-desc">
+    Switching activities triggers a <strong>1-second weather event</strong> across the entire page.
+    Switch to MMA: red impact shockwave + screen shake. SKI: snow blizzard sweeps left-to-right. SURF: water spray crashes from edge.
+    SNORKEL: bubble explosion. SKYDIVE: cloud rush. SCUBA: ink darkness.
+  </p>
+  <div class="storm-demo" id="storm-demo">
+    <div class="storm-name" id="storm-name">MMA</div>
+    <div class="storm-tabs">
+      <button class="stab" onclick="fireStorm('mma','MMA')">⚡ MMA</button>
+      <button class="stab" onclick="fireStorm('ski','SKI')">❄ SKI</button>
+      <button class="stab" onclick="fireStorm('surf','SURF')">🌊 SURF</button>
+      <button class="stab" onclick="fireStorm('snorkel','SNORKEL')">○ SNORKEL</button>
+      <button class="stab" onclick="fireStorm('skydive','SKYDIVE')">☁ SKYDIVE</button>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="ic">
+      <div class="ic-label">Duration</div>
+      <div class="ic-val">~1.2 seconds. Long enough to feel cinematic, short enough to not annoy on rapid switching.</div>
+    </div>
+    <div class="ic">
+      <div class="ic-label">Impact</div>
+      <div class="ic-val">Every tab click is a moment. You feel each transition. The page reacts physically.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ IDEA 5: Big icon silhouette ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 05 · Big Icon</p>
+  <h2 class="idea-title">Decorative Number → Sport Silhouette</h2>
+  <p class="idea-desc">
+    Replace the giant outlined "01/02/03" on the right with <strong>a hand-drawn sport silhouette</strong>
+    in the same outlined style. A fighter throwing a hook. A skier carving. A surfer dropping in.
+    A diver descending. Pure visual signature. Same outlined-stroke aesthetic as the current numbers.
+  </p>
+  <div class="silh-demo">
+    <div class="silh-left">
+      <div class="silh-num-mini">01 · Combat</div>
+      <div class="silh-name-mid" id="silh-name">MMA</div>
+      <div class="silh-tag-mid" id="silh-tag">Where discipline meets chaos</div>
+    </div>
+    <div id="silh-svg-wrap">
+      <!-- MMA fighter silhouette -->
+      <svg class="silh-icon" viewBox="0 0 200 200">
+        <!-- Body -->
+        <ellipse cx="100" cy="55" rx="22" ry="26"/>
+        <path d="M75 80 L75 130 L65 175 L80 175 L90 130 L110 130 L120 175 L135 175 L125 130 L125 80 Z"/>
+        <!-- Arm punching -->
+        <path d="M125 90 L165 75 L180 85 L172 100 L130 110 Z"/>
+        <!-- Glove on extended arm -->
+        <circle cx="178" cy="86" r="14"/>
+        <!-- Other arm -->
+        <path d="M75 90 L55 105 L48 130 L62 130 L72 110 Z"/>
+        <circle cx="55" cy="125" r="11"/>
+      </svg>
+    </div>
+    <div class="silh-tabs">
+      <button class="sitab on" onclick="setSilh('MMA','01 · Combat','Where discipline meets chaos','mma',this)">MMA</button>
+      <button class="sitab" onclick="setSilh('SKI','02 · Mountain','Speed and silence','ski',this)">SKI</button>
+      <button class="sitab" onclick="setSilh('SURF','03 · Ocean','Patience and timing','surf',this)">SURF</button>
+      <button class="sitab" onclick="setSilh('SNORKEL','04 · Underwater','Beneath the surface','snorkel',this)">SNORKEL</button>
+      <button class="sitab" onclick="setSilh('SKYDIVE','05 · Sky','Stepping off the edge','skydive',this)">SKYDIVE</button>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="ic">
+      <div class="ic-label">Style</div>
+      <div class="ic-val">Outlined stroke (1.5px), low-opacity white. Matches the existing decorative number aesthetic. ~200×200 viewBox per sport.</div>
+    </div>
+    <div class="ic">
+      <div class="ic-label">Impact</div>
+      <div class="ic-val">Stronger signature than a generic number. Each activity has its own iconic silhouette that's unmistakable.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ IDEA 6: Page tilt ═══════════ -->
+<div class="idea-wrap">
+  <p class="chip">Idea 06 · Page Tilt</p>
+  <h2 class="idea-title">Page Physically Tilts With Each Sport</h2>
+  <p class="idea-desc">
+    Switching activities <strong>subtly tilts the entire content</strong> as if the page itself is leaning into the sport.
+    SKI tilts down-right (carving). SURF tilts side-to-side (paddling). SKYDIVE tilts back (free-fall stance).
+    Subtle (1-2 degrees). Felt, not seen. Click each tab below.
+  </p>
+  <div class="tilt-demo">
+    <div class="tilt-horizon" id="tilt-horizon"></div>
+    <div class="tilt-content" id="tilt-content">
+      <div class="tilt-name" id="tilt-name">MMA</div>
+      <div class="tilt-tag" id="tilt-tag">Combat · Training</div>
+      <div class="tilt-tabs">
+        <button class="ttab on" onclick="setTilt('MMA','Combat',0,this)">MMA</button>
+        <button class="ttab" onclick="setTilt('SKI','Mountain',1.5,this)">SKI</button>
+        <button class="ttab" onclick="setTilt('SURF','Ocean',-1,this)">SURF</button>
+        <button class="ttab" onclick="setTilt('SNORKEL','Underwater',0.5,this)">SNORKEL</button>
+        <button class="ttab" onclick="setTilt('SKYDIVE','Sky',-2,this)">SKYDIVE</button>
+      </div>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="ic">
+      <div class="ic-label">Why subtle</div>
+      <div class="ic-val">A 1-2 degree tilt is below conscious notice but felt as "off-balance." Combined with the sport name, your brain reads the lean as intentional gesture.</div>
+    </div>
+    <div class="ic">
+      <div class="ic-label">Effort</div>
+      <div class="ic-val">~10 min — just CSS transform rotate on the content wrapper, transitions between activities.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary">
+  <div class="sum-table">
+    <div class="sr head"><div class="sc">#</div><div class="sc">Idea</div><div class="sc">Boldness</div><div class="sc">Effort</div></div>
+    <div class="sr"><div class="sc sn">01</div><div class="sc">First-person POV flash on long press</div><div class="sc">Showstopper · cinematic</div><div class="sc">2 hr</div></div>
+    <div class="sr"><div class="sc sn">02</div><div class="sc">Sport-specific cursor (boxing glove, ski boot...)</div><div class="sc">Signature · iconic</div><div class="sc">2 hr</div></div>
+    <div class="sr"><div class="sc sn">03</div><div class="sc">Constant title physics (no hover needed)</div><div class="sc">Living · ambient</div><div class="sc">1.5 hr</div></div>
+    <div class="sr"><div class="sc sn">04</div><div class="sc">Page-wide weather storm on every switch</div><div class="sc">Cinematic · dramatic</div><div class="sc">2.5 hr</div></div>
+    <div class="sr"><div class="sc sn">05</div><div class="sc">Decorative number → hand-drawn sport silhouette</div><div class="sc">Pure signature</div><div class="sc">1.5 hr (incl. SVG art)</div></div>
+    <div class="sr"><div class="sc sn">06</div><div class="sc">Subtle page tilt per activity</div><div class="sc">Felt · invisible</div><div class="sc">10 min</div></div>
+  </div>
+</div>
+
+<script>
+/* IDEA 1: POV */
+function firePov(sport) {
+  const ov = document.getElementById('pov-overlay');
+  const hud = document.getElementById('pov-hud');
+  const hudText = document.getElementById('pov-hud-text');
+  hudText.textContent = 'RECORDING · ' + sport.toUpperCase() + ' POV';
+  ov.dataset.pov = sport;
+  ov.classList.add('show');
+  hud.style.display = 'flex';
+  setTimeout(() => {
+    ov.classList.remove('show');
+    setTimeout(() => hud.style.display = 'none', 300);
+  }, 2200);
+}
+
+/* IDEA 2: Sport cursor */
+const cursorSVGs = {
+  mma: `<g><path d="M8 12 Q8 6, 14 6 L22 6 Q28 6, 28 12 L28 22 Q28 30, 18 30 Q8 30, 8 22 Z" fill="oklch(0.58 0.19 32)" stroke="#fff" stroke-width="1.5"/><path d="M10 18 Q10 14, 14 14 Q18 14, 18 18 Q18 22, 14 22 Q10 22, 10 18" fill="oklch(0.4 0.13 14)"/></g>`,
+  ski: `<g transform="rotate(15 18 18)"><rect x="14" y="4" width="3" height="28" fill="oklch(0.58 0.19 32)" stroke="#fff" stroke-width="1"/><circle cx="15.5" cy="34" r="3" fill="#fff"/></g>`,
+  surf: `<g transform="rotate(-12 18 18)"><ellipse cx="18" cy="18" rx="6" ry="16" fill="oklch(0.58 0.19 32)" stroke="#fff" stroke-width="1.2"/><line x1="18" y1="6" x2="18" y2="30" stroke="#fff" stroke-width=".6"/></g>`,
+  snorkel: `<g><ellipse cx="18" cy="14" rx="13" ry="8" fill="none" stroke="oklch(0.58 0.19 32)" stroke-width="2"/><circle cx="14" cy="14" r="4" fill="#fff" opacity=".6"/><circle cx="22" cy="14" r="4" fill="#fff" opacity=".6"/></g>`,
+  skydive: `<g><path d="M6 14 Q18 4, 30 14 L26 18 L18 16 L10 18 Z" fill="oklch(0.58 0.19 32)" stroke="#fff" stroke-width="1"/><line x1="10" y1="18" x2="18" y2="32" stroke="#fff" stroke-width=".8"/><line x1="18" y1="16" x2="18" y2="32" stroke="#fff" stroke-width=".8"/><line x1="26" y1="18" x2="18" y2="32" stroke="#fff" stroke-width=".8"/><circle cx="18" cy="33" r="1.5" fill="#fff"/></g>`,
+  scuba: `<g><rect x="13" y="6" width="10" height="20" rx="2" fill="oklch(0.58 0.19 32)" stroke="#fff" stroke-width="1"/><circle cx="18" cy="14" r="3" fill="#fff" opacity=".8"/><path d="M18 26 Q18 30, 22 32" stroke="#fff" stroke-width="1.2" fill="none"/></g>`,
+};
+(function() {
+  const demo = document.getElementById('cursor-demo');
+  const svg = document.getElementById('cursor-svg');
+  const name = document.getElementById('cursor-name');
+  if (!demo) return;
+  demo.addEventListener('mousemove', e => {
+    const r = demo.getBoundingClientRect();
+    svg.style.left = (e.clientX - r.left) + 'px';
+    svg.style.top = (e.clientY - r.top) + 'px';
+  });
+
+  window.setCursorActivity = function(activity, btn) {
+    document.querySelectorAll('.ctab').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    svg.innerHTML = cursorSVGs[activity];
+    name.textContent = activity.toUpperCase();
+  };
+})();
+
+/* IDEA 3: Letter physics */
+const physicsProfiles = {
+  mma:     { fn: (i, t) => ({ x: 0, y: 0, jolt: Math.random() < .02 }) },
+  ski:     { fn: (i, t) => ({ x: Math.sin(t * .8 + i * .4) * 6, y: Math.sin(t * .4 + i * .3) * 3 }) },
+  surf:    { fn: (i, t) => ({ x: 0, y: Math.sin(t * 1.5 + i * .8) * 6 }) },
+  snorkel: { fn: (i, t) => ({ x: Math.sin(t * .5 + i * .3) * 3, y: Math.sin(t * .7 + i * .2) * 4 }) },
+  skydive: { fn: (i, t) => ({ x: 0, y: (Math.sin(t * 2 + i * .5) + 1) * 4 }) },
+};
+
+let currentProfile = 'mma';
+
+function setPhysics(name, profile, btn) {
+  if (btn) {
+    document.querySelectorAll('.pctab').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+  currentProfile = profile;
+  const el = document.getElementById('physics-name');
+  el.innerHTML = name.split('').map(c =>
+    `<span class="phys-letter">${c === ' ' ? '&nbsp;' : c}</span>`
+  ).join('');
+}
+
+setPhysics('MMA', 'mma');
+
+(function() {
+  let t = 0;
+  function tick() {
+    t += .05;
+    const letters = document.querySelectorAll('#physics-name .phys-letter');
+    const profile = physicsProfiles[currentProfile];
+    letters.forEach((l, i) => {
+      const { x, y, jolt } = profile.fn(i, t);
+      if (jolt && currentProfile === 'mma') {
+        // sudden impact jolt
+        l.style.transition = 'transform .15s ease-out';
+        l.style.transform = `translate(${(Math.random() - .5) * 14}px, ${(Math.random() - .5) * 14}px)`;
+        setTimeout(() => {
+          l.style.transition = 'transform .4s cubic-bezier(.16,1,.3,1)';
+          l.style.transform = '';
+        }, 150);
+      } else if (currentProfile !== 'mma') {
+        l.style.transition = 'transform .3s';
+        l.style.transform = `translate(${x}px, ${y}px)`;
+      }
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* IDEA 4: Storm */
+function fireStorm(type, name) {
+  document.getElementById('storm-name').textContent = name;
+  const demo = document.getElementById('storm-demo');
+  // clear existing particles
+  demo.querySelectorAll('.storm-particle').forEach(p => p.remove());
+
+  if (type === 'mma') {
+    // red flash + shake
+    const flash = document.createElement('div');
+    flash.className = 'storm-particle';
+    flash.style.cssText = 'position:absolute;inset:0;background:oklch(.55 .2 14);opacity:0;animation:mmaFlash .6s ease-out;';
+    demo.appendChild(flash);
+    demo.style.animation = 'shake .4s';
+    setTimeout(() => { demo.style.animation = ''; flash.remove(); }, 600);
+  }
+  if (type === 'ski') {
+    for (let i = 0; i < 80; i++) {
+      const f = document.createElement('div');
+      f.className = 'storm-particle';
+      f.style.cssText = `position:absolute;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;background:oklch(1 0 0 / ${.4+Math.random()*.5});border-radius:50%;top:-10px;left:${Math.random()*100}%;animation:skiSweep ${.7+Math.random()*.5}s linear forwards;`;
+      f.style.animationDelay = (Math.random() * .3) + 's';
+      demo.appendChild(f);
+    }
+    setTimeout(() => demo.querySelectorAll('.storm-particle').forEach(p => p.remove()), 1500);
+  }
+  if (type === 'surf') {
+    for (let i = 0; i < 50; i++) {
+      const d = document.createElement('div');
+      d.className = 'storm-particle';
+      d.style.cssText = `position:absolute;width:${4+Math.random()*6}px;height:${2+Math.random()*3}px;background:oklch(.7 .12 220 / ${.5+Math.random()*.4});border-radius:50%;left:-10px;top:${Math.random()*100}%;animation:surfSpray ${.8+Math.random()*.4}s ease-out forwards;`;
+      d.style.animationDelay = (Math.random() * .3) + 's';
+      demo.appendChild(d);
+    }
+    setTimeout(() => demo.querySelectorAll('.storm-particle').forEach(p => p.remove()), 1500);
+  }
+  if (type === 'snorkel') {
+    for (let i = 0; i < 35; i++) {
+      const b = document.createElement('div');
+      b.className = 'storm-particle';
+      const s = 4 + Math.random() * 12;
+      b.style.cssText = `position:absolute;width:${s}px;height:${s}px;border:1px solid oklch(.85 .04 220 / .7);border-radius:50%;top:50%;left:50%;animation:bubbleBurst ${.8+Math.random()*.6}s ease-out forwards;`;
+      b.style.setProperty('--dx', ((Math.random() - .5) * 600) + 'px');
+      b.style.setProperty('--dy', ((Math.random() - .5) * 400) + 'px');
+      demo.appendChild(b);
+    }
+    setTimeout(() => demo.querySelectorAll('.storm-particle').forEach(p => p.remove()), 1500);
+  }
+  if (type === 'skydive') {
+    for (let i = 0; i < 30; i++) {
+      const c = document.createElement('div');
+      c.className = 'storm-particle';
+      c.style.cssText = `position:absolute;width:${40+Math.random()*60}px;height:${20+Math.random()*30}px;background:oklch(1 0 0 / .25);border-radius:50%;filter:blur(8px);top:${Math.random()*100}%;left:120%;animation:cloudRush ${.8+Math.random()*.5}s ease-in forwards;`;
+      c.style.animationDelay = (Math.random() * .2) + 's';
+      demo.appendChild(c);
+    }
+    setTimeout(() => demo.querySelectorAll('.storm-particle').forEach(p => p.remove()), 1500);
+  }
+}
+const stormStyle = document.createElement('style');
+stormStyle.textContent = `
+  @keyframes shake { 25%,75% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
+  @keyframes mmaFlash { 0% { opacity: 0; } 30% { opacity: .6; } 100% { opacity: 0; } }
+  @keyframes skiSweep { from { transform: translate(0,0); } to { transform: translate(-200px, 400px); } }
+  @keyframes surfSpray { from { transform: translateX(0); opacity: 1; } to { transform: translateX(800px) rotate(8deg); opacity: 0; } }
+  @keyframes bubbleBurst { from { transform: translate(-50%,-50%); opacity: 1; } to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))); opacity: 0; } }
+  @keyframes cloudRush { from { transform: translateX(0); opacity: .6; } to { transform: translateX(-800px); opacity: 0; } }
+`;
+document.head.appendChild(stormStyle);
+
+/* IDEA 5: Silhouettes */
+const sportSilhouettes = {
+  mma: `<svg class="silh-icon" viewBox="0 0 200 200"><ellipse cx="100" cy="55" rx="22" ry="26"/><path d="M75 80 L75 130 L65 175 L80 175 L90 130 L110 130 L120 175 L135 175 L125 130 L125 80 Z"/><path d="M125 90 L165 75 L180 85 L172 100 L130 110 Z"/><circle cx="178" cy="86" r="14"/><path d="M75 90 L55 105 L48 130 L62 130 L72 110 Z"/><circle cx="55" cy="125" r="11"/></svg>`,
+  ski: `<svg class="silh-icon" viewBox="0 0 200 200"><ellipse cx="105" cy="40" rx="14" ry="16"/><path d="M85 60 Q90 90, 95 110 L80 165 L120 175 L130 110 Q125 90, 125 60 Z"/><line x1="80" y1="180" x2="180" y2="195"/><line x1="60" y1="190" x2="160" y2="200"/><line x1="125" y1="100" x2="170" y2="60"/><line x1="170" y1="60" x2="180" y2="65"/></svg>`,
+  surf: `<svg class="silh-icon" viewBox="0 0 200 200"><ellipse cx="95" cy="35" rx="13" ry="15"/><path d="M85 55 L75 110 L60 165 L80 170 L95 115 L105 115 L120 165 L140 170 L130 110 L125 55 Z"/><ellipse cx="100" cy="180" rx="80" ry="12"/><path d="M30 175 Q100 160, 170 175 Q170 195, 100 195 Q30 195, 30 175 Z"/></svg>`,
+  snorkel: `<svg class="silh-icon" viewBox="0 0 200 200"><ellipse cx="100" cy="40" rx="20" ry="18"/><rect x="80" y="30" width="40" height="20" rx="4"/><line x1="125" y1="25" x2="135" y2="10"/><path d="M75 70 L75 110 L60 160 L80 170 L100 110 L120 170 L140 160 L125 110 L125 70 Z"/><ellipse cx="75" cy="180" rx="20" ry="8"/><ellipse cx="125" cy="180" rx="20" ry="8"/></svg>`,
+  skydive: `<svg class="silh-icon" viewBox="0 0 200 200"><path d="M30 70 Q100 30, 170 70 L155 90 L130 78 L100 82 L70 78 L45 90 Z"/><line x1="50" y1="88" x2="85" y2="125"/><line x1="100" y1="82" x2="100" y2="130"/><line x1="150" y1="88" x2="115" y2="125"/><circle cx="100" cy="135" r="10"/><path d="M90 145 L80 175 L95 175 L100 155 L105 175 L120 175 L110 145 Z"/></svg>`,
+};
+function setSilh(name, num, tag, key, btn) {
+  document.querySelectorAll('.sitab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('silh-name').textContent = name;
+  document.getElementById('silh-tag').textContent = tag;
+  document.querySelector('.silh-num-mini').textContent = num;
+  document.getElementById('silh-svg-wrap').innerHTML = sportSilhouettes[key];
+}
+
+/* IDEA 6: Page tilt */
+function setTilt(name, tag, angle, btn) {
+  document.querySelectorAll('.ttab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('tilt-name').textContent = name;
+  document.getElementById('tilt-tag').textContent = tag + ' · Training';
+  document.getElementById('tilt-content').style.transform = `rotate(${angle}deg)`;
+  document.getElementById('tilt-horizon').style.transform = `rotate(${angle}deg)`;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+/* ── PAGE — full viewport, no scroll ── */
+.page {
+  position: relative;
+  height: calc(100svh - 67px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: oklch(0.10 0.018 14);
+}
+
+/* ── BACKGROUND ── */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  will-change: opacity, transform;
+}
+
+.bgImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Dark left-heavy gradient so text is always readable */
+.bgGradient {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      oklch(0.10 0.018 14 / 0.97) 0%,
+      oklch(0.10 0.018 14 / 0.75) 45%,
+      oklch(0.10 0.018 14 / 0.20) 100%
+    ),
+    linear-gradient(
+      to top,
+      oklch(0.10 0.018 14 / 0.8) 0%,
+      transparent 40%
+    );
+}
+
+/* Film grain texture */
+.bgGrain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  pointer-events: none;
+  animation: grainShift 0.14s steps(1) infinite;
+}
+
+.bgGrainHeavy { opacity: 0.45; }
+
+@keyframes grainShift {
+  0%  { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 4%); }
+  40% { transform: translate(4%, -2%); }
+  60% { transform: translate(-2%, -4%); }
+  80% { transform: translate(3%, 3%); }
+}
+
+/* ── CONTENT ── */
+.content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  padding: 3rem var(--page-px) 2.5rem;
+}
+
+/* ── LEFT: text panel ── */
+.left { max-width: 560px; }
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.num {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  line-height: 0.9;
+  color: #fff;
+  margin-bottom: 1.2rem;
+  will-change: transform, text-shadow;
+}
+
+/* Idle glitch — fires every 2s */
+.glitching {
+  animation: nameGlitch 0.35s steps(4) 1;
+}
+
+@keyframes nameGlitch {
+  0%   { text-shadow: -2px 0 var(--accent), 2px 0 oklch(0.6 0.16 220); transform: translateX(0); }
+  25%  { text-shadow:  2px 0 var(--accent), -2px 0 oklch(0.6 0.16 220); transform: translateX(-2px); }
+  50%  { text-shadow: -2px 0 var(--accent), 2px 0 oklch(0.6 0.16 220); transform: translateX(2px); }
+  75%  { text-shadow:  2px 0 var(--accent), -2px 0 oklch(0.6 0.16 220); transform: translateX(-1px); }
+  100% { text-shadow: none; transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitching { animation: none; }
+}
+
+.tag {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tagWordWrap { display: inline-flex; align-items: center; }
+
+.tagWord {
+  display: inline-block;
+  color: oklch(1 0 0 / 0.32);
+  transition: color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: tagWordPulse 4s ease-in-out infinite;
+  will-change: color, transform;
+}
+
+@keyframes tagWordPulse {
+  0%, 18%, 100% { color: oklch(1 0 0 / 0.32); transform: translateY(0); }
+  4%, 14%        { color: var(--accent); transform: translateY(-2px); }
+}
+
+.tagDivider {
+  display: inline-block;
+  margin: 0 0.65rem;
+  color: oklch(1 0 0 / 0.18);
+}
+
+.horizonBadge {
+  display: inline-block;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.25rem 0.65rem;
+  margin-bottom: 1.25rem;
+  align-self: flex-start;
+}
+
+.desc {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: oklch(1 0 0 / 0.72);
+  max-width: 44ch;
+  margin-bottom: 2rem;
+}
+
+/* Stats grid */
+.statsGrid {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid oklch(1 0 0 / 0.12);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.statLabel {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: oklch(1 0 0 / 0.35);
+}
+
+.statValue {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+/* Intensity */
+.intensityRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.intensityLabel {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: oklch(1 0 0 / 0.35);
+}
+
+.intensityDots {
+  display: flex;
+  gap: 5px;
+}
+
+.dot {
+  width: 24px;
+  height: 3px;
+  background: oklch(1 0 0 / 0.18);
+  transition: background 0.3s ease;
+}
+
+.dotFilled { background: var(--accent); }
+
+/* ── RIGHT: big decorative number ── */
+.right {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 0.5rem;
+  padding-left: 2rem;
+}
+
+.bigNum {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(8rem, 18vw, 22rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px oklch(1 0 0 / 0.08);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── BOTTOM SWITCHER ── */
+.switcher {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid oklch(1 0 0 / 0.1);
+}
+
+.switcherGroup {
+  display: flex;
+}
+
+.switcherDivider {
+  width: 1px;
+  background: oklch(1 0 0 / 0.1);
+  margin: 0.75rem 0;
+}
+
+.switchBtn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding: 1rem 1.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-right: 1px solid oklch(1 0 0 / 0.08);
+  transition: background 0.2s ease;
+  min-width: 110px;
+}
+
+.switchBtn:hover { background: oklch(1 0 0 / 0.04); }
+.switchBtn:last-child { border-right: none; }
+
+.switchName {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(1 0 0 / 0.5);
+  transition: color 0.2s ease;
+}
+
+.switchBtnActive .switchName { color: #fff; }
+
+.switchTag {
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: oklch(1 0 0 / 0.25);
+  font-family: var(--font-display), sans-serif;
+}
+
+.switchSoon {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.switchBtnHorizon .switchName { color: oklch(1 0 0 / 0.25); }
+.switchBtnHorizon.switchBtnActive .switchName { color: oklch(1 0 0 / 0.6); }
+
+/* Animated underline for active tab */
+.switchUnderline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* ── INTENSITY WAVE CANVAS ── */
+.waveCanvas {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 72px;
+  display: block;
+  pointer-events: none;
+  flex-shrink: 0;
+  /* bleed upward so wave merges with content */
+  margin-block-start: -36px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .name { font-size: clamp(3.5rem, 14vw, 7rem); }
+  .bigNum { display: none; }
+  .content { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .switchBtn { padding: 0.85rem 1rem; min-width: 80px; }
+  .switchName { font-size: 0.6rem; }
+  .statsGrid { gap: 1.5rem; }
+  .name { font-size: clamp(3rem, 16vw, 5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bgGrain { animation: none; }
+}

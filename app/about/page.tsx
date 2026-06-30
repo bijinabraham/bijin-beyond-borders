@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import PhotoTrail from "@/components/PhotoTrail";
 import styles from "./about.module.css";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -34,6 +35,7 @@ export default function AboutPage() {
       {/* ── HERO ── */}
       <section className={styles.hero}>
         <div className={styles.heroText}>
+          <PhotoTrail />
           <motion.p className={styles.heroOverline} {...fadeUp(0.1)}>
             About
           </motion.p>

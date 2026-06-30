@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adrenaline Quirks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: oklch(0.93 0.016 14); --surface: oklch(0.89 0.020 14);
+  --ink: oklch(0.14 0.022 14); --primary: oklch(0.34 0.11 14);
+  --accent: oklch(0.58 0.19 32); --muted: oklch(0.44 0.010 14);
+  --rule: oklch(0.82 0.018 14); --dark: oklch(0.10 0.018 14);
+  --fd: 'Josefin Sans'; --fb: 'Nunito Sans'; --fm: 'JetBrains Mono'; --px: 3rem;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--fb); font-weight: 300; }
+.page-header { background: var(--primary); color: #fff; padding: 2rem var(--px); }
+.page-header h1 { font-family: var(--fd); font-weight: 700; font-size: clamp(1rem,2vw,1.4rem); letter-spacing: .15em; text-transform: uppercase; }
+.page-header p { font-size: .82rem; opacity: .65; margin-top: .3rem; }
+.idea-wrap { border-top: 1px solid var(--rule); padding: 4rem var(--px) 0; }
+.chip { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.idea-title { font-family: var(--fd); font-size: clamp(1.3rem,2.5vw,2rem); font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; margin-bottom: .4rem; }
+.idea-desc { font-size: .85rem; color: var(--muted); max-width: 60ch; margin-bottom: 2rem; line-height: 1.75; }
+.idea-desc strong { color: var(--ink); font-weight: 500; }
+.info-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--rule); border-top: none; margin-bottom: 5rem; }
+.ic { padding: 1rem 1.25rem; border-right: 1px solid var(--rule); }
+.ic:last-child { border-right: none; }
+.ic-label { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.ic-val { font-size: .78rem; line-height: 1.5; }
+.badge { display: inline-block; font-family: var(--fd); font-size: .52rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .4rem; }
+.hl { background: var(--accent); color: #fff; }
+.hm { background: var(--primary); color: #fff; }
+
+/* ════════════════════
+   IDEA 1 — Keyboard shortcuts
+════════════════════ */
+.kbd-demo {
+  height: 280px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; padding: 2rem; display: flex; flex-direction: column;
+}
+.kbd-status { color: oklch(1 0 0 / .5); font-family: var(--fd); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 1rem; }
+.kbd-name { font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; line-height: 1; flex: 1; display: flex; align-items: center; }
+.kbd-hint-bar { display: flex; gap: 1.2rem; padding-top: 1rem; border-top: 1px solid oklch(1 0 0 / .1); }
+.kbd-key { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: oklch(1 0 0 / .55); }
+.kbd-key kbd {
+  display: inline-block; padding: .15rem .4rem;
+  background: oklch(1 0 0 / .08); border: 1px solid oklch(1 0 0 / .2);
+  color: #fff; font-family: var(--fm); font-size: .55rem;
+  min-width: 16px; text-align: center;
+}
+.kbd-overlay {
+  position: absolute; inset: 0; background: oklch(.06 .015 14 / .85);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.kbd-overlay.show { opacity: 1; }
+.kbd-overlay-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  padding: 2rem; border: 1px solid oklch(1 0 0 / .2); background: var(--dark);
+}
+.kbd-card {
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  padding: 1rem 1.5rem; background: oklch(1 0 0 / .04); cursor: pointer;
+  transition: background .2s;
+}
+.kbd-card:hover { background: oklch(.58 .19 32 / .15); }
+.kbd-card kbd {
+  display: inline-block; padding: .3rem .7rem; background: var(--accent);
+  border: none; color: #fff; font-family: var(--fm); font-size: .75rem; font-weight: 700;
+}
+.kbd-card-name { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; }
+.kbd-toggle {
+  position: absolute; top: 1rem; right: 1rem;
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  background: none; border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .5);
+  padding: .3rem .65rem; cursor: pointer; transition: all .2s;
+}
+.kbd-toggle:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ════════════════════
+   IDEA 2 — Status HUD
+════════════════════ */
+.hud-demo {
+  height: 260px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; padding: 2.5rem;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.hud-name2 { font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; line-height: 1; }
+.hud-overlay {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  display: flex; flex-direction: column; gap: .35rem; align-items: flex-end;
+  font-family: var(--fm); font-size: .58rem; color: oklch(1 0 0 / .55);
+  letter-spacing: .05em;
+}
+.hud-line { display: flex; align-items: center; gap: .4rem; }
+.hud-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: hudPulse 1.4s ease-in-out infinite; }
+@keyframes hudPulse { 50% { opacity: .35; } }
+.hud-bracket { color: oklch(1 0 0 / .25); }
+
+/* ════════════════════
+   IDEA 3 — Cursor particles
+════════════════════ */
+.particles-demo {
+  height: 320px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; cursor: none; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.particles-demo * { cursor: none; }
+.particle-arena-name {
+  font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: oklch(1 0 0 / .15);
+  pointer-events: none; user-select: none;
+}
+.particle-cursor {
+  position: absolute; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); pointer-events: none; translate: -50% -50%; z-index: 10;
+}
+.particle {
+  position: absolute; pointer-events: none;
+  will-change: transform, opacity;
+}
+.particle.mma {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 6px var(--accent);
+}
+.particle.ski {
+  width: 5px; height: 5px;
+  background: oklch(1 0 0 / .8); border-radius: 50%;
+}
+.particle.surf {
+  width: 6px; height: 3px; border-radius: 50%;
+  background: oklch(.85 .08 220 / .7);
+}
+.particle.snorkel {
+  width: 6px; height: 6px; border-radius: 50%;
+  border: 1px solid oklch(.85 .04 220 / .8); background: transparent;
+}
+.particle-tabs {
+  position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 1rem; z-index: 5;
+}
+.ptab {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .35rem 1rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .5); cursor: none;
+  transition: all .2s;
+}
+.ptab.on { border-color: var(--accent); color: var(--accent); }
+
+/* ════════════════════
+   IDEA 4 — Days-since counter
+════════════════════ */
+.days-demo {
+  background: var(--dark); border: 1px solid var(--rule); padding: 2.5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+}
+.days-info { color: oklch(1 0 0 / .55); }
+.days-info h3 { font-family: var(--fd); font-size: 1.2rem; font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; color: #fff; margin-bottom: .3rem; }
+.days-info p { font-size: .8rem; line-height: 1.6; max-width: 36ch; }
+.days-counter { display: flex; flex-direction: column; align-items: flex-end; }
+.days-num {
+  font-family: var(--fm); font-size: clamp(3rem, 10vw, 6rem); font-weight: 700;
+  color: #fff; letter-spacing: -.04em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.days-label { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-top: .5rem; }
+.days-progress { width: 100%; height: 2px; background: oklch(1 0 0 / .1); margin-top: 1rem; position: relative; }
+.days-progress-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); transition: width 2s ease; }
+.days-meta { display: flex; gap: 2rem; margin-top: .8rem; font-family: var(--fm); font-size: .6rem; color: oklch(1 0 0 / .4); letter-spacing: .05em; }
+
+/* ════════════════════
+   IDEA 5 — Hold-to-engage
+════════════════════ */
+.hold-demo {
+  height: 220px; background: var(--dark); border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  padding: 2rem;
+}
+.hold-btn {
+  position: relative; padding: 1.5rem 2.5rem;
+  background: oklch(1 0 0 / .04); border: 1px solid oklch(1 0 0 / .15);
+  cursor: pointer; overflow: hidden;
+  font-family: var(--fd); font-size: .8rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: #fff;
+  user-select: none; transition: border-color .2s;
+}
+.hold-btn:hover { border-color: oklch(1 0 0 / .35); }
+.hold-fill {
+  position: absolute; top: 0; bottom: 0; left: 0;
+  background: var(--accent); width: 0%;
+  transition: width .05s linear;
+  z-index: 0;
+}
+.hold-btn span { position: relative; z-index: 1; }
+.hold-btn.engaged { animation: engaged .6s ease; }
+@keyframes engaged {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.06); background: var(--accent); }
+}
+.hold-hint { font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .35); }
+
+/* ════════════════════
+   IDEA 6 — Random glitch
+════════════════════ */
+.glitch-demo {
+  height: 260px; background: var(--dark); border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem; position: relative;
+}
+.glitch-name {
+  font-family: var(--fd); font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 700;
+  letter-spacing: -.03em; text-transform: uppercase; color: #fff; line-height: 1;
+  position: relative;
+  text-shadow: none;
+  transition: text-shadow .1s;
+}
+.glitch-name.glitching {
+  animation: glitch .35s steps(4) 1;
+}
+@keyframes glitch {
+  0% { text-shadow: -2px 0 var(--accent), 2px 0 oklch(.6 .15 220); transform: translateX(0); }
+  25% { text-shadow: 2px 0 var(--accent), -2px 0 oklch(.6 .15 220); transform: translateX(-1px); }
+  50% { text-shadow: -2px 0 var(--accent), 2px 0 oklch(.6 .15 220); transform: translateX(1px); }
+  75% { text-shadow: 2px 0 var(--accent), -2px 0 oklch(.6 .15 220); transform: translateX(-1px); }
+  100% { text-shadow: none; transform: translateX(0); }
+}
+.glitch-counter {
+  position: absolute; top: 1rem; right: 1rem;
+  font-family: var(--fm); font-size: .55rem; color: oklch(1 0 0 / .35);
+  letter-spacing: .05em;
+}
+
+/* summary */
+.summary { padding: 2rem var(--px) 0; }
+.sum-table { border: 1px solid var(--rule); margin-bottom: 5rem; }
+.sr { display: grid; grid-template-columns: 3rem 1fr 1fr 6rem; border-bottom: 1px solid var(--rule); }
+.sr:last-child { border-bottom: none; }
+.sr.head { background: var(--surface); }
+.sc { padding: .9rem 1.1rem; border-right: 1px solid var(--rule); font-size: .78rem; }
+.sc:last-child { border-right: none; }
+.sr.head .sc { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.sn { font-family: var(--fd); font-weight: 700; font-size: .7rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Adrenaline Page — Quirks &amp; Personality</h1>
+  <p>Small details that reward attention. Interact with each demo below.</p>
+</header>
+
+<!-- IDEA 1 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 01</p>
+  <h2 class="idea-title">Keyboard Shortcuts</h2>
+  <p class="idea-desc">
+    Press <strong>1 through 6</strong> on your keyboard to instantly switch activities. Press
+    <strong>?</strong> to see all shortcuts. Tab/Arrow keys cycle through. Click the demo first to focus it, then press a number.
+  </p>
+  <div class="kbd-demo" tabindex="0" id="kbd-demo">
+    <button class="kbd-toggle" onclick="document.getElementById('kbd-overlay').classList.toggle('show')">? Shortcuts</button>
+    <div class="kbd-status">Pursuit 01 of 06</div>
+    <div class="kbd-name" id="kbd-name">MMA</div>
+    <div class="kbd-hint-bar">
+      <div class="kbd-key"><kbd>1</kbd>–<kbd>6</kbd> Switch</div>
+      <div class="kbd-key"><kbd>←</kbd><kbd>→</kbd> Cycle</div>
+      <div class="kbd-key"><kbd>?</kbd> Shortcuts</div>
+    </div>
+
+    <div class="kbd-overlay" id="kbd-overlay">
+      <div class="kbd-overlay-grid">
+        <div class="kbd-card" onclick="kbdPick('MMA')"><kbd>1</kbd><div class="kbd-card-name">MMA</div></div>
+        <div class="kbd-card" onclick="kbdPick('SKI')"><kbd>2</kbd><div class="kbd-card-name">SKI</div></div>
+        <div class="kbd-card" onclick="kbdPick('SURF')"><kbd>3</kbd><div class="kbd-card-name">SURF</div></div>
+        <div class="kbd-card" onclick="kbdPick('SNORKEL')"><kbd>4</kbd><div class="kbd-card-name">SNORKEL</div></div>
+        <div class="kbd-card" onclick="kbdPick('SKYDIVE')"><kbd>5</kbd><div class="kbd-card-name">SKYDIVE</div></div>
+        <div class="kbd-card" onclick="kbdPick('SCUBA')"><kbd>6</kbd><div class="kbd-card-name">SCUBA</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~20 min — single useEffect listening to keydown on document</div></div>
+    <div class="ic"><div class="ic-label">Discoverability</div><div class="ic-val">Hint bar at bottom + ? overlay for full reference</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">High</span> — power users love it, casual users see the hint and feel "this is built thoughtfully"</div></div>
+  </div>
+</div>
+
+<!-- IDEA 2 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 02</p>
+  <h2 class="idea-title">Live Status HUD</h2>
+  <p class="idea-desc">
+    A tiny <strong>monospace status panel</strong> in the top-right corner shows current local time,
+    session counter, and a pulsing "live" dot. Like a fitness tracker or mission console.
+  </p>
+  <div class="hud-demo">
+    <div class="hud-name2">MMA</div>
+    <div class="hud-overlay">
+      <div class="hud-line"><span class="hud-dot"></span> <span>SESSION ACTIVE</span></div>
+      <div class="hud-line"><span class="hud-bracket">[</span> <span id="hud-time">22:34:12</span> <span class="hud-bracket">]</span></div>
+      <div class="hud-line"><span class="hud-bracket">PURSUIT</span> <span>01 / 06</span></div>
+      <div class="hud-line"><span class="hud-bracket">SWITCH</span> <span id="hud-switches">3</span></div>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~30 min — setInterval updates the clock; switch counter increments on tab click</div></div>
+    <div class="ic"><div class="ic-label">Style</div><div class="ic-val">JetBrains Mono, lowercase oklch(1 0 0 / .55), pulsing accent dot</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">High</span> — sells the tactical/scanner aesthetic completely</div></div>
+  </div>
+</div>
+
+<!-- IDEA 3 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 03</p>
+  <h2 class="idea-title">Activity-Specific Cursor Particles</h2>
+  <p class="idea-desc">
+    Different particles trail the cursor for each activity. <strong>MMA = orange sparks</strong>,
+    <strong>Ski = falling snowflakes</strong>, <strong>Surf = blue droplet streaks</strong>, <strong>Snorkel = rising bubbles</strong>.
+    Hover the demo and click the tabs.
+  </p>
+  <div class="particles-demo" id="part-arena">
+    <div class="particle-cursor" id="part-cursor"></div>
+    <div class="particle-arena-name" id="part-name">MMA</div>
+    <div class="particle-tabs">
+      <button class="ptab on" onclick="setParticleType('mma',this)">MMA</button>
+      <button class="ptab" onclick="setParticleType('ski',this)">Ski</button>
+      <button class="ptab" onclick="setParticleType('surf',this)">Surf</button>
+      <button class="ptab" onclick="setParticleType('snorkel',this)">Snorkel</button>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~1 hr — particle pool with per-activity physics (gravity, drift, fade)</div></div>
+    <div class="ic"><div class="ic-label">Style</div><div class="ic-val">~60 particles per type, subtle so they don't compete with text</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">Showstopper</span> — different activities literally feel different to interact with</div></div>
+  </div>
+</div>
+
+<!-- IDEA 4 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 04</p>
+  <h2 class="idea-title">Live "Days Active" Counter</h2>
+  <p class="idea-desc">
+    Each activity shows the <strong>exact number of days since you started</strong>, calculated live.
+    Updates every day automatically. Makes the page feel ongoing, not static. Click below to see the count animate up.
+  </p>
+  <div class="days-demo">
+    <div class="days-info">
+      <h3>MMA</h3>
+      <p>Six days a week, BJJ and Muay Thai. Started in mid-2024 when the gym finally felt like the right place.</p>
+    </div>
+    <div class="days-counter">
+      <div class="days-num" id="days-num">0</div>
+      <div class="days-label">Days active</div>
+      <div class="days-progress" style="width:200px"><div class="days-progress-fill" id="days-fill"></div></div>
+      <div class="days-meta">
+        <div>SINCE: <span style="color:#fff">2024-06-15</span></div>
+        <div>SESSIONS: <span style="color:#fff" id="days-sess">~ 480</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">How</div><div class="ic-val">Diff between today and startDate in activity data. Updates daily on page load.</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~20 min — utility function + count-up animation on enter</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">High</span> — proves these are real, lived pursuits, not aspirations</div></div>
+  </div>
+</div>
+
+<!-- IDEA 5 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 05</p>
+  <h2 class="idea-title">Hold-to-Engage Activity Tabs</h2>
+  <p class="idea-desc">
+    Instead of clicking a tab, <strong>hold it down for a beat</strong>. A charge bar fills, then snaps into the activity with a brief flash.
+    Feels physical, like cocking a weapon or pulling a parachute cord. Hold any button below for ~600ms.
+  </p>
+  <div class="hold-demo">
+    <button class="hold-btn"><div class="hold-fill"></div><span>MMA</span></button>
+    <button class="hold-btn"><div class="hold-fill"></div><span>SKI</span></button>
+    <button class="hold-btn"><div class="hold-fill"></div><span>SURF</span></button>
+    <button class="hold-btn"><div class="hold-fill"></div><span>SNORKEL</span></button>
+    <div class="hold-hint" style="margin-left:1rem">HOLD →</div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~45 min — pointer events with charge tracker, fallback to click for accessibility</div></div>
+    <div class="ic"><div class="ic-label">Caveat</div><div class="ic-val">Quick-click still works (after 100ms threshold). Hold is the discoverable upgrade.</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Quirky</span> — divisive (slows down casual users). Could be optional with a click-only fallback</div></div>
+  </div>
+</div>
+
+<!-- IDEA 6 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 06</p>
+  <h2 class="idea-title">Idle Glitch Pulse</h2>
+  <p class="idea-desc">
+    Every <strong>10-15 seconds while idle</strong>, the activity name briefly glitches (RGB-split, slight horizontal shift)
+    before snapping back. Tiny detail. Makes the page feel alive even when no one's interacting. Watch for ~10s.
+  </p>
+  <div class="glitch-demo">
+    <div class="glitch-counter">Next glitch in: <span id="glitch-eta">2s</span></div>
+    <div class="glitch-name" id="glitch-name">MMA</div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~15 min — setInterval with random jitter, CSS keyframe animation toggle</div></div>
+    <div class="ic"><div class="ic-label">Frequency</div><div class="ic-val">Every 10–15s with random jitter, pauses when user is interacting</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Subtle</span> — invisible to fast users, delightful to lingerers</div></div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary">
+  <div class="sum-table">
+    <div class="sr head"><div class="sc">#</div><div class="sc">Quirk</div><div class="sc">Vibe</div><div class="sc">Effort</div></div>
+    <div class="sr"><div class="sc sn">01</div><div class="sc">Keyboard shortcuts (1–6 + ?)</div><div class="sc">Power-user, tactical</div><div class="sc">20 min</div></div>
+    <div class="sr"><div class="sc sn">02</div><div class="sc">Live status HUD (top-right)</div><div class="sc">Fitness tracker / console</div><div class="sc">30 min</div></div>
+    <div class="sr"><div class="sc sn">03</div><div class="sc">Activity-specific cursor particles</div><div class="sc">Each sport feels different</div><div class="sc">1 hr</div></div>
+    <div class="sr"><div class="sc sn">04</div><div class="sc">Live "days active" counter</div><div class="sc">Real, lived practice</div><div class="sc">20 min</div></div>
+    <div class="sr"><div class="sc sn">05</div><div class="sc">Hold-to-engage tabs</div><div class="sc">Physical, deliberate</div><div class="sc">45 min</div></div>
+    <div class="sr"><div class="sc sn">06</div><div class="sc">Idle glitch pulse</div><div class="sc">Page is alive</div><div class="sc">15 min</div></div>
+  </div>
+</div>
+
+<script>
+// IDEA 1: Keyboard
+function kbdPick(name) {
+  document.getElementById('kbd-name').textContent = name;
+  document.getElementById('kbd-overlay').classList.remove('show');
+  document.getElementById('kbd-demo').focus();
+}
+const kbdMap = { '1':'MMA','2':'SKI','3':'SURF','4':'SNORKEL','5':'SKYDIVE','6':'SCUBA' };
+const kbdOrder = ['MMA','SKI','SURF','SNORKEL','SKYDIVE','SCUBA'];
+document.getElementById('kbd-demo').addEventListener('keydown', e => {
+  if (kbdMap[e.key]) { kbdPick(kbdMap[e.key]); e.preventDefault(); }
+  else if (e.key === '?') { document.getElementById('kbd-overlay').classList.toggle('show'); e.preventDefault(); }
+  else if (e.key === 'ArrowRight') {
+    const cur = document.getElementById('kbd-name').textContent;
+    const i = kbdOrder.indexOf(cur);
+    kbdPick(kbdOrder[(i + 1) % kbdOrder.length]);
+    e.preventDefault();
+  }
+  else if (e.key === 'ArrowLeft') {
+    const cur = document.getElementById('kbd-name').textContent;
+    const i = kbdOrder.indexOf(cur);
+    kbdPick(kbdOrder[(i - 1 + kbdOrder.length) % kbdOrder.length]);
+    e.preventDefault();
+  }
+});
+
+// IDEA 2: HUD time
+function updateHud() {
+  const d = new Date();
+  const t = String(d.getHours()).padStart(2,'0') + ':' +
+            String(d.getMinutes()).padStart(2,'0') + ':' +
+            String(d.getSeconds()).padStart(2,'0');
+  document.getElementById('hud-time').textContent = t;
+}
+setInterval(updateHud, 1000);
+updateHud();
+
+// IDEA 3: Particles
+(function() {
+  const arena = document.getElementById('part-arena');
+  const cursor = document.getElementById('part-cursor');
+  const nameEl = document.getElementById('part-name');
+  if (!arena) return;
+  let type = 'mma', mx = 200, my = 160, lastMx = -999, lastMy = -999;
+
+  arena.addEventListener('mousemove', e => {
+    const r = arena.getBoundingClientRect();
+    mx = e.clientX - r.left; my = e.clientY - r.top;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+
+    if (Math.hypot(mx - lastMx, my - lastMy) > 14) {
+      spawn(mx, my, type);
+      lastMx = mx; lastMy = my;
+    }
+  });
+
+  function spawn(x, y, t) {
+    const p = document.createElement('div');
+    p.className = 'particle ' + t;
+    p.style.left = x + 'px';
+    p.style.top  = y + 'px';
+    arena.appendChild(p);
+
+    // Different physics per type
+    const angle = Math.random() * Math.PI * 2;
+    let dx = Math.cos(angle) * (1 + Math.random() * 3);
+    let dy = Math.sin(angle) * (1 + Math.random() * 3);
+    let gravity = 0;
+    let life = 1;
+    let decay = 0.025;
+
+    if (t === 'mma')      { gravity = 0.15; decay = 0.04; }
+    if (t === 'ski')      { dx *= .4; dy = .3 + Math.random() * .6; gravity = 0.04; decay = 0.012; }
+    if (t === 'surf')     { dx = (Math.random() - .5) * 4; dy = .5; gravity = 0.12; decay = 0.025; }
+    if (t === 'snorkel')  { dy = -(.5 + Math.random()); dx = (Math.random()-.5) * .8; gravity = -.02; decay = 0.018; }
+
+    let px = x, py = y;
+    function step() {
+      px += dx; py += dy; dy += gravity; life -= decay;
+      if (life <= 0) { p.remove(); return; }
+      p.style.transform = `translate(${px - x}px, ${py - y}px)`;
+      p.style.opacity = life;
+      requestAnimationFrame(step);
+    }
+    step();
+  }
+
+  window.setParticleType = function(t, btn) {
+    type = t;
+    document.querySelectorAll('.ptab').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    nameEl.textContent = t.toUpperCase();
+  };
+})();
+
+// IDEA 4: Days counter
+(function() {
+  const start = new Date('2024-06-15');
+  const today = new Date();
+  const days = Math.floor((today - start) / 86400000);
+  const sess = Math.floor(days * 6 / 7);
+  let cur = 0;
+  const numEl = document.getElementById('days-num');
+  const fillEl = document.getElementById('days-fill');
+  const id = setInterval(() => {
+    cur += Math.max(1, Math.floor((days - cur) / 8));
+    if (cur >= days) { cur = days; clearInterval(id); }
+    numEl.textContent = cur;
+  }, 28);
+  document.getElementById('days-sess').textContent = '~ ' + sess;
+  setTimeout(() => fillEl.style.width = Math.min(100, days / 365 * 100) + '%', 100);
+})();
+
+// IDEA 5: Hold to engage
+document.querySelectorAll('.hold-btn').forEach(btn => {
+  let pid, start, raf;
+  const fill = btn.querySelector('.hold-fill');
+  const TARGET = 600;
+
+  btn.addEventListener('pointerdown', e => {
+    start = Date.now();
+    btn.setPointerCapture(e.pointerId);
+    pid = e.pointerId;
+    function tick() {
+      const pct = Math.min(100, (Date.now() - start) / TARGET * 100);
+      fill.style.width = pct + '%';
+      if (pct < 100) raf = requestAnimationFrame(tick);
+      else {
+        btn.classList.add('engaged');
+        setTimeout(() => btn.classList.remove('engaged'), 600);
+        setTimeout(() => fill.style.width = '0%', 400);
+        cancelAnimationFrame(raf);
+      }
+    }
+    raf = requestAnimationFrame(tick);
+  });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => {
+    btn.addEventListener(ev, () => {
+      cancelAnimationFrame(raf);
+      setTimeout(() => fill.style.width = '0%', 100);
+    });
+  });
+});
+
+// IDEA 6: Glitch
+(function() {
+  const name = document.getElementById('glitch-name');
+  const eta  = document.getElementById('glitch-eta');
+  let countdown = 2;
+
+  function tick() {
+    countdown--;
+    if (countdown <= 0) {
+      name.classList.add('glitching');
+      setTimeout(() => name.classList.remove('glitching'), 350);
+      countdown = 2;
+    }
+    eta.textContent = countdown + 's';
+  }
+  setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>

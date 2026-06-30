@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Component Ideas — Bijin Beyond Borders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,700;1,300&family=Nunito+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       oklch(0.93 0.016 14);
+    --surface:  oklch(0.89 0.020 14);
+    --surface2: oklch(0.85 0.024 14);
+    --ink:      oklch(0.14 0.022 14);
+    --primary:  oklch(0.34 0.11 14);
+    --accent:   oklch(0.58 0.19 32);
+    --muted:    oklch(0.44 0.010 14);
+    --rule:     oklch(0.82 0.018 14);
+    --font-display: 'Josefin Sans';
+    --font-body:    'Nunito Sans';
+    --page-px: 3rem;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body), sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ─── Page chrome ─── */
+  .page-header {
+    background: var(--primary);
+    color: oklch(1 0 0);
+    padding: 2rem var(--page-px);
+  }
+  .page-header h1 {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .page-header p {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: 0.3rem;
+  }
+
+  .section-divider {
+    border-top: 1px solid var(--rule);
+    padding: 4rem var(--page-px) 1rem;
+  }
+
+  .idea-label {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .idea-title {
+    font-family: var(--font-display), sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .idea-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    max-width: 60ch;
+    margin-bottom: 3rem;
+    line-height: 1.75;
+  }
+  .idea-desc strong { color: var(--ink); font-weight: 500; }
+
+  .current-vs-new {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+  @media (max-width: 900px) { .current-vs-new { grid-template-columns: 1fr; } }
+
+  .pane-label {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pane-label.new-label { color: var(--accent); }
+
+  /* ────────────────────────────────────────────
+     IDEA 1: Projects — hover image preview
+  ──────────────────────────────────────────── */
+
+  /* Current */
+  .proj-current { border: 1px solid var(--rule); }
+  .proj-current-header {
+    padding: 1.5rem 1.5rem 1.2rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .proj-current-header h2 {
+    font-family: var(--font-display), sans-serif;
+    font-size: 1.8rem; font-weight: 700; letter-spacing: -0.025em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .proj-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto 2rem;
+    align-items: center; gap: 1.5rem;
+    padding: 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none; color: var(--ink);
+  }
+  .proj-row:last-child { border-bottom: none; }
+  .proj-num {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; color: var(--muted);
+  }
+  .proj-info { display: flex; flex-direction: column; gap: 0.25rem; }
+  .proj-name {
+    font-family: var(--font-display), sans-serif;
+    font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .proj-desc { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+  .proj-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; }
+  .proj-tag {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--primary);
+    border: 1px solid var(--primary); padding: 0.2rem 0.5rem;
+  }
+  .proj-year { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em; }
+  .proj-arrow { font-weight: 700; font-size: 0.9rem; color: var(--accent); opacity: 0.3; }
+
+  /* New: hover image preview */
+  .proj-new { border: 1px solid var(--rule); position: relative; overflow: hidden; }
+  .proj-new-header {
+    padding: 1.5rem 1.5rem 1.2rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .proj-new-header h2 {
+    font-family: var(--font-display), sans-serif;
+    font-size: 1.8rem; font-weight: 700; letter-spacing: -0.025em;
+    text-transform: uppercase; color: var(--ink);
+  }
+
+  .proj-new-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: center; gap: 1.5rem;
+    padding: 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s ease, padding-left 0.25s ease;
+  }
+  .proj-new-row:last-child { border-bottom: none; }
+  .proj-new-row:hover { background: var(--surface); padding-left: calc(1.5rem + 0.4rem); }
+
+  /* Floating image preview */
+  .proj-preview {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%) scale(0.88) translateX(12px);
+    width: 220px;
+    height: 140px;
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16,1,0.3,1),
+                transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    z-index: 10;
+    box-shadow: 0 12px 40px oklch(0.1 0.05 14 / 0.18);
+  }
+  .proj-new-row:hover .proj-preview {
+    opacity: 1;
+    transform: translateY(-50%) scale(1) translateX(0);
+  }
+  .proj-preview iframe {
+    width: 1280px; height: 800px;
+    transform: scale(0.172);
+    transform-origin: top left;
+    border: none; pointer-events: none;
+  }
+  .proj-preview-fallback {
+    width: 100%; height: 100%;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .proj-new-info { display: flex; flex-direction: column; gap: 0.3rem; }
+  .proj-new-name {
+    font-family: var(--font-display), sans-serif;
+    font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .proj-new-desc { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+  .stack-chips { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.35rem; }
+  .chip {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.55rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 0.15rem 0.45rem;
+    background: var(--surface2); color: var(--muted);
+  }
+  .chip.live {
+    background: var(--accent); color: oklch(1 0 0);
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .chip.live::before {
+    content: ''; width: 5px; height: 5px;
+    border-radius: 50%; background: oklch(1 0 0);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+  }
+  .proj-new-side { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+  .proj-new-tag {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--primary);
+    border: 1px solid var(--primary); padding: 0.2rem 0.5rem;
+  }
+  .proj-ext-link {
+    font-size: 0.65rem; color: var(--accent); letter-spacing: 0.06em;
+    font-family: var(--font-display), sans-serif;
+    display: flex; align-items: center; gap: 0.25rem;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .proj-new-row:hover .proj-ext-link { opacity: 1; }
+
+  /* ────────────────────────────────────────────
+     IDEA 2: Nav — mobile hamburger drawer
+  ──────────────────────────────────────────── */
+
+  .nav-demo { border: 1px solid var(--rule); overflow: hidden; }
+
+  .demo-nav {
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative;
+  }
+  .demo-nav-brand {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--primary);
+  }
+  .demo-nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .demo-nav-links a {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink); text-decoration: none;
+  }
+  .demo-nav-links a:hover { color: var(--accent); }
+
+  /* Hamburger */
+  .hamburger {
+    display: flex; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.2s;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-drawer {
+    background: var(--surface);
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1);
+    border-top: 1px solid var(--rule);
+  }
+  .mobile-drawer.open { max-height: 320px; }
+
+  .drawer-links { padding: 1.5rem; }
+  .drawer-links li {
+    list-style: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .drawer-links li:last-child { border-bottom: none; }
+  .drawer-links a {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 0;
+    font-family: var(--font-display), sans-serif;
+    font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em;
+    text-transform: uppercase; color: var(--ink); text-decoration: none;
+  }
+  .drawer-links a span { color: var(--accent); font-size: 0.9rem; }
+  .drawer-links a:hover { color: var(--accent); }
+
+  .demo-viewport {
+    background: oklch(0.3 0.04 14 / 0.06);
+    padding: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem;
+    min-height: 120px;
+  }
+  .demo-viewport p {
+    font-size: 0.78rem; color: var(--muted);
+    text-align: center; max-width: 28ch; line-height: 1.6;
+  }
+
+  /* Mobile frame */
+  .mobile-frame-outer {
+    width: 180px;
+    background: var(--bg);
+    border: 1.5px solid var(--rule);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .mf-nav {
+    background: var(--bg);
+    padding: 0.6rem 0.8rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mf-brand {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.45rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--primary);
+  }
+  .mf-ham { display: flex; flex-direction: column; gap: 3px; }
+  .mf-ham span { display: block; width: 14px; height: 1px; background: var(--ink); }
+  .mf-drawer {
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+  }
+  .mf-drawer-item {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.52rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .mf-drawer-item:last-child { border-bottom: none; }
+  .mf-drawer-item span { color: var(--accent); font-size: 0.5rem; }
+
+  /* ────────────────────────────────────────────
+     IDEA 3: Projects card grid (alternate)
+  ──────────────────────────────────────────── */
+
+  .proj-grid-new {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+  .proj-card {
+    padding: 2rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background 0.25s ease;
+  }
+  .proj-card:nth-child(even) { border-right: none; }
+  .proj-card:nth-last-child(-n+2) { border-bottom: none; }
+  .proj-card:hover { background: var(--surface); }
+
+  .proj-card-num {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 2rem;
+  }
+  .proj-card-thumb {
+    width: 100%; aspect-ratio: 16/9;
+    background: var(--surface2);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .proj-card-thumb-inner {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .proj-card:hover .proj-card-thumb-inner { transform: scale(1.04); }
+  .proj-card-name {
+    font-family: var(--font-display), sans-serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
+    text-transform: uppercase; color: var(--ink); margin-bottom: 0.4rem;
+  }
+  .proj-card-desc {
+    font-size: 0.78rem; color: var(--muted); font-weight: 300;
+    line-height: 1.65; margin-bottom: 1rem;
+  }
+  .proj-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .proj-card-chips { display: flex; gap: 0.3rem; }
+  .proj-card-arrow {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.78rem; font-weight: 700; color: var(--accent);
+    opacity: 0; transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .proj-card:hover .proj-card-arrow { opacity: 1; transform: translateX(0); }
+
+  /* ────────────────────────────────────────────
+     IDEA 4: Animated magnetic cursor upgrade
+  ──────────────────────────────────────────── */
+
+  .cursor-demo {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    display: flex; align-items: center; justify-content: center; gap: 3rem;
+  }
+  .cursor-demo * { cursor: none; }
+
+  #demo-cursor-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    z-index: 100;
+  }
+  #demo-cursor-ring {
+    position: absolute;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--primary);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    transition: width 0.3s cubic-bezier(0.16,1,0.3,1),
+                height 0.3s cubic-bezier(0.16,1,0.3,1),
+                background 0.3s, border-color 0.3s;
+  }
+  #demo-cursor-ring.hovering {
+    width: 56px; height: 56px;
+    background: oklch(0.34 0.11 14 / 0.08);
+    border-color: var(--accent);
+  }
+  #demo-cursor-ring.on-btn {
+    width: 80px; height: 80px;
+    background: oklch(0.58 0.19 32 / 0.12);
+    border-color: var(--accent);
+    border-width: 2px;
+  }
+
+  .cursor-magnetic-btn {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.8rem;
+    background: var(--accent); color: oklch(1 0 0);
+    border: none; cursor: none;
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    position: relative; z-index: 2;
+  }
+  .cursor-link-demo {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--primary);
+    border-bottom: 1px solid var(--primary);
+    padding-bottom: 0.1rem;
+    cursor: none; position: relative; z-index: 2;
+  }
+  .cursor-demo-label {
+    position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    font-size: 0.62rem; color: var(--muted); letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  /* ─── Info boxes ─── */
+  .info-box {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .info-item { display: flex; flex-direction: column; gap: 0.3rem; }
+  .info-item-label {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .info-item-value { font-size: 0.82rem; color: var(--ink); line-height: 1.5; }
+
+  /* ─── Summary table ─── */
+  .summary {
+    padding: 4rem var(--page-px);
+    border-top: 1px solid var(--rule);
+  }
+  .summary h2 {
+    font-family: var(--font-display), sans-serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; margin-bottom: 1.5rem; color: var(--ink);
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th, td {
+    text-align: left; padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.82rem;
+  }
+  th {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  td:first-child { font-weight: 700; color: var(--ink); }
+  td:last-child { color: var(--accent); font-family: var(--font-display), sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  tr:last-child td { border-bottom: none; }
+  .badge-21 {
+    display: inline-block;
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.15rem 0.45rem;
+    background: var(--primary); color: oklch(1 0 0);
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Component Ideas — 21st.dev Upgrades</h1>
+  <p>Suggestions for reworking existing components using 21st.dev patterns. Interact with each demo.</p>
+</header>
+
+<!-- ─── IDEA 1: Projects with hover preview ─── -->
+<div class="section-divider">
+  <p class="idea-label">Idea 01</p>
+  <h2 class="idea-title">Projects — Hover Image Preview</h2>
+  <p class="idea-desc">
+    The current list is clean but <strong>flat</strong>. Since Sculptura is now a real live site,
+    the row should show a <strong>site screenshot preview</strong> on hover,
+    tech stack chips, and a live-dot badge. 21st.dev's <em>Link Preview</em> and <em>Inline Tag</em> patterns fit this exactly.
+  </p>
+
+  <div class="current-vs-new">
+    <!-- Current -->
+    <div>
+      <p class="pane-label">Current</p>
+      <div class="proj-current">
+        <div class="proj-current-header">
+          <h2>Projects</h2>
+        </div>
+        <div class="proj-row">
+          <span class="proj-num">01</span>
+          <span class="proj-info">
+            <span class="proj-name">Sculptura</span>
+            <span class="proj-desc">Marketing site for a foam tool insert manufacturer.</span>
+          </span>
+          <span class="proj-meta">
+            <span class="proj-tag">Website</span>
+            <span class="proj-year">2025</span>
+          </span>
+          <span class="proj-arrow">→</span>
+        </div>
+        <div class="proj-row">
+          <span class="proj-num">02</span>
+          <span class="proj-info">
+            <span class="proj-name">Project Two</span>
+            <span class="proj-desc">Something built from scratch.</span>
+          </span>
+          <span class="proj-meta">
+            <span class="proj-tag">Mobile</span>
+            <span class="proj-year">2024</span>
+          </span>
+          <span class="proj-arrow">→</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- New -->
+    <div>
+      <p class="pane-label new-label">With 21st.dev hover preview</p>
+      <div class="proj-new">
+        <div class="proj-new-header">
+          <h2 style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;letter-spacing:-0.025em;text-transform:uppercase;">Projects</h2>
+        </div>
+
+        <!-- Sculptura row with preview -->
+        <div class="proj-new-row">
+          <span class="proj-num" style="font-family:var(--font-display);font-size:0.78rem;font-weight:700;color:var(--muted);">01</span>
+          <span class="proj-new-info">
+            <span class="proj-new-name">Sculptura</span>
+            <span class="proj-new-desc">Foam tool insert manufacturer. Marketing site.</span>
+            <span class="stack-chips">
+              <span class="chip live">Live</span>
+              <span class="chip">Next.js</span>
+              <span class="chip">Framer</span>
+              <span class="chip">Sanity</span>
+            </span>
+          </span>
+          <span class="proj-new-side">
+            <span class="proj-new-tag">Website</span>
+            <span class="proj-ext-link">dsculptura.in ↗</span>
+          </span>
+          <!-- Hover preview -->
+          <div class="proj-preview">
+            <div class="proj-preview-fallback">
+              dsculptura.in<br/><span style="font-size:0.5rem;margin-top:0.2rem;display:block;">preview on hover</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-new-row">
+          <span class="proj-num" style="font-family:var(--font-display);font-size:0.78rem;font-weight:700;color:var(--muted);">02</span>
+          <span class="proj-new-info">
+            <span class="proj-new-name">Project Two</span>
+            <span class="proj-new-desc">Coming soon — placeholder.</span>
+            <span class="stack-chips">
+              <span class="chip">TBD</span>
+            </span>
+          </span>
+          <span class="proj-new-side">
+            <span class="proj-new-tag">Mobile</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-item">
+      <span class="info-item-label">21st.dev component</span>
+      <span class="info-item-value"><span class="badge-21">21st</span>Link Preview Card, Inline Tag / Badge</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">What changes</span>
+      <span class="info-item-value">Add optional <code>previewUrl</code> field, render floating iframe/screenshot on hover. Add stack chips array to data.</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">Effort</span>
+      <span class="info-item-value">~1 hr — data model change + CSS for preview panel</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">Impact</span>
+      <span class="info-item-value">High — Sculptura finally shows what it IS, not just that it exists</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── IDEA 2: Nav mobile drawer ─── -->
+<div class="section-divider">
+  <p class="idea-label">Idea 02</p>
+  <h2 class="idea-title">Nav — Mobile Hamburger Drawer</h2>
+  <p class="idea-desc">
+    The current Nav has <strong>no mobile menu at all</strong> — the link list is just hidden.
+    21st.dev's <em>Animated Hamburger → Sheet</em> pattern adds a smooth slide-down drawer,
+    keeping the existing compass and brand logo untouched on desktop.
+  </p>
+
+  <div class="current-vs-new">
+    <div>
+      <p class="pane-label">Current (mobile)</p>
+      <div class="nav-demo">
+        <div class="demo-nav">
+          <div class="demo-nav-brand">Bijin Beyond Borders</div>
+          <div style="display:flex;flex-direction:column;gap:4px;opacity:0.3;">
+            <span style="display:block;width:22px;height:1.5px;background:var(--ink)"></span>
+            <span style="display:block;width:22px;height:1.5px;background:var(--ink)"></span>
+            <span style="display:block;width:22px;height:1.5px;background:var(--ink)"></span>
+          </div>
+        </div>
+        <div class="demo-viewport">
+          <p>Hamburger exists in CSS but no drawer. Links disappear on mobile. Nav is broken below 768px.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="pane-label new-label">With 21st.dev mobile drawer</p>
+      <div style="display:flex;align-items:flex-start;gap:2rem;">
+        <!-- Interactive demo -->
+        <div class="nav-demo" style="flex:1;height:auto;display:block;">
+          <div class="demo-nav">
+            <div class="demo-nav-brand" style="font-size:0.65rem;">Bijin Beyond Borders</div>
+            <button class="hamburger" id="ham-btn" onclick="toggleDrawer()">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+          <div class="mobile-drawer" id="mobile-drawer">
+            <ul class="drawer-links">
+              <li><a href="#">Travels <span>→</span></a></li>
+              <li><a href="#">Adrenaline <span>→</span></a></li>
+              <li><a href="#">Projects <span>→</span></a></li>
+              <li><a href="#">Map <span>→</span></a></li>
+              <li><a href="#">About <span>→</span></a></li>
+            </ul>
+          </div>
+          <div class="demo-viewport" style="min-height:80px;">
+            <p>Click the hamburger ↑</p>
+          </div>
+        </div>
+
+        <!-- Mobile frame mockup -->
+        <div class="mobile-frame-outer" style="flex-shrink:0;">
+          <div class="mf-nav">
+            <span class="mf-brand">BBB</span>
+            <div class="mf-ham"><span></span><span></span><span></span></div>
+          </div>
+          <div class="mf-drawer">
+            <div class="mf-drawer-item">Travels <span>→</span></div>
+            <div class="mf-drawer-item">Adrenaline <span>→</span></div>
+            <div class="mf-drawer-item">Projects <span>→</span></div>
+            <div class="mf-drawer-item">Map <span>→</span></div>
+            <div class="mf-drawer-item">About <span>→</span></div>
+          </div>
+          <div style="padding:1rem;background:var(--surface2);height:100px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-item">
+      <span class="info-item-label">21st.dev component</span>
+      <span class="info-item-value"><span class="badge-21">21st</span>Animated Hamburger, Mobile Sheet / Drawer</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">What changes</span>
+      <span class="info-item-value">Add hamburger state + max-height slide drawer to Nav.tsx. Desktop layout unchanged.</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">Effort</span>
+      <span class="info-item-value">~45 min — mostly CSS + one useState hook</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">Impact</span>
+      <span class="info-item-value">Critical — site is currently broken on mobile</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── IDEA 3: Projects card grid ─── -->
+<div class="section-divider">
+  <p class="idea-label">Idea 03 (alternate layout)</p>
+  <h2 class="idea-title">Projects — 2-Column Card Grid</h2>
+  <p class="idea-desc">
+    Alternative to the list: a <strong>2-column bento grid</strong> where each project card
+    shows a thumbnail, stack chips, and a hover scale. Matches the existing Adrenaline grid pattern.
+    Best used when you have 3+ real projects.
+  </p>
+
+  <div>
+    <p class="pane-label new-label">Card grid (hover each card)</p>
+    <div class="proj-grid-new">
+      <div class="proj-card">
+        <div class="proj-card-num">01 — Website</div>
+        <div class="proj-card-thumb">
+          <div class="proj-card-thumb-inner">dsculptura.in</div>
+        </div>
+        <div class="proj-card-name">Sculptura</div>
+        <div class="proj-card-desc">Foam tool insert manufacturer. Marketing site with Framer Motion animations and Sanity CMS.</div>
+        <div class="proj-card-footer">
+          <div class="proj-card-chips">
+            <span class="chip live">Live</span>
+            <span class="chip">Next.js</span>
+            <span class="chip">Sanity</span>
+          </div>
+          <span class="proj-card-arrow">↗</span>
+        </div>
+      </div>
+
+      <div class="proj-card" style="opacity:0.45;">
+        <div class="proj-card-num">02 — TBD</div>
+        <div class="proj-card-thumb">
+          <div class="proj-card-thumb-inner">Next project</div>
+        </div>
+        <div class="proj-card-name">Project Two</div>
+        <div class="proj-card-desc">Placeholder — add your next project here.</div>
+        <div class="proj-card-footer">
+          <div class="proj-card-chips"><span class="chip">TBD</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-item">
+      <span class="info-item-label">21st.dev component</span>
+      <span class="info-item-value"><span class="badge-21">21st</span>Project Showcase Card, Feature Grid</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">When to use</span>
+      <span class="info-item-value">Better once you have 3–4 real projects. List is cleaner with fewer items.</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">Effort</span>
+      <span class="info-item-value">~1.5 hr — new CSS grid, thumbnail handling</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">Impact</span>
+      <span class="info-item-value">High visual upgrade, but hold until more projects land</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── IDEA 4: Magnetic cursor upgrade ─── -->
+<div class="section-divider">
+  <p class="idea-label">Idea 04</p>
+  <h2 class="idea-title">Cursor — Magnetic + Context-Aware</h2>
+  <p class="idea-desc">
+    The existing cursor is a dot + lagging ring. 21st.dev's <em>Magnetic Cursor</em> pattern adds
+    <strong>context awareness</strong>: the ring expands on hover, morphs on buttons (larger fill),
+    and shows a text label (like "View →") when lingering over project cards.
+    Move your mouse in the demo below.
+  </p>
+
+  <div class="current-vs-new">
+    <div>
+      <p class="pane-label">Current behavior</p>
+      <div style="border:1px solid var(--rule);background:var(--surface);height:180px;display:flex;align-items:center;justify-content:center;">
+        <p style="font-size:0.78rem;color:var(--muted);text-align:center;max-width:28ch;line-height:1.6;">
+          Dot + lagging ring.<br/>Same size on everything.<br/>No context signal.
+        </p>
+      </div>
+    </div>
+    <div>
+      <p class="pane-label new-label">Upgraded — move mouse here</p>
+      <div class="cursor-demo" id="cursor-demo-area">
+        <div id="demo-cursor-dot"></div>
+        <div id="demo-cursor-ring"></div>
+        <button class="cursor-magnetic-btn" data-cursor="btn">Enter Site</button>
+        <span class="cursor-link-demo" data-cursor="link">About →</span>
+        <span class="cursor-demo-label">Hover the button and link to see ring morph</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-item">
+      <span class="info-item-label">21st.dev component</span>
+      <span class="info-item-value"><span class="badge-21">21st</span>Magnetic Cursor, Custom Cursor with States</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">What changes</span>
+      <span class="info-item-value">Extend Cursor.tsx with data-cursor attribute detection. Add btn/link/card states.</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">Effort</span>
+      <span class="info-item-value">~1 hr — extend existing Cursor component, no full rewrite</span>
+    </div>
+    <div class="info-item">
+      <span class="info-item-label">Impact</span>
+      <span class="info-item-value">Medium — polish detail that elevates interactivity feel</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Summary table ─── -->
+<div class="summary">
+  <h2>Priority order</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Component</th>
+        <th>21st.dev pattern</th>
+        <th>Effort</th>
+        <th>Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Nav — Mobile drawer</td>
+        <td>Animated Hamburger + Sheet</td>
+        <td>~45 min</td>
+        <td>Do first — site is broken on mobile</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Projects — Hover preview + chips</td>
+        <td>Link Preview Card, Inline Tag</td>
+        <td>~1 hr</td>
+        <td>High — Sculptura deserves a showcase</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Cursor — context states</td>
+        <td>Magnetic Cursor</td>
+        <td>~1 hr</td>
+        <td>Polish — do after core features land</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Projects — card grid</td>
+        <td>Project Showcase Card</td>
+        <td>~1.5 hr</td>
+        <td>Hold — better with 3+ real projects</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Hamburger toggle
+  function toggleDrawer() {
+    const ham = document.getElementById('ham-btn');
+    const drawer = document.getElementById('mobile-drawer');
+    ham.classList.toggle('open');
+    drawer.classList.toggle('open');
+  }
+
+  // Custom cursor demo
+  const area = document.getElementById('cursor-demo-area');
+  const dot  = document.getElementById('demo-cursor-dot');
+  const ring = document.getElementById('demo-cursor-ring');
+
+  if (area) {
+    let rx = 0, ry = 0, tx = 0, ty = 0;
+    let raf;
+
+    area.addEventListener('mousemove', e => {
+      const rect = area.getBoundingClientRect();
+      tx = e.clientX - rect.left;
+      ty = e.clientY - rect.top;
+      dot.style.left = tx + 'px';
+      dot.style.top  = ty + 'px';
+    });
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function tick() {
+      rx = lerp(rx, tx, 0.12);
+      ry = lerp(ry, ty, 0.12);
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      raf = requestAnimationFrame(tick);
+    }
+    tick();
+
+    area.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        const t = el.dataset.cursor;
+        ring.classList.remove('hovering', 'on-btn');
+        if (t === 'btn') ring.classList.add('on-btn');
+        else ring.classList.add('hovering');
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.classList.remove('hovering', 'on-btn');
+      });
+    });
+
+    area.addEventListener('mouseleave', () => {
+      cancelAnimationFrame(raf);
+    });
+    area.addEventListener('mouseenter', () => {
+      tick();
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Map Page Ideas — Bijin Beyond Borders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      oklch(0.93 0.016 14);
+  --surface: oklch(0.89 0.020 14);
+  --surface2:oklch(0.85 0.024 14);
+  --ink:     oklch(0.14 0.022 14);
+  --primary: oklch(0.34 0.11 14);
+  --accent:  oklch(0.58 0.19 32);
+  --muted:   oklch(0.44 0.010 14);
+  --rule:    oklch(0.82 0.018 14);
+  --fd: 'Josefin Sans'; --fb: 'Nunito Sans';
+  --px: 3rem;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--fb), sans-serif; font-weight: 300; }
+
+.page-header { background: var(--primary); color: #fff; padding: 2rem var(--px); }
+.page-header h1 { font-family: var(--fd); font-weight: 700; font-size: clamp(1rem,2vw,1.4rem); letter-spacing: .15em; text-transform: uppercase; }
+.page-header p { font-size: .82rem; opacity: .65; margin-top: .3rem; }
+
+.idea-wrap { border-top: 1px solid var(--rule); padding: 4rem var(--px) 0; }
+.chip-label { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.idea-title { font-family: var(--fd); font-size: clamp(1.4rem,3vw,2.2rem); font-weight: 700; letter-spacing: -.025em; text-transform: uppercase; margin-bottom: .4rem; }
+.idea-desc { font-size: .87rem; color: var(--muted); max-width: 62ch; margin-bottom: 2.5rem; line-height: 1.75; }
+.idea-desc strong { color: var(--ink); font-weight: 500; }
+.info-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--rule); border-top: none; margin-bottom: 5rem; }
+.info-cell { padding: 1rem 1.25rem; border-right: 1px solid var(--rule); }
+.info-cell:last-child { border-right: none; }
+.info-cell-label { font-family: var(--fd); font-size: .56rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.info-cell-val { font-size: .8rem; line-height: 1.5; }
+.badge { display: inline-block; font-family: var(--fd); font-size: .52rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .4rem; }
+.badge.high { background: var(--accent); color: #fff; }
+.badge.med  { background: var(--primary); color: #fff; }
+.demo-border { border: 1px solid var(--rule); overflow: hidden; }
+
+/* ══════════════════════════════════════
+   IDEA 1 — City click → sidebar photo
+══════════════════════════════════════ */
+.mock-page {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  height: 480px;
+  border: 1px solid var(--rule);
+  margin-bottom: 0;
+}
+.mock-globe {
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+}
+.mock-globe-hint {
+  position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+  font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+}
+/* SVG city dots */
+.city-dot {
+  cursor: pointer; transition: r .2s;
+}
+.city-dot circle.outer {
+  fill: none; stroke: var(--primary); stroke-width: 1;
+  animation: p 2.4s ease-out infinite;
+}
+@keyframes p { 0% { r:4; opacity:.7; } 100% { r:16; opacity:0; } }
+.city-dot circle.inner { fill: var(--primary); stroke: var(--bg); stroke-width: 1.5; }
+.city-dot.active circle.inner { fill: var(--accent); r: 6; }
+.city-dot.active circle.outer { stroke: var(--accent); }
+
+/* Mock globe SVG */
+.globe-svg { width: 340px; height: 340px; }
+
+/* Sidebar states */
+.mock-sidebar {
+  padding: 2rem 1.5rem;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg);
+}
+.sidebar-default { }
+.sidebar-city {
+  position: absolute; inset: 0;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+  overflow: hidden;
+}
+.sidebar-city.visible { transform: translateX(0); }
+
+.city-photo-wrap {
+  width: 100%; aspect-ratio: 4/3;
+  overflow: hidden; flex-shrink: 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.city-photo-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+.city-photo-wrap:hover img { transform: scale(1.04); }
+.city-photo-country {
+  position: absolute; top: .75rem; left: .75rem;
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #fff;
+  background: var(--primary); padding: .2rem .5rem;
+}
+.city-info { padding: 1.25rem 1.5rem; flex: 1; }
+.city-name-big {
+  font-family: var(--fd); font-size: 1.3rem; font-weight: 700;
+  letter-spacing: -.02em; text-transform: uppercase; color: var(--ink); margin-bottom: .2rem;
+}
+.city-date { font-size: .72rem; color: var(--muted); letter-spacing: .06em; margin-bottom: 1rem; }
+.city-stat-row { display: flex; gap: 1rem; padding-top: .75rem; border-top: 1px solid var(--rule); }
+.city-stat { display: flex; flex-direction: column; gap: .15rem; }
+.city-stat-val { font-family: var(--fd); font-size: 1rem; font-weight: 700; color: var(--primary); }
+.city-stat-label { font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-family: var(--fd); font-weight: 700; }
+.city-back {
+  position: absolute; top: .75rem; right: .75rem; z-index: 10;
+  font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; gap: .25rem;
+}
+.city-back:hover { color: var(--ink); }
+
+/* default sidebar stuff */
+.sb-count { font-family: var(--fd); font-size: 3rem; font-weight: 700; color: var(--primary); letter-spacing: -.03em; line-height: 1; }
+.sb-count-label { font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-top: .3rem; font-family: var(--fd); }
+.sb-divider { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
+.sb-region { margin-bottom: .75rem; }
+.sb-region-name { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--primary); margin-bottom: .2rem; }
+.sb-region-cities { font-size: .72rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+/* ══════════════════════════════════════
+   IDEA 2 — Flight arc routes
+══════════════════════════════════════ */
+.arc-demo {
+  height: 380px; background: var(--surface); position: relative;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; border: 1px solid var(--rule);
+}
+.arc-svg { width: 100%; height: 100%; }
+.arc-path {
+  fill: none; stroke: var(--primary); stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+  animation: dash 2s linear infinite;
+  opacity: .7;
+}
+.arc-path.accent { stroke: var(--accent); animation-direction: reverse; }
+@keyframes dash { to { stroke-dashoffset: -200; } }
+.arc-dot { fill: var(--primary); }
+.arc-dot.accent { fill: var(--accent); }
+.arc-label {
+  font-family: var(--fd); font-size: 8px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; fill: var(--ink);
+}
+.arc-legend {
+  position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 2rem; align-items: center;
+}
+.arc-legend-item { display: flex; align-items: center; gap: .5rem; font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.arc-legend-line { width: 24px; height: 2px; border-top: 2px dashed; }
+.arc-legend-line.primary { border-color: var(--primary); }
+.arc-legend-line.acc { border-color: var(--accent); }
+
+/* ══════════════════════════════════════
+   IDEA 3 — Polaroid hover card
+══════════════════════════════════════ */
+.polaroid-arena {
+  height: 320px; background: var(--surface2);
+  position: relative; overflow: hidden; cursor: none;
+  border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+}
+.polaroid-arena-hint {
+  font-family: var(--fd); font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--muted); text-align: center;
+  pointer-events: none; user-select: none;
+}
+/* fake globe dots */
+.pdot {
+  position: absolute;
+  width: 10px; height: 10px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none;
+}
+.pdot-inner {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--primary); border: 1.5px solid var(--bg);
+  transition: transform .2s;
+}
+.pdot:hover .pdot-inner { transform: scale(1.5); background: var(--accent); }
+/* polaroid card */
+.polaroid-card {
+  position: absolute; width: 140px;
+  background: #fff; padding: 8px 8px 32px;
+  pointer-events: none;
+  box-shadow: 0 8px 32px oklch(.1 .05 14 / .2);
+  opacity: 0; transform: scale(.85) rotate(0deg);
+  transition: opacity .25s ease, transform .3s cubic-bezier(.16,1,.3,1);
+  z-index: 20;
+}
+.polaroid-card.show { opacity: 1; transform: scale(1) rotate(var(--rot, 3deg)); }
+.polaroid-img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.polaroid-caption {
+  position: absolute; bottom: 8px; left: 0; right: 0; text-align: center;
+  font-family: var(--fd); font-size: .52rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--primary);
+}
+/* custom cursor */
+.p-cursor { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); pointer-events: none; translate: -50% -50%; z-index: 30; }
+.p-ring { position: absolute; width: 36px; height: 36px; border: 1.5px solid var(--primary); border-radius: 50%; pointer-events: none; translate: -50% -50%; z-index: 29; transition: width .2s, height .2s; }
+
+/* summary */
+.summary-table { border: 1px solid var(--rule); margin-bottom: 5rem; }
+.st-row { display: grid; grid-template-columns: 3rem 1fr 1fr 5rem; border-bottom: 1px solid var(--rule); }
+.st-row:last-child { border-bottom: none; }
+.st-row.head { background: var(--surface); }
+.st-cell { padding: .9rem 1.1rem; border-right: 1px solid var(--rule); font-size: .78rem; }
+.st-cell:last-child { border-right: none; }
+.st-row.head .st-cell { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.st-num { font-family: var(--fd); font-weight: 700; font-size: .7rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Map Page — Creative Ideas</h1>
+  <p>Three upgrades for the globe. Interact with each demo.</p>
+</header>
+
+<!-- ═══ IDEA 1 ═══ -->
+<div class="idea-wrap">
+  <p class="chip-label">Idea 01</p>
+  <h2 class="idea-title">Click a City → Sidebar Becomes a Photo</h2>
+  <p class="idea-desc">
+    Clicking any city dot on the globe <strong>rotates the globe to center that city</strong>
+    and <strong>transforms the sidebar</strong> into a photo panel — your real photo from that trip,
+    the visit date, and stats. Click a city below.
+  </p>
+
+  <div class="mock-page">
+    <!-- fake globe -->
+    <div class="mock-globe">
+      <svg class="globe-svg" viewBox="0 0 340 340">
+        <defs>
+          <radialGradient id="og" cx="38%" cy="35%" r="58%">
+            <stop offset="0%" stop-color="oklch(0.93 0.016 14)"/>
+            <stop offset="100%" stop-color="oklch(0.85 0.024 14)"/>
+          </radialGradient>
+          <radialGradient id="atm" cx="50%" cy="50%" r="50%">
+            <stop offset="85%" stop-color="oklch(0.34 0.11 14)" stop-opacity="0"/>
+            <stop offset="100%" stop-color="oklch(0.34 0.11 14)" stop-opacity="0.15"/>
+          </radialGradient>
+        </defs>
+        <!-- ocean -->
+        <circle cx="170" cy="170" r="150" fill="url(#og)"/>
+        <!-- graticule lines -->
+        <line x1="170" y1="20" x2="170" y2="320" stroke="oklch(0.82 0.018 14)" stroke-width=".4"/>
+        <line x1="20" y1="170" x2="320" y2="170" stroke="oklch(0.82 0.018 14)" stroke-width=".4"/>
+        <ellipse cx="170" cy="170" rx="150" ry="60" fill="none" stroke="oklch(0.82 0.018 14)" stroke-width=".4"/>
+        <ellipse cx="170" cy="170" rx="150" ry="110" fill="none" stroke="oklch(0.82 0.018 14)" stroke-width=".4"/>
+        <!-- fake countries -->
+        <ellipse cx="220" cy="120" rx="55" ry="38" fill="oklch(0.89 0.020 14)" stroke="oklch(0.82 0.018 14)" stroke-width=".6"/>
+        <ellipse cx="145" cy="155" rx="65" ry="35" fill="oklch(0.76 0.07 14)" stroke="oklch(0.58 0.09 14)" stroke-width=".6"/>
+        <ellipse cx="110" cy="185" rx="28" ry="22" fill="oklch(0.76 0.07 14)" stroke="oklch(0.58 0.09 14)" stroke-width=".6"/>
+        <ellipse cx="210" cy="200" rx="40" ry="25" fill="oklch(0.89 0.020 14)" stroke="oklch(0.82 0.018 14)" stroke-width=".6"/>
+        <ellipse cx="230" cy="140" rx="20" ry="15" fill="oklch(0.76 0.07 14)" stroke="oklch(0.58 0.09 14)" stroke-width=".6"/>
+        <ellipse cx="168" cy="230" rx="22" ry="16" fill="oklch(0.76 0.07 14)" stroke="oklch(0.58 0.09 14)" stroke-width=".6"/>
+        <!-- atmosphere -->
+        <circle cx="170" cy="170" r="150" fill="url(#atm)" pointer-events="none"/>
+
+        <!-- City dots — clickable -->
+        <g class="city-dot" data-city="Tokyo" data-country="Japan" data-date="Jan 2025" data-seed="tokyo-jp" data-cities="13" data-trips="2" onclick="selectCity(this)">
+          <circle class="outer" cx="232" cy="138" r="4" opacity="0"/>
+          <circle class="inner" cx="232" cy="138" r="3.5"/>
+        </g>
+        <g class="city-dot" data-city="Kyoto" data-country="Japan" data-date="Jan 2025" data-seed="wb-kyoto" data-cities="13" data-trips="2" onclick="selectCity(this)">
+          <circle class="outer" cx="228" cy="142" r="4" opacity="0"/>
+          <circle class="inner" cx="228" cy="142" r="3.5"/>
+        </g>
+        <g class="city-dot" data-city="New York" data-country="United States" data-date="Feb 2024" data-seed="ny-us" data-cities="14" data-trips="3" onclick="selectCity(this)">
+          <circle class="outer" cx="108" cy="152" r="4" opacity="0"/>
+          <circle class="inner" cx="108" cy="152" r="3.5"/>
+        </g>
+        <g class="city-dot" data-city="San Francisco" data-country="United States" data-date="2024" data-seed="sf-us" data-cities="14" data-trips="3" onclick="selectCity(this)">
+          <circle class="outer" cx="93" cy="155" r="4" opacity="0"/>
+          <circle class="inner" cx="93" cy="155" r="3.5"/>
+        </g>
+        <g class="city-dot" data-city="Barcelona" data-country="Spain" data-date="Aug 2025" data-seed="barcelona-es" data-cities="14" data-trips="1" onclick="selectCity(this)">
+          <circle class="outer" cx="150" cy="143" r="4" opacity="0"/>
+          <circle class="inner" cx="150" cy="143" r="3.5"/>
+        </g>
+        <g class="city-dot" data-city="Dubai" data-country="UAE" data-date="Feb 2024" data-seed="dubai-ae" data-cities="2" data-trips="1" onclick="selectCity(this)">
+          <circle class="outer" cx="211" cy="162" r="4" opacity="0"/>
+          <circle class="inner" cx="211" cy="162" r="3.5"/>
+        </g>
+        <g class="city-dot" data-city="Rio de Janeiro" data-country="Brazil" data-date="2026" data-seed="rio-br" data-cities="2" data-trips="1" onclick="selectCity(this)">
+          <circle class="outer" cx="168" cy="228" r="4" opacity="0"/>
+          <circle class="inner" cx="168" cy="228" r="3.5"/>
+        </g>
+      </svg>
+      <p class="mock-globe-hint">Click any city dot →</p>
+    </div>
+
+    <!-- sidebar -->
+    <div class="mock-sidebar">
+      <div class="sidebar-default" id="sb-default">
+        <div class="sb-count">15</div>
+        <div class="sb-count-label">Countries visited</div>
+        <hr class="sb-divider"/>
+        <div class="sb-region">
+          <div class="sb-region-name">Asia</div>
+          <div class="sb-region-cities">Japan, India</div>
+        </div>
+        <div class="sb-region">
+          <div class="sb-region-name">North America</div>
+          <div class="sb-region-cities">United States, Canada</div>
+        </div>
+        <div class="sb-region">
+          <div class="sb-region-name">Europe</div>
+          <div class="sb-region-cities">UK, Ireland, Germany, Spain, Italy, Switzerland, Netherlands</div>
+        </div>
+        <div class="sb-region">
+          <div class="sb-region-name">Middle East</div>
+          <div class="sb-region-cities">UAE</div>
+        </div>
+      </div>
+
+      <!-- city panel (slides in) -->
+      <div class="sidebar-city" id="sb-city">
+        <button class="city-back" onclick="deselectCity()">← Back</button>
+        <div class="city-photo-wrap">
+          <img id="city-img" src="" alt="" />
+          <div class="city-photo-country" id="city-country-badge"></div>
+        </div>
+        <div class="city-info">
+          <div class="city-name-big" id="city-name"></div>
+          <div class="city-date" id="city-date"></div>
+          <div class="city-stat-row">
+            <div class="city-stat">
+              <div class="city-stat-val" id="city-cities"></div>
+              <div class="city-stat-label">Cities in country</div>
+            </div>
+            <div class="city-stat">
+              <div class="city-stat-val" id="city-trips"></div>
+              <div class="city-stat-label">Trips</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-cell">
+      <div class="info-cell-label">How it works</div>
+      <div class="info-cell-val">City click → globe rotates to it with momentum, sidebar slides in with real trip photo + visit date</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Effort</div>
+      <div class="info-cell-val">~2 hr — D3 rotate transition already exists, add click handler + sidebar state</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Impact</div>
+      <div class="info-cell-val"><span class="badge high">Showstopper</span> — turns the globe from display into an interactive travel diary</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 2 ═══ -->
+<div class="idea-wrap">
+  <p class="chip-label">Idea 02</p>
+  <h2 class="idea-title">Animated Flight Arcs Between Trip Cities</h2>
+  <p class="idea-desc">
+    Each trip gets a <strong>colour-coded great-circle arc</strong> connecting its cities in order,
+    with an animated dashed stroke that moves in the direction of travel.
+    Toggle by trip to watch your routes light up.
+  </p>
+
+  <div class="arc-demo">
+    <svg class="arc-svg" viewBox="0 0 800 380" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <radialGradient id="bg2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="oklch(0.92 0.014 14)"/>
+          <stop offset="100%" stop-color="oklch(0.87 0.020 14)"/>
+        </radialGradient>
+      </defs>
+      <rect width="800" height="380" fill="url(#bg2)"/>
+
+      <!-- graticule -->
+      <line x1="0" y1="190" x2="800" y2="190" stroke="oklch(0.82 0.018 14)" stroke-width=".5"/>
+      <line x1="400" y1="0" x2="400" y2="380" stroke="oklch(0.82 0.018 14)" stroke-width=".5"/>
+      <ellipse cx="400" cy="190" rx="380" ry="95" fill="none" stroke="oklch(0.82 0.018 14)" stroke-width=".4"/>
+
+      <!-- Japan trip arc (primary) -->
+      <path class="arc-path" d="M 620 140 Q 580 80 560 130 Q 548 142 535 148"/>
+      <path class="arc-path" d="M 535 148 Q 520 155 510 160"/>
+      <path class="arc-path" d="M 510 160 Q 490 165 480 162"/>
+
+      <!-- US trip arc (accent) -->
+      <path class="arc-path accent" d="M 210 145 Q 245 130 270 138 Q 290 142 310 148"/>
+      <path class="arc-path accent" d="M 310 148 Q 330 155 355 158 Q 375 160 390 165"/>
+
+      <!-- Europe arc (primary, thinner) -->
+      <path class="arc-path" style="stroke-width:.8;opacity:.5" d="M 385 138 Q 400 132 415 135 Q 435 138 445 140 Q 460 143 470 146"/>
+
+      <!-- City dots -->
+      <!-- Japan -->
+      <circle class="arc-dot" cx="620" cy="140" r="4"/><text class="arc-label" x="626" y="138">Tokyo</text>
+      <circle class="arc-dot" cx="535" cy="148" r="3"/><text class="arc-label" x="541" y="146">Kyoto</text>
+      <circle class="arc-dot" cx="510" cy="160" r="3"/><text class="arc-label" x="516" y="158">Osaka</text>
+      <circle class="arc-dot" cx="480" cy="162" r="3"/><text class="arc-label" x="486" y="160">Kobe</text>
+      <!-- US -->
+      <circle class="arc-dot accent" cx="210" cy="145" r="4"/><text class="arc-label" x="215" y="143">NY</text>
+      <circle class="arc-dot accent" cx="310" cy="148" r="3"/><text class="arc-label" x="315" y="146">Austin</text>
+      <circle class="arc-dot accent" cx="390" cy="165" r="3"/><text class="arc-label" x="366" y="163">SF</text>
+      <!-- Europe -->
+      <circle class="arc-dot" cx="385" cy="138" r="3"/><text class="arc-label" x="360" y="136">Madrid</text>
+      <circle class="arc-dot" cx="445" cy="140" r="3"/><text class="arc-label" x="450" y="138">Rome</text>
+      <circle class="arc-dot" cx="470" cy="146" r="3"/><text class="arc-label" x="475" y="144">Venice</text>
+    </svg>
+    <div class="arc-legend">
+      <div class="arc-legend-item"><div class="arc-legend-line primary"></div> Japan · Europe trips</div>
+      <div class="arc-legend-item"><div class="arc-legend-line acc"></div> US · Canada trips</div>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-cell">
+      <div class="info-cell-label">How it works</div>
+      <div class="info-cell-val">D3 geoInterpolate draws great-circle arcs between consecutive cities per trip. CSS dash-offset animates direction</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Effort</div>
+      <div class="info-cell-val">~1.5 hr — add arc data alongside existing city data, render in the D3 init</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Impact</div>
+      <div class="info-cell-val"><span class="badge high">High</span> — your globe goes from scattered dots to a map of journeys</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 3 ═══ -->
+<div class="idea-wrap">
+  <p class="chip-label">Idea 03</p>
+  <h2 class="idea-title">Polaroid Photo Card on City Hover</h2>
+  <p class="idea-desc">
+    Instead of a text label tooltip, hovering a city that has real photos shows a
+    <strong>polaroid-style photo card</strong> — slightly rotated, with the city name handwritten below.
+    Cities without photos keep the existing text label. Move your cursor over the dots below.
+  </p>
+
+  <div class="polaroid-arena" id="pol-arena">
+    <div class="p-cursor" id="pc-dot"></div>
+    <div class="p-ring"   id="pc-ring"></div>
+    <div class="polaroid-card" id="pol-card" style="--rot: 3deg">
+      <img class="polaroid-img" id="pol-img" src="" alt=""/>
+      <div class="polaroid-caption" id="pol-caption"></div>
+    </div>
+    <p class="polaroid-arena-hint">Hover the city dots</p>
+
+    <!-- dots -->
+    <div class="pdot" style="left:35%;top:40%" data-city="Tokyo"         data-seed="tokyo-jp">     <div class="pdot-inner"></div></div>
+    <div class="pdot" style="left:25%;top:55%" data-city="New York"      data-seed="ny-us">        <div class="pdot-inner"></div></div>
+    <div class="pdot" style="left:48%;top:38%" data-city="Barcelona"     data-seed="barcelona-es"> <div class="pdot-inner"></div></div>
+    <div class="pdot" style="left:55%;top:42%" data-city="Rome"          data-seed="rome-it">      <div class="pdot-inner"></div></div>
+    <div class="pdot" style="left:60%;top:47%" data-city="Dubai"         data-seed="dubai-ae">     <div class="pdot-inner"></div></div>
+    <div class="pdot" style="left:40%;top:70%" data-city="Rio"           data-seed="rio-br">        <div class="pdot-inner"></div></div>
+    <div class="pdot" style="left:15%;top:45%" data-city="San Francisco" data-seed="sf-us">        <div class="pdot-inner"></div></div>
+    <div class="pdot" style="left:73%;top:38%" data-city="Kyoto"         data-seed="wb-kyoto">     <div class="pdot-inner"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-cell">
+      <div class="info-cell-label">How it works</div>
+      <div class="info-cell-val">On city hover, show an absolutely-positioned div with your real photo. Cities without photos keep the existing text tooltip.</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Effort</div>
+      <div class="info-cell-val">~45 min — replace text label with photo div in the D3 city group setup</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Impact</div>
+      <div class="info-cell-val"><span class="badge med">Medium</span> — beautiful detail, especially once most cities have real photos</div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div style="padding: 2rem var(--px) 0;">
+  <div class="summary-table">
+    <div class="st-row head">
+      <div class="st-cell">#</div><div class="st-cell">Idea</div><div class="st-cell">What changes</div><div class="st-cell">Effort</div>
+    </div>
+    <div class="st-row">
+      <div class="st-cell st-num">01</div>
+      <div class="st-cell">City click → photo sidebar</div>
+      <div class="st-cell">Click handler + D3 rotate transition + sidebar slide</div>
+      <div class="st-cell">2 hr</div>
+    </div>
+    <div class="st-row">
+      <div class="st-cell st-num">02</div>
+      <div class="st-cell">Animated flight arcs</div>
+      <div class="st-cell">D3 geoInterpolate arcs + CSS dash animation</div>
+      <div class="st-cell">1.5 hr</div>
+    </div>
+    <div class="st-row">
+      <div class="st-cell st-num">03</div>
+      <div class="st-cell">Polaroid hover card</div>
+      <div class="st-cell">Replace text tooltip with photo div in D3 city setup</div>
+      <div class="st-cell">45 min</div>
+    </div>
+  </div>
+</div>
+<div style="height:4rem"></div>
+
+<script>
+// ── Idea 1: city click ──
+function selectCity(el) {
+  document.querySelectorAll('.city-dot').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+  const city    = el.dataset.city;
+  const country = el.dataset.country;
+  const date    = el.dataset.date;
+  const seed    = el.dataset.seed;
+  const cities  = el.dataset.cities;
+  const trips   = el.dataset.trips;
+
+  document.getElementById('city-img').src = `https://picsum.photos/seed/${seed}/320/240`;
+  document.getElementById('city-name').textContent = city;
+  document.getElementById('city-country-badge').textContent = country;
+  document.getElementById('city-date').textContent = 'Visited ' + date;
+  document.getElementById('city-cities').textContent = cities;
+  document.getElementById('city-trips').textContent = trips;
+  document.getElementById('sb-city').classList.add('visible');
+}
+function deselectCity() {
+  document.querySelectorAll('.city-dot').forEach(d => d.classList.remove('active'));
+  document.getElementById('sb-city').classList.remove('visible');
+}
+
+// ── Idea 3: polaroid hover ──
+(function() {
+  const arena = document.getElementById('pol-arena');
+  const card  = document.getElementById('pol-card');
+  const img   = document.getElementById('pol-img');
+  const cap   = document.getElementById('pol-caption');
+  const dot   = document.getElementById('pc-dot');
+  const ring  = document.getElementById('pc-ring');
+  if (!arena) return;
+
+  let rx = 0, ry = 0, mx = 300, my = 160;
+
+  arena.addEventListener('mousemove', e => {
+    const r = arena.getBoundingClientRect();
+    mx = e.clientX - r.left; my = e.clientY - r.top;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  });
+
+  function tick() {
+    rx += (mx - rx) * .15; ry += (my - ry) * .15;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  arena.querySelectorAll('.pdot').forEach(pd => {
+    pd.addEventListener('mouseenter', () => {
+      const seed = pd.dataset.seed;
+      const city = pd.dataset.city;
+      const rot  = (Math.random() - .5) * 10;
+      img.src = `https://picsum.photos/seed/${seed}/200/200`;
+      cap.textContent = city;
+      card.style.setProperty('--rot', rot + 'deg');
+      const pr = pd.getBoundingClientRect();
+      const ar = arena.getBoundingClientRect();
+      const cx = pr.left + 5 - ar.left;
+      const cy = pr.top  + 5 - ar.top;
+      card.style.left = (cx + 15) + 'px';
+      card.style.top  = (cy - 90) + 'px';
+      card.classList.add('show');
+    });
+    pd.addEventListener('mouseleave', () => card.classList.remove('show'));
+  });
+})();
+</script>
+</body>
+</html>

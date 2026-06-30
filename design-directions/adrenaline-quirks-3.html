@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adrenaline Quirks — Round 3 (Ambient)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Nunito+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: oklch(0.93 0.016 14); --surface: oklch(0.89 0.020 14);
+  --ink: oklch(0.14 0.022 14); --primary: oklch(0.34 0.11 14);
+  --accent: oklch(0.58 0.19 32); --muted: oklch(0.44 0.010 14);
+  --rule: oklch(0.82 0.018 14); --dark: oklch(0.10 0.018 14);
+  --fd: 'Josefin Sans'; --fb: 'Nunito Sans'; --fm: 'JetBrains Mono'; --px: 3rem;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--fb); font-weight: 300; }
+.page-header { background: var(--primary); color: #fff; padding: 2rem var(--px); }
+.page-header h1 { font-family: var(--fd); font-weight: 700; font-size: clamp(1rem,2vw,1.4rem); letter-spacing: .15em; text-transform: uppercase; }
+.page-header p { font-size: .82rem; opacity: .65; margin-top: .3rem; }
+.idea-wrap { border-top: 1px solid var(--rule); padding: 4rem var(--px) 0; }
+.chip { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.idea-title { font-family: var(--fd); font-size: clamp(1.3rem,2.5vw,2rem); font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; margin-bottom: .4rem; }
+.idea-desc { font-size: .85rem; color: var(--muted); max-width: 60ch; margin-bottom: 2rem; line-height: 1.75; }
+.idea-desc strong { color: var(--ink); font-weight: 500; }
+.info-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--rule); border-top: none; margin-bottom: 5rem; }
+.ic { padding: 1rem 1.25rem; border-right: 1px solid var(--rule); }
+.ic:last-child { border-right: none; }
+.ic-label { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.ic-val { font-size: .78rem; line-height: 1.5; }
+.badge { display: inline-block; font-family: var(--fd); font-size: .52rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .4rem; }
+.hl { background: var(--accent); color: #fff; }
+.hm { background: var(--primary); color: #fff; }
+
+/* ════════════════════
+   IDEA 1 — Wave silhouette morph
+════════════════════ */
+.silh-demo {
+  height: 260px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden; padding: 2rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.silh-name { font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; }
+.silh-canvas-wrap { position: relative; height: 90px; }
+canvas { width: 100%; height: 100%; display: block; }
+.silh-counter { position: absolute; top: 1rem; right: 1rem; font-family: var(--fm); font-size: .55rem; color: oklch(1 0 0 / .35); letter-spacing: .05em; }
+
+/* ════════════════════
+   IDEA 2 — Floating dust
+════════════════════ */
+.dust-demo {
+  height: 260px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden; padding: 2rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.dust-name { font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; position: relative; z-index: 2; }
+.dust {
+  position: absolute; pointer-events: none; will-change: transform;
+  background: oklch(1 0 0 / .35); border-radius: 50%;
+}
+
+/* ════════════════════
+   IDEA 3 — Hue shift per activity
+════════════════════ */
+.hue-demo {
+  height: 280px; border: 1px solid var(--rule); position: relative; overflow: hidden;
+  transition: background 1s ease;
+}
+.hue-bg-mma     { background: linear-gradient(135deg, oklch(.14 .04 14) 0%, oklch(.08 .025 14) 100%); }
+.hue-bg-ski     { background: linear-gradient(135deg, oklch(.14 .025 220) 0%, oklch(.08 .015 220) 100%); }
+.hue-bg-surf    { background: linear-gradient(135deg, oklch(.14 .03 200) 0%, oklch(.08 .02 200) 100%); }
+.hue-bg-snorkel { background: linear-gradient(135deg, oklch(.14 .035 180) 0%, oklch(.08 .02 180) 100%); }
+.hue-bg-skydive { background: linear-gradient(135deg, oklch(.14 .025 240) 0%, oklch(.08 .015 250) 100%); }
+.hue-bg-scuba   { background: linear-gradient(135deg, oklch(.12 .035 250) 0%, oklch(.06 .02 260) 100%); }
+.hue-content { position: relative; z-index: 2; padding: 2rem; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+.hue-name { font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; transition: color 1s; }
+.hue-tag { font-family: var(--fd); font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: oklch(1 0 0 / .55); margin-top: .3rem; }
+.hue-tabs { display: flex; gap: .5rem; flex-wrap: wrap; }
+.hue-btn { font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: .4rem .9rem; background: oklch(0 0 0 / .25); border: 1px solid oklch(1 0 0 / .15); color: oklch(1 0 0 / .55); cursor: pointer; transition: all .2s; }
+.hue-btn.on { border-color: var(--accent); color: var(--accent); }
+
+/* ════════════════════
+   IDEA 4 — Whispering edge text
+════════════════════ */
+.whisper-demo {
+  height: 320px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; overflow: hidden; padding: 2rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.whisper-name { font-family: var(--fd); font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 700; letter-spacing: -.03em; text-transform: uppercase; color: #fff; }
+.whisper {
+  position: absolute; pointer-events: none;
+  font-family: var(--fd); font-size: .68rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: oklch(1 0 0 / .25);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  white-space: nowrap;
+}
+.whisper.show { opacity: 1; }
+.whisper-trigger {
+  position: absolute; bottom: 1rem; left: 1rem;
+  font-family: var(--fd); font-size: .55rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; padding: .35rem .8rem; background: none;
+  border: 1px solid oklch(1 0 0 / .2); color: oklch(1 0 0 / .55); cursor: pointer;
+}
+.whisper-trigger:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ════════════════════
+   IDEA 5 — Reverse wave
+════════════════════ */
+.rev-demo {
+  background: var(--dark); border: 1px solid var(--rule);
+  padding: 2rem; position: relative;
+  display: grid; grid-template-rows: 1fr auto;
+  gap: 1rem; height: 220px;
+}
+.rev-info { display: flex; align-items: center; justify-content: space-between; }
+.rev-name { font-family: var(--fd); font-size: 1.4rem; font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; color: #fff; }
+.rev-status { font-family: var(--fm); font-size: .55rem; color: oklch(1 0 0 / .4); letter-spacing: .05em; display: flex; align-items: center; gap: .5rem; }
+.rev-status .dot { width: 6px; height: 6px; border-radius: 50%; background: oklch(1 0 0 / .35); }
+.rev-status.reverse .dot { background: var(--accent); animation: pulse 1s ease-in-out infinite; }
+.rev-status.reverse { color: var(--accent); }
+@keyframes pulse { 50% { opacity: .4; } }
+.rev-canvas-wrap { height: 90px; position: relative; }
+
+/* ════════════════════
+   IDEA 6 — Big number slot
+════════════════════ */
+.slot-demo {
+  height: 280px; background: var(--dark); border: 1px solid var(--rule);
+  position: relative; padding: 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.slot-left {
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.slot-hint { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: oklch(1 0 0 / .4); }
+.slot-name { font-family: var(--fd); font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; color: #fff; }
+.slot-instr { font-family: var(--fm); font-size: .6rem; color: oklch(1 0 0 / .35); letter-spacing: .05em; margin-top: .5rem; }
+.slot-num {
+  font-family: var(--fd); font-size: clamp(8rem, 18vw, 14rem); font-weight: 700;
+  line-height: 1; letter-spacing: -.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px oklch(1 0 0 / .25);
+  cursor: pointer;
+  user-select: none;
+  transition: -webkit-text-stroke-color .2s;
+  font-variant-numeric: tabular-nums;
+}
+.slot-num:hover { -webkit-text-stroke-color: var(--accent); }
+.slot-num.spinning { -webkit-text-stroke-color: var(--accent); }
+
+/* summary */
+.summary { padding: 2rem var(--px) 0; }
+.sum-table { border: 1px solid var(--rule); margin-bottom: 5rem; }
+.sr { display: grid; grid-template-columns: 3rem 1fr 1fr 6rem; border-bottom: 1px solid var(--rule); }
+.sr:last-child { border-bottom: none; }
+.sr.head { background: var(--surface); }
+.sc { padding: .9rem 1.1rem; border-right: 1px solid var(--rule); font-size: .78rem; }
+.sc:last-child { border-right: none; }
+.sr.head .sc { font-family: var(--fd); font-size: .54rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.sn { font-family: var(--fd); font-weight: 700; font-size: .7rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Adrenaline Quirks — Round 3 (Ambient)</h1>
+  <p>Atmospheric and subtle. Same family as the glitch you shortlisted.</p>
+</header>
+
+<!-- IDEA 1 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 01</p>
+  <h2 class="idea-title">Wave Silhouette Morph</h2>
+  <p class="idea-desc">
+    Every ~10 seconds, the intensity wave at the bottom <strong>briefly morphs into a silhouette of the sport</strong>
+    (a fighter, mountain peaks, ocean swell) before settling back into the wave.
+    Subtle. Most people will see it once and remember it forever.
+  </p>
+  <div class="silh-demo">
+    <div class="silh-counter">Morph in: <span id="silh-eta">3s</span></div>
+    <div class="silh-name">MMA</div>
+    <div class="silh-canvas-wrap">
+      <canvas id="silh-canvas"></canvas>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~1.5 hr — pre-defined silhouette paths per activity, canvas tween morphs between wave and shape</div></div>
+    <div class="ic"><div class="ic-label">Frequency</div><div class="ic-val">Every 10–15s, holds for 1.5s, then dissolves back to wave</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">Memorable</span> — turns the wave from decoration into a hidden signature</div></div>
+  </div>
+</div>
+
+<!-- IDEA 2 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 02</p>
+  <h2 class="idea-title">Floating Atmospheric Dust</h2>
+  <p class="idea-desc">
+    Tiny <strong>dust particles drift slowly across the page</strong>, like light filtering through a window.
+    No interaction. Just atmosphere. Adds the visual texture of a real room. Watch the box.
+  </p>
+  <div class="dust-demo" id="dust-arena">
+    <div class="dust-name">SCUBA</div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Spec</div><div class="ic-val">~40 particles, sizes 1–3px, drift speed 8–25s across viewport, very low opacity</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~25 min — CSS-only animation, one keyframe + spawn loop</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Subtle</span> — invisible until you notice, then you can't unsee it</div></div>
+  </div>
+</div>
+
+<!-- IDEA 3 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 03</p>
+  <h2 class="idea-title">Activity Mood Tint</h2>
+  <p class="idea-desc">
+    Background <strong>tint subtly shifts per activity</strong>. MMA is warm and red-tinged.
+    Snorkel is cool teal. Skydive is dusky blue. Scuba is deep navy.
+    Click the tabs below to feel the shift.
+  </p>
+  <div class="hue-demo hue-bg-mma" id="hue-demo">
+    <div class="hue-content">
+      <div>
+        <div class="hue-name" id="hue-name">MMA</div>
+        <div class="hue-tag" id="hue-tag">Combat · Training</div>
+      </div>
+      <div class="hue-tabs">
+        <button class="hue-btn on" onclick="hueShift('mma','MMA','Combat · Training',this)">MMA</button>
+        <button class="hue-btn" onclick="hueShift('ski','SKI','Mountain · Snow',this)">Ski</button>
+        <button class="hue-btn" onclick="hueShift('surf','SURF','Ocean · Waves',this)">Surf</button>
+        <button class="hue-btn" onclick="hueShift('snorkel','SNORKEL','Underwater · Reef',this)">Snorkel</button>
+        <button class="hue-btn" onclick="hueShift('skydive','SKYDIVE','Freefall · Sky',this)">Skydive</button>
+        <button class="hue-btn" onclick="hueShift('scuba','SCUBA','Deep · Silence',this)">Scuba</button>
+      </div>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">How</div><div class="ic-val">Bg gradient hue per activity. 1s ease transition. Image stays on top with multiply blend</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~20 min — 6 CSS classes, swap on activity change</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hl">Atmospheric</span> — each activity has its own mood, felt not noticed</div></div>
+  </div>
+</div>
+
+<!-- IDEA 4 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 04</p>
+  <h2 class="idea-title">Whispering Edge Text</h2>
+  <p class="idea-desc">
+    Tiny poetic phrases <strong>fade in at random edges of the page</strong>, hold for a second, fade out.
+    Per activity. MMA whispers "BREATHE", "STAY READY", "EYES UP". Snorkel whispers "DESCEND", "OBSERVE".
+    Click the trigger to see one.
+  </p>
+  <div class="whisper-demo" id="whisper-demo">
+    <div class="whisper-name">MMA</div>
+    <button class="whisper-trigger" onclick="fireWhisper()">⟳ Trigger Whisper</button>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Words per activity</div><div class="ic-val">MMA: BREATHE / STAY READY / EYES UP / HOLD THE LINE</div></div>
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~30 min — random word + position + timer</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Poetic</span> — turns the page into a coaching presence</div></div>
+  </div>
+</div>
+
+<!-- IDEA 5 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 05</p>
+  <h2 class="idea-title">Wave Reverses Direction</h2>
+  <p class="idea-desc">
+    Once every ~25 seconds, the intensity wave at the bottom <strong>briefly reverses direction</strong>
+    for 2 seconds, then resumes its normal flow. Like a tide pulling back. Tiny status indicator shows when it happens.
+  </p>
+  <div class="rev-demo">
+    <div class="rev-info">
+      <div class="rev-name">SURF</div>
+      <div class="rev-status" id="rev-status"><div class="dot"></div> <span id="rev-status-text">FORWARD</span></div>
+    </div>
+    <div class="rev-canvas-wrap">
+      <canvas id="rev-canvas"></canvas>
+    </div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~15 min — flip wave time direction for 2s every ~25s</div></div>
+    <div class="ic"><div class="ic-label">Pairs with</div><div class="ic-val">Existing intensity wave (no new component needed)</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Subtle</span> — visual hiccup that rewards watching</div></div>
+  </div>
+</div>
+
+<!-- IDEA 6 -->
+<div class="idea-wrap">
+  <p class="chip">Quirk 06</p>
+  <h2 class="idea-title">Decorative Number = Slot Machine</h2>
+  <p class="idea-desc">
+    The big outlined number on the right is <strong>clickable</strong>. Tap it and the digit rapidly cycles
+    through 0-9 like a slot machine before settling back. Pure fidget. Try clicking the big 01 below.
+  </p>
+  <div class="slot-demo">
+    <div class="slot-left">
+      <div class="slot-hint">Click the number →</div>
+      <div class="slot-name">MMA</div>
+      <div class="slot-instr">Pure fidget. Has no purpose. That's the point.</div>
+    </div>
+    <div class="slot-num" id="slot-num" onclick="spinSlot()">01</div>
+  </div>
+  <div class="info-strip">
+    <div class="ic"><div class="ic-label">Effort</div><div class="ic-val">~15 min — onClick rapid-cycle, easing out to original</div></div>
+    <div class="ic"><div class="ic-label">Affordance</div><div class="ic-val">Stroke colour shifts to accent on hover, signalling clickability</div></div>
+    <div class="ic"><div class="ic-label">Impact</div><div class="ic-val"><span class="badge hm">Fidget</span> — pure delight, rewards curiosity</div></div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary">
+  <div class="sum-table">
+    <div class="sr head"><div class="sc">#</div><div class="sc">Quirk</div><div class="sc">Family</div><div class="sc">Effort</div></div>
+    <div class="sr"><div class="sc sn">01</div><div class="sc">Wave silhouette morph (sport shape emerges)</div><div class="sc">Ambient · Memorable</div><div class="sc">1.5 hr</div></div>
+    <div class="sr"><div class="sc sn">02</div><div class="sc">Floating dust particles</div><div class="sc">Ambient · Atmosphere</div><div class="sc">25 min</div></div>
+    <div class="sr"><div class="sc sn">03</div><div class="sc">Activity mood tint (bg hue per sport)</div><div class="sc">Ambient · Mood</div><div class="sc">20 min</div></div>
+    <div class="sr"><div class="sc sn">04</div><div class="sc">Whispering edge text (coaching whispers)</div><div class="sc">Ambient · Poetic</div><div class="sc">30 min</div></div>
+    <div class="sr"><div class="sc sn">05</div><div class="sc">Wave reverses direction occasionally</div><div class="sc">Ambient · Detail</div><div class="sc">15 min</div></div>
+    <div class="sr"><div class="sc sn">06</div><div class="sc">Decorative number = slot machine</div><div class="sc">Fidget · Delight</div><div class="sc">15 min</div></div>
+  </div>
+</div>
+
+<script>
+/* IDEA 1: Silhouette morph in wave */
+(function() {
+  const canvas = document.getElementById('silh-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t = 0, morphProgress = 0, eta = 3;
+  const eta_el = document.getElementById('silh-eta');
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = canvas.offsetWidth * dpr;
+    canvas.height = canvas.offsetHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // MMA silhouette — fighter outline approximated as a series of y-values per x
+  // returns y at given x (0..1) for the silhouette shape
+  function silhouetteY(x, w, h) {
+    // approximation of a fighter pose, varying terrain
+    const peaks = [.05,.1,.2,.35,.5,.65,.78,.85,.92,1.0];
+    const heights = [.2,.4,.65,.8,.5,.7,.9,.65,.4,.2];
+    let i = 0;
+    while (i < peaks.length - 1 && x > peaks[i+1]) i++;
+    const t = (x - peaks[i]) / (peaks[i+1] - peaks[i]);
+    const y = heights[i] + (heights[i+1] - heights[i]) * t;
+    return h - y * h * .8;
+  }
+
+  function draw() {
+    t += .04;
+    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+
+    ctx.beginPath();
+    for (let x = 0; x <= w; x++) {
+      const wave = h/2 + Math.sin(x * .025 + t) * h*.3 + Math.sin(x * .04 + t*1.3) * h*.15;
+      const silh = silhouetteY(x/w, w, h);
+      const y = wave + (silh - wave) * morphProgress;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = `oklch(0.58 0.19 32 / ${0.6 + morphProgress * 0.4})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  function countdown() {
+    eta--;
+    if (eta <= 0) {
+      let mp = 0;
+      const morphIn = setInterval(() => {
+        mp += .04;
+        morphProgress = mp;
+        if (mp >= 1) {
+          clearInterval(morphIn);
+          setTimeout(() => {
+            const morphOut = setInterval(() => {
+              mp -= .04;
+              morphProgress = mp;
+              if (mp <= 0) { morphProgress = 0; clearInterval(morphOut); }
+            }, 40);
+          }, 1500);
+        }
+      }, 40);
+      eta = 8;
+    }
+    eta_el.textContent = eta + 's';
+  }
+  setInterval(countdown, 1000);
+})();
+
+/* IDEA 2: Floating dust */
+(function() {
+  const arena = document.getElementById('dust-arena');
+  if (!arena) return;
+  for (let i = 0; i < 40; i++) {
+    const d = document.createElement('div');
+    d.className = 'dust';
+    const size = Math.random() * 2.5 + 1;
+    d.style.width = size + 'px';
+    d.style.height = size + 'px';
+    d.style.top = Math.random() * 100 + '%';
+    d.style.left = '-10px';
+    d.style.opacity = Math.random() * 0.5 + 0.15;
+    const dur = 10 + Math.random() * 20;
+    const drift = Math.random() * 60 - 30;
+    d.style.animation = `dustDrift${i} ${dur}s linear infinite`;
+    d.style.animationDelay = Math.random() * dur + 's';
+    const style = document.createElement('style');
+    style.textContent = `@keyframes dustDrift${i} {
+      from { transform: translate(0, 0); }
+      to   { transform: translate(${arena.offsetWidth + 20}px, ${drift}px); }
+    }`;
+    document.head.appendChild(style);
+    arena.appendChild(d);
+  }
+})();
+
+/* IDEA 3: Hue shift */
+function hueShift(key, name, tag, btn) {
+  const demo = document.getElementById('hue-demo');
+  demo.className = 'hue-demo hue-bg-' + key;
+  document.getElementById('hue-name').textContent = name;
+  document.getElementById('hue-tag').textContent = tag;
+  document.querySelectorAll('.hue-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* IDEA 4: Whisper */
+const whisperWords = ['BREATHE', 'STAY READY', 'EYES UP', 'HOLD THE LINE', 'COMMIT', 'NEXT ROUND'];
+function fireWhisper() {
+  const demo = document.getElementById('whisper-demo');
+  const w = document.createElement('div');
+  w.className = 'whisper';
+  w.textContent = whisperWords[Math.floor(Math.random() * whisperWords.length)];
+  const corner = Math.floor(Math.random() * 4);
+  if (corner === 0) { w.style.top = '1.5rem'; w.style.left = '2rem'; }
+  if (corner === 1) { w.style.top = '1.5rem'; w.style.right = '2rem'; }
+  if (corner === 2) { w.style.bottom = '4rem'; w.style.left = '2rem'; }
+  if (corner === 3) { w.style.bottom = '4rem'; w.style.right = '2rem'; }
+  demo.appendChild(w);
+  requestAnimationFrame(() => w.classList.add('show'));
+  setTimeout(() => { w.classList.remove('show'); setTimeout(() => w.remove(), 1300); }, 2200);
+}
+// Auto fire every 4s for demo
+setInterval(fireWhisper, 4000);
+
+/* IDEA 5: Reverse wave */
+(function() {
+  const canvas = document.getElementById('rev-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t = 0, direction = 1, reverseTimer = 0;
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = canvas.offsetWidth * dpr;
+    canvas.height = canvas.offsetHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function draw() {
+    t += .05 * direction;
+    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    ctx.beginPath();
+    for (let x = 0; x <= w; x++) {
+      const y = h/2 + Math.sin(x * .025 + t) * h*.3 + Math.sin(x * .04 + t*1.3) * h*.15;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = direction === 1 ? 'oklch(0.58 0.19 32 / .6)' : 'oklch(0.58 0.19 32 / .9)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  setInterval(() => {
+    reverseTimer++;
+    if (reverseTimer >= 8 && direction === 1) {
+      direction = -1;
+      document.getElementById('rev-status').classList.add('reverse');
+      document.getElementById('rev-status-text').textContent = 'REVERSE';
+      setTimeout(() => {
+        direction = 1;
+        document.getElementById('rev-status').classList.remove('reverse');
+        document.getElementById('rev-status-text').textContent = 'FORWARD';
+        reverseTimer = 0;
+      }, 2000);
+    }
+  }, 1000);
+})();
+
+/* IDEA 6: Slot machine */
+function spinSlot() {
+  const el = document.getElementById('slot-num');
+  el.classList.add('spinning');
+  let count = 0;
+  const targets = ['01','02','03','04','05','06'];
+  const final = targets[0];
+  const interval = setInterval(() => {
+    el.textContent = String(Math.floor(Math.random() * 100)).padStart(2, '0');
+    count++;
+    if (count > 18) {
+      clearInterval(interval);
+      el.textContent = final;
+      el.classList.remove('spinning');
+    }
+  }, 60);
+}
+</script>
+</body>
+</html>

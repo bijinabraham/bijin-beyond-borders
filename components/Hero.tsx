@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { photo } from "@/lib/basePath";
+import MagneticBtn from "./MagneticBtn";
 import styles from "./Hero.module.css";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -103,7 +104,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.88, duration: 0.6, ease }}
         >
-          <Link href="/travels" className={styles.ctaPrimary}>Enter</Link>
+          <MagneticBtn>
+            <Link href="/travels" className={styles.ctaPrimary} data-cursor="btn">Enter</Link>
+          </MagneticBtn>
           <Link href="/about"   className={styles.ctaGhost}>About &rarr;</Link>
         </motion.div>
       </div>

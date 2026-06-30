@@ -2,19 +2,26 @@
   position: sticky;
   inset-block-start: 0;
   z-index: 100;
+  background: var(--bg);
+  border-block-end: 1px solid var(--rule);
+  transition: box-shadow 0.4s ease;
+}
+
+.nav.scrolled {
+  box-shadow: 0 4px 24px oklch(0.14 0.022 14 / 0.07);
+}
+
+/* ── Row (brand + links + hamburger) ── */
+.navRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.75rem var(--page-px);
-  background: var(--bg);
-  border-block-end: 1px solid var(--rule);
-  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s ease;
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav.scrolled {
+.nav.scrolled .navRow {
   padding-block: 0.75rem;
-  box-shadow: 0 4px 24px oklch(0.14 0.022 14 / 0.07);
 }
 
 .left {
@@ -37,12 +44,7 @@
 }
 
 /* ── Compass ── */
-.compass {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-}
-
+.compass      { width: 32px; height: 32px; flex-shrink: 0; }
 .cRing        { stroke: var(--rule); }
 .cLabelN      { fill: var(--primary); font-family: var(--font-display), sans-serif; font-size: 10px; font-weight: 700; }
 .cLabelMinor  { fill: var(--muted);   font-family: var(--font-display), sans-serif; font-size: 7px; }
@@ -51,7 +53,7 @@
 .cPivotOuter  { fill: var(--bg); stroke: var(--primary); }
 .cPivotInner  { fill: var(--primary); }
 
-/* ── Nav links ── */
+/* ── Desktop nav links ── */
 .links {
   display: flex;
   gap: 2.5rem;
@@ -71,9 +73,119 @@
 }
 
 .links a:hover { color: var(--ink); }
+.links a[aria-current="page"]:not(:hover) { color: var(--ink); }
+
+/* ── Hamburger button ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--ink);
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
+}
+
+.hamburger.hamOpen span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.hamOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.hamOpen span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile drawer ── */
+.drawer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border-block-start: 0px solid var(--rule);
+}
+
+.drawer.drawerOpen {
+  max-height: 420px;
+  border-block-start-width: 1px;
+}
+
+.drawerLinks {
+  list-style: none;
+  padding: 0.5rem 0;
+  margin: 0;
+}
+
+.drawerLinks li {
+  border-block-end: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawerLinks li:last-child { border-block-end: none; }
+
+.drawerLinks li.drawerItemVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.drawerLinks a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem var(--page-px);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.drawerLinks a:hover,
+.drawerLinks a:active {
+  color: var(--accent);
+  background: var(--surface);
+}
+
+/* active page: keep ink, but still go accent on hover/tap */
+.drawerLinks a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.drawerLinks a[aria-current="page"]:hover,
+.drawerLinks a[aria-current="page"]:active {
+  color: var(--accent);
+}
+
+.drawerLinks a:focus-visible {
+  outline: 1px solid var(--primary);
+  outline-offset: -2px;
+}
+
+/* suppress mobile tap flash */
+.drawerLinks a { -webkit-tap-highlight-color: transparent; }
+
+.drawerArrow {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .links    { display: none; }
+  .hamburger { display: flex; }
+  .compass  { width: 26px; height: 26px; }
+  .brand span { display: none; }
+}
 
 @media (max-width: 640px) {
-  .nav { padding: 1.25rem var(--page-px); }
-  .links { gap: 1.5rem; }
-  .compass { width: 26px; height: 26px; }
+  .navRow { padding: 1.25rem var(--page-px); }
 }

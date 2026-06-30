@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Creative Ideas 2 — Bijin Beyond Borders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,700;1,300&family=Nunito+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      oklch(0.93 0.016 14);
+  --surface: oklch(0.89 0.020 14);
+  --surface2:oklch(0.85 0.024 14);
+  --ink:     oklch(0.14 0.022 14);
+  --primary: oklch(0.34 0.11 14);
+  --accent:  oklch(0.58 0.19 32);
+  --muted:   oklch(0.44 0.010 14);
+  --rule:    oklch(0.82 0.018 14);
+  --fd: 'Josefin Sans';
+  --fb: 'Nunito Sans';
+  --px: 3rem;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--fb), sans-serif; font-weight: 300; }
+
+/* chrome */
+.page-header { background: var(--primary); color: #fff; padding: 2rem var(--px); }
+.page-header h1 { font-family: var(--fd); font-weight: 700; font-size: clamp(1.1rem,2vw,1.5rem); letter-spacing: .15em; text-transform: uppercase; }
+.page-header p { font-size: .82rem; opacity: .65; margin-top: .3rem; }
+
+.idea-wrap { border-top: 1px solid var(--rule); padding: 4rem var(--px) 0; }
+.chip-label { font-family: var(--fd); font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+.idea-title { font-family: var(--fd); font-size: clamp(1.4rem,3vw,2.2rem); font-weight: 700; letter-spacing: -.025em; text-transform: uppercase; margin-bottom: .4rem; }
+.idea-desc { font-size: .87rem; color: var(--muted); max-width: 60ch; margin-bottom: 2.5rem; line-height: 1.75; }
+.idea-desc strong { color: var(--ink); font-weight: 500; }
+.demo-box { border: 1px solid var(--rule); margin-bottom: 1.5rem; overflow: hidden; }
+.info-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--rule); }
+.info-cell { padding: 1rem 1.25rem; border-right: 1px solid var(--rule); }
+.info-cell:last-child { border-right: none; }
+.info-cell-label { font-family: var(--fd); font-size: .56rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.info-cell-val { font-size: .8rem; line-height: 1.5; }
+.section-gap { margin-bottom: 5rem; }
+
+/* ─────────────────────────────────────────
+   IDEA 1 — Photo cursor trail
+───────────────────────────────────────── */
+.trail-arena {
+  height: 340px;
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.trail-arena * { cursor: none; }
+.trail-hint {
+  font-family: var(--fd); font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--muted); text-align: center; pointer-events: none;
+  transition: opacity .3s;
+  user-select: none;
+}
+.trail-img {
+  position: absolute;
+  width: 120px; height: 160px;
+  object-fit: cover;
+  pointer-events: none;
+  border: 2px solid var(--bg);
+  opacity: 0;
+  transform: rotate(0deg) scale(.7);
+  transition: opacity .4s ease, transform .5s cubic-bezier(.16,1,.3,1);
+  will-change: transform, opacity;
+  top: 0; left: 0;
+}
+.trail-cursor {
+  position: absolute;
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  translate: -50% -50%;
+  z-index: 20;
+}
+.trail-cursor-ring {
+  position: absolute;
+  width: 48px; height: 48px;
+  border: 1.5px solid var(--primary);
+  border-radius: 50%;
+  pointer-events: none;
+  translate: -50% -50%;
+  z-index: 19;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fd); font-size: .42rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--primary);
+}
+
+/* ─────────────────────────────────────────
+   IDEA 2 — Marquee ticker
+───────────────────────────────────────── */
+.marquee-wrap {
+  background: var(--primary);
+  padding: .85rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid oklch(1 0 0 / .1);
+  border-bottom: 1px solid oklch(1 0 0 / .1);
+}
+.marquee-track {
+  display: inline-flex;
+  gap: 0;
+  animation: marquee 18s linear infinite;
+}
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-item {
+  font-family: var(--fd); font-size: .7rem; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: oklch(1 0 0 / .85);
+  padding: 0 2.5rem;
+  display: inline-flex; align-items: center; gap: 2.5rem;
+}
+.marquee-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+}
+
+/* reversed — accent bg */
+.marquee-wrap.rev {
+  background: var(--accent);
+  animation-direction: reverse;
+}
+.marquee-wrap.rev .marquee-item { color: oklch(1 0 0 / .9); }
+.marquee-wrap.rev .marquee-dot { background: #fff; }
+.marquee-wrap.rev .marquee-track { animation-direction: reverse; }
+
+.marquee-demo-label {
+  padding: 1rem var(--px);
+  font-size: .78rem; color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ─────────────────────────────────────────
+   IDEA 3 — Horizontal scroll (Adrenaline)
+───────────────────────────────────────── */
+.hscroll-outer {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+}
+.hscroll-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 2rem var(--px);
+  border-bottom: 1px solid var(--rule);
+}
+.hscroll-header h2 {
+  font-family: var(--fd); font-size: clamp(1.4rem,3vw,2rem);
+  font-weight: 700; letter-spacing: -.025em; text-transform: uppercase;
+}
+.hscroll-hint {
+  font-family: var(--fd); font-size: .62rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+  display: flex; align-items: center; gap: .5rem;
+}
+.hscroll-hint::after {
+  content: '→';
+  display: inline-block;
+  animation: nudge 1.2s ease-in-out infinite;
+}
+@keyframes nudge {
+  0%,100% { transform: translateX(0); }
+  50%      { transform: translateX(5px); }
+}
+.hscroll-track {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2rem var(--px) 2rem;
+  gap: 1px;
+  scroll-snap-type: x mandatory;
+  cursor: grab;
+}
+.hscroll-track:active { cursor: grabbing; }
+.hscroll-track::-webkit-scrollbar { display: none; }
+.hscroll-card {
+  flex: 0 0 240px;
+  height: 320px;
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--surface2);
+  border: 1px solid var(--rule);
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.hscroll-card:hover { transform: scale(1.02); z-index: 2; }
+.hscroll-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+  display: block;
+}
+.hscroll-card:hover img { transform: scale(1.05); }
+.hscroll-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, oklch(0.1 0.05 14 / .75) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.25rem;
+}
+.hscroll-name {
+  font-family: var(--fd); font-size: 1.1rem; font-weight: 700;
+  letter-spacing: -.01em; text-transform: uppercase; color: #fff;
+}
+.hscroll-tag {
+  font-family: var(--fd); font-size: .55rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: oklch(1 0 0 / .6);
+  margin-top: .3rem;
+}
+.hscroll-progress {
+  display: flex; gap: .4rem; padding: 1rem var(--px);
+  border-top: 1px solid var(--rule);
+}
+.hscroll-pip {
+  height: 2px; flex: 1; background: var(--rule);
+  transition: background .3s;
+}
+.hscroll-pip.active { background: var(--accent); }
+
+/* ─────────────────────────────────────────
+   IDEA 4 — Film grain overlay
+───────────────────────────────────────── */
+.grain-demo {
+  position: relative;
+  height: 260px;
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.grain-half {
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: flex-end;
+  padding: 2rem;
+  background: var(--surface2);
+}
+.grain-half img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+.grain-half-label {
+  position: relative; z-index: 2;
+  font-family: var(--fd); font-size: .6rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  background: var(--bg); color: var(--muted); padding: .3rem .7rem;
+}
+.grain-overlay {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  opacity: .55;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  mix-blend-mode: overlay;
+}
+/* animated grain */
+.grain-overlay.animated {
+  animation: grain 0.12s steps(1) infinite;
+}
+@keyframes grain {
+  0%  { transform: translate(0,0); }
+  10% { transform: translate(-3%,-4%); }
+  20% { transform: translate(4%,2%); }
+  30% { transform: translate(-2%,5%); }
+  40% { transform: translate(5%,-3%); }
+  50% { transform: translate(-4%,4%); }
+  60% { transform: translate(3%,-5%); }
+  70% { transform: translate(-5%,2%); }
+  80% { transform: translate(4%,4%); }
+  90% { transform: translate(-3%,-2%); }
+}
+.grain-divider { width: 1px; background: var(--rule); }
+
+/* ─────────────────────────────────────────
+   IDEA 5 — Magnetic CTA button
+───────────────────────────────────────── */
+.magnetic-arena {
+  height: 260px;
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 2rem;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+.magnetic-arena * { cursor: none; }
+.magnetic-btn-wrap {
+  position: relative;
+  display: inline-block;
+}
+.magnetic-btn {
+  font-family: var(--fd); font-size: .8rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 1.1rem 2.4rem;
+  background: var(--accent); color: #fff;
+  border: none; display: block;
+  transition: transform .15s ease, box-shadow .15s ease;
+  will-change: transform;
+  position: relative; z-index: 2;
+}
+.magnetic-dot {
+  position: absolute; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--accent);
+  pointer-events: none; translate: -50% -50%;
+  z-index: 10;
+}
+.magnetic-ring {
+  position: absolute; width: 36px; height: 36px;
+  border: 1.5px solid var(--primary); border-radius: 50%;
+  pointer-events: none; translate: -50% -50%;
+  z-index: 9;
+  transition: width .25s cubic-bezier(.16,1,.3,1), height .25s cubic-bezier(.16,1,.3,1),
+              background .2s, border-color .2s;
+}
+.magnetic-ring.on-btn {
+  width: 60px; height: 60px;
+  background: oklch(.58 .19 32 / .1);
+  border-color: var(--accent); border-width: 2px;
+}
+.magnetic-label {
+  font-family: var(--fd); font-size: .62rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+}
+.magnetic-ghost-btn {
+  font-family: var(--fd); font-size: .7rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--primary); border-bottom: 1px solid var(--primary);
+  padding-bottom: .1rem; background: none; border-top: none; border-left: none; border-right: none;
+  transition: transform .15s ease;
+  will-change: transform;
+}
+
+/* summary */
+.summary-table { margin: 4rem var(--px) 0; border: 1px solid var(--rule); margin-bottom: 0; }
+.st-row { display: grid; grid-template-columns: 3rem 1fr 1fr 5rem; border-bottom: 1px solid var(--rule); }
+.st-row:last-child { border-bottom: none; }
+.st-row.head { background: var(--surface); }
+.st-cell {
+  padding: 1rem 1.25rem; border-right: 1px solid var(--rule); font-size: .8rem;
+}
+.st-cell:last-child { border-right: none; }
+.st-row.head .st-cell {
+  font-family: var(--fd); font-size: .56rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--muted);
+}
+.st-num { font-family: var(--fd); font-weight: 700; font-size: .7rem; color: var(--muted); }
+.badge { display: inline-block; font-family: var(--fd); font-size: .52rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .4rem; }
+.badge.high { background: var(--accent); color: #fff; }
+.badge.med  { background: var(--primary); color: #fff; }
+.page-end { height: 5rem; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Creative Ideas — Round 2</h1>
+  <p>More ambitious upgrades. Interact with every demo.</p>
+</header>
+
+<!-- ═══ IDEA 1: Photo cursor trail ═══ -->
+<div class="idea-wrap">
+  <p class="chip-label">Idea 01</p>
+  <h2 class="idea-title">Photo Cursor Trail</h2>
+  <p class="idea-desc">
+    As the cursor moves across the hero or Travels section, a <strong>trail of your travel photos</strong>
+    fans out behind it — each image slightly rotated, fading as it ages. Feels like rifling through
+    a stack of prints. Pure CSS + JS, no library needed. Move your mouse below.
+  </p>
+  <div class="demo-box">
+    <div class="trail-arena" id="trail-arena">
+      <div class="trail-cursor" id="trail-dot"></div>
+      <div class="trail-cursor-ring" id="trail-ring">VIEW</div>
+      <p class="trail-hint" id="trail-hint">Move your cursor here</p>
+    </div>
+  </div>
+  <div class="info-row section-gap">
+    <div class="info-cell">
+      <div class="info-cell-label">Where it lives</div>
+      <div class="info-cell-val">Hero section or PlacesGrid — activate on <code>mousemove</code> only in that zone</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Effort</div>
+      <div class="info-cell-val">~1.5 hr — pool of 8–10 div elements cycled with JS</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Impact</div>
+      <div class="info-cell-val"><span class="badge high">Showstopper</span> — nothing else on personal travel sites does this</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 2: Marquee ticker ═══ -->
+<div class="idea-wrap">
+  <p class="chip-label">Idea 02</p>
+  <h2 class="idea-title">Scrolling Marquee Strips</h2>
+  <p class="idea-desc">
+    Editorial-style ticker strips between sections. <strong>Two lanes running in opposite directions</strong> —
+    one lists countries visited, the other lists activities. Hover to pause.
+    Adds rhythm and motion without JS. Framer Motion or pure CSS.
+  </p>
+  <div class="demo-box">
+    <div class="marquee-demo-label">Between Hero → Travels section</div>
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="mt1">
+        <span class="marquee-item">Japan <span class="marquee-dot"></span></span>
+        <span class="marquee-item">India <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Thailand <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Indonesia <span class="marquee-dot"></span></span>
+        <span class="marquee-item">France <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Mexico <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Sri Lanka <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Italy <span class="marquee-dot"></span></span>
+        <!-- duplicate for seamless loop -->
+        <span class="marquee-item">Japan <span class="marquee-dot"></span></span>
+        <span class="marquee-item">India <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Thailand <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Indonesia <span class="marquee-dot"></span></span>
+        <span class="marquee-item">France <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Mexico <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Sri Lanka <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Italy <span class="marquee-dot"></span></span>
+      </div>
+    </div>
+    <div class="marquee-wrap rev">
+      <div class="marquee-track" style="animation-direction:reverse">
+        <span class="marquee-item">MMA <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Surfing <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Skiing <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Snorkelling <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Skydiving <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Scuba <span class="marquee-dot"></span></span>
+        <span class="marquee-item">MMA <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Surfing <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Skiing <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Snorkelling <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Skydiving <span class="marquee-dot"></span></span>
+        <span class="marquee-item">Scuba <span class="marquee-dot"></span></span>
+      </div>
+    </div>
+  </div>
+  <div class="info-row section-gap">
+    <div class="info-cell">
+      <div class="info-cell-label">Where it lives</div>
+      <div class="info-cell-val">Between Hero and Travels, and between Adrenaline and Projects</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Effort</div>
+      <div class="info-cell-val">~30 min — pure CSS animation, no library needed</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Impact</div>
+      <div class="info-cell-val"><span class="badge high">High</span> — adds editorial energy, fills dead whitespace between sections</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 3: Horizontal scroll ═══ -->
+<div class="idea-wrap">
+  <p class="chip-label">Idea 03</p>
+  <h2 class="idea-title">Adrenaline — Horizontal Drag Scroll</h2>
+  <p class="idea-desc">
+    Replace the fixed 3-column grid with a <strong>draggable horizontal film strip</strong>.
+    Cards are taller, images dominate, and the gesture of dragging feels physical and kinetic.
+    Scroll-snap keeps it crisp. Drag the cards below.
+  </p>
+  <div class="demo-box">
+    <div class="hscroll-outer">
+      <div class="hscroll-header">
+        <h2>Adrenaline</h2>
+        <span class="hscroll-hint">Drag</span>
+      </div>
+      <div class="hscroll-track" id="htrack">
+        <div class="hscroll-card">
+          <img src="https://picsum.photos/seed/mma-training/400/600" alt="MMA" draggable="false" />
+          <div class="hscroll-overlay">
+            <div class="hscroll-name">MMA</div>
+            <div class="hscroll-tag">Combat training</div>
+          </div>
+        </div>
+        <div class="hscroll-card">
+          <img src="https://picsum.photos/seed/ski-mountain/400/600" alt="Ski" draggable="false" />
+          <div class="hscroll-overlay">
+            <div class="hscroll-name">Ski</div>
+            <div class="hscroll-tag">On the mountain</div>
+          </div>
+        </div>
+        <div class="hscroll-card">
+          <img src="https://picsum.photos/seed/ocean-surf/400/600" alt="Surf" draggable="false" />
+          <div class="hscroll-overlay">
+            <div class="hscroll-name">Surf</div>
+            <div class="hscroll-tag">In the water</div>
+          </div>
+        </div>
+        <div class="hscroll-card">
+          <img src="https://picsum.photos/seed/snorkel-reef/400/600" alt="Snorkel" draggable="false" />
+          <div class="hscroll-overlay">
+            <div class="hscroll-name">Snorkel</div>
+            <div class="hscroll-tag">Beneath the surface</div>
+          </div>
+        </div>
+        <div class="hscroll-card" style="opacity:.55">
+          <img src="https://picsum.photos/seed/sky-freefall/400/600" alt="Skydive" draggable="false" />
+          <div class="hscroll-overlay">
+            <div class="hscroll-name">Skydive</div>
+            <div class="hscroll-tag">On the horizon</div>
+          </div>
+        </div>
+        <div class="hscroll-card" style="opacity:.55">
+          <img src="https://picsum.photos/seed/scuba-deep/400/600" alt="Scuba" draggable="false" />
+          <div class="hscroll-overlay">
+            <div class="hscroll-name">Scuba</div>
+            <div class="hscroll-tag">On the horizon</div>
+          </div>
+        </div>
+      </div>
+      <div class="hscroll-progress" id="hpips">
+        <div class="hscroll-pip active"></div>
+        <div class="hscroll-pip"></div>
+        <div class="hscroll-pip"></div>
+        <div class="hscroll-pip"></div>
+        <div class="hscroll-pip"></div>
+        <div class="hscroll-pip"></div>
+      </div>
+    </div>
+  </div>
+  <div class="info-row section-gap">
+    <div class="info-cell">
+      <div class="info-cell-label">Where it lives</div>
+      <div class="info-cell-val">Replaces the current 3×2 fixed grid in the Adrenaline component</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Effort</div>
+      <div class="info-cell-val">~1 hr — CSS scroll-snap + mouse drag JS (~30 lines)</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Impact</div>
+      <div class="info-cell-val"><span class="badge high">High</span> — especially on mobile where the fixed grid was cramped</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 4: Film grain ═══ -->
+<div class="idea-wrap">
+  <p class="chip-label">Idea 04</p>
+  <h2 class="idea-title">Film Grain Texture Overlay</h2>
+  <p class="idea-desc">
+    A <strong>single fixed SVG noise layer</strong> sitting over the entire page at low opacity.
+    Gives the warm off-white palette a physical, tactile quality — like heavy paper.
+    Left half: no grain. Right half: grain active. One line of CSS, zero JS.
+  </p>
+  <div class="demo-box">
+    <div class="grain-demo">
+      <div class="grain-half">
+        <img src="https://picsum.photos/seed/grain-travel/800/400" alt="" />
+        <div class="grain-half-label">Without grain</div>
+      </div>
+      <div class="grain-divider"></div>
+      <div class="grain-half">
+        <img src="https://picsum.photos/seed/grain-travel/800/400" alt="" />
+        <div class="grain-overlay animated"></div>
+        <div class="grain-half-label">With grain</div>
+      </div>
+    </div>
+  </div>
+  <div class="info-row section-gap">
+    <div class="info-cell">
+      <div class="info-cell-label">Where it lives</div>
+      <div class="info-cell-val">Single <code>::after</code> on <code>body</code> — covers everything, no component changes</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Effort</div>
+      <div class="info-cell-val">~10 min — add 8 lines of CSS to globals.css</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Impact</div>
+      <div class="info-cell-val"><span class="badge med">Medium</span> — subtle but makes the whole site feel more considered and handcrafted</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IDEA 5: Magnetic buttons ═══ -->
+<div class="idea-wrap">
+  <p class="chip-label">Idea 05</p>
+  <h2 class="idea-title">Magnetic Buttons</h2>
+  <p class="idea-desc">
+    Primary buttons <strong>physically move toward the cursor</strong> as it approaches —
+    up to ~20px pull. When the cursor leaves the button's orbit, it snaps back with a spring.
+    Ghost links get a subtler pull. Move your cursor near the buttons below.
+  </p>
+  <div class="demo-box">
+    <div class="magnetic-arena" id="mag-arena">
+      <div class="magnetic-dot" id="mag-dot"></div>
+      <div class="magnetic-ring" id="mag-ring"></div>
+      <div class="magnetic-btn-wrap" id="mag-wrap-1">
+        <button class="magnetic-btn" id="mag-btn-1" data-magnetic>Enter</button>
+      </div>
+      <div class="magnetic-btn-wrap" id="mag-wrap-2">
+        <button class="magnetic-ghost-btn" id="mag-btn-2" data-magnetic-soft>About →</button>
+      </div>
+      <p class="magnetic-label">Move cursor near the buttons</p>
+    </div>
+  </div>
+  <div class="info-row section-gap">
+    <div class="info-cell">
+      <div class="info-cell-label">Where it lives</div>
+      <div class="info-cell-val">Hero CTA "Enter", footer contact link, any primary button</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Effort</div>
+      <div class="info-cell-val">~1 hr — reusable <code>MagneticBtn</code> wrapper component</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">Impact</div>
+      <div class="info-cell-val"><span class="badge high">High</span> — feels premium and tactile on desktop, degrades gracefully on touch</div>
+    </div>
+  </div>
+</div>
+
+<!-- summary -->
+<div style="padding: 4rem var(--px) 0;">
+  <div class="summary-table">
+    <div class="st-row head">
+      <div class="st-cell">#</div>
+      <div class="st-cell">Idea</div>
+      <div class="st-cell">Where</div>
+      <div class="st-cell">Effort</div>
+    </div>
+    <div class="st-row">
+      <div class="st-cell st-num">01</div>
+      <div class="st-cell">Photo cursor trail</div>
+      <div class="st-cell">Hero / PlacesGrid</div>
+      <div class="st-cell">1.5 hr</div>
+    </div>
+    <div class="st-row">
+      <div class="st-cell st-num">02</div>
+      <div class="st-cell">Marquee strips</div>
+      <div class="st-cell">Between sections</div>
+      <div class="st-cell">30 min</div>
+    </div>
+    <div class="st-row">
+      <div class="st-cell st-num">03</div>
+      <div class="st-cell">Adrenaline drag scroll</div>
+      <div class="st-cell">Adrenaline section</div>
+      <div class="st-cell">1 hr</div>
+    </div>
+    <div class="st-row">
+      <div class="st-cell st-num">04</div>
+      <div class="st-cell">Film grain overlay</div>
+      <div class="st-cell">Whole site (globals.css)</div>
+      <div class="st-cell">10 min</div>
+    </div>
+    <div class="st-row">
+      <div class="st-cell st-num">05</div>
+      <div class="st-cell">Magnetic buttons</div>
+      <div class="st-cell">Hero CTA + footer</div>
+      <div class="st-cell">1 hr</div>
+    </div>
+  </div>
+</div>
+<div class="page-end"></div>
+
+<script>
+/* ── Idea 1: Photo trail ── */
+(function() {
+  const arena  = document.getElementById('trail-arena');
+  const dot    = document.getElementById('trail-dot');
+  const ring   = document.getElementById('trail-ring');
+  const hint   = document.getElementById('trail-hint');
+  if (!arena) return;
+
+  const colors = ['#c6756e','#8b9e8f','#d4a87a','#7e8fa3','#b58e6e','#9ba89e','#c9a98f','#8fa0b0'];
+  const POOL = 10;
+  const imgs = [];
+  const seeds = ['japan-travel','surf-wave','ski-slope','jungle-path','ocean-dive','mma-fight','mountain-peak','city-lights','beach-sunset','forest-walk'];
+
+  for (let i = 0; i < POOL; i++) {
+    const el = document.createElement('img');
+    el.className = 'trail-img';
+    el.src = `https://picsum.photos/seed/${seeds[i % seeds.length]}/200/280`;
+    el.draggable = false;
+    arena.appendChild(el);
+    imgs.push(el);
+  }
+
+  let idx = 0, last = {x: -999, y: -999};
+  let rx = 0, ry = 0, mx = 0, my = 0;
+  let active = false;
+
+  arena.addEventListener('mousemove', e => {
+    const r = arena.getBoundingClientRect();
+    mx = e.clientX - r.left;
+    my = e.clientY - r.top;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+
+    if (!active) {
+      active = true;
+      hint.style.opacity = '0';
+    }
+
+    const dist = Math.hypot(mx - last.x, my - last.y);
+    if (dist < 50) return;
+    last = {x: mx, y: my};
+
+    const el = imgs[idx % POOL];
+    idx++;
+    const rot = (Math.random() - .5) * 22;
+    el.style.left = (mx - 60) + 'px';
+    el.style.top  = (my - 80) + 'px';
+    el.style.transform = `rotate(${rot}deg) scale(1)`;
+    el.style.opacity   = '1';
+    el.style.zIndex    = idx;
+
+    setTimeout(() => {
+      el.style.opacity = '0';
+      el.style.transform = `rotate(${rot}deg) scale(.85) translateY(12px)`;
+    }, 700);
+  });
+
+  arena.addEventListener('mouseleave', () => {
+    active = false;
+    hint.style.opacity = '1';
+  });
+
+  // ring lerp
+  function tick() {
+    rx += (mx - rx) * .14;
+    ry += (my - ry) * .14;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ── Idea 3: Drag scroll + pips ── */
+(function() {
+  const track = document.getElementById('htrack');
+  const pips  = document.querySelectorAll('#hpips .hscroll-pip');
+  if (!track) return;
+
+  let isDown = false, startX, scrollLeft;
+  track.addEventListener('mousedown', e => {
+    isDown = true; track.style.cursor = 'grabbing';
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+  document.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
+  track.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX) * 1.2;
+  });
+  track.addEventListener('scroll', () => {
+    const cards = track.querySelectorAll('.hscroll-card');
+    const idx = Math.round(track.scrollLeft / (240 + 1));
+    pips.forEach((p,i) => p.classList.toggle('active', i === idx));
+  });
+})();
+
+/* ── Idea 5: Magnetic buttons ── */
+(function() {
+  const arena = document.getElementById('mag-arena');
+  if (!arena) return;
+  const dot  = document.getElementById('mag-dot');
+  const ring = document.getElementById('mag-ring');
+  let rx = 0, ry = 0, mx = 200, my = 130;
+
+  arena.addEventListener('mousemove', e => {
+    const r = arena.getBoundingClientRect();
+    mx = e.clientX - r.left;
+    my = e.clientY - r.top;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+
+    // Primary button magnetic pull
+    const btn1 = document.getElementById('mag-btn-1');
+    const wrap1 = document.getElementById('mag-wrap-1');
+    if (btn1 && wrap1) {
+      const br = wrap1.getBoundingClientRect();
+      const ar = arena.getBoundingClientRect();
+      const bx = br.left + br.width/2  - ar.left;
+      const by = br.top  + br.height/2 - ar.top;
+      const dx = mx - bx, dy = my - by;
+      const dist = Math.hypot(dx, dy);
+      const radius = 110;
+      if (dist < radius) {
+        const pull = (1 - dist/radius);
+        const tx = dx * pull * 0.38;
+        const ty = dy * pull * 0.38;
+        btn1.style.transform = `translate(${tx}px, ${ty}px)`;
+        ring.classList.add('on-btn');
+      } else {
+        btn1.style.transform = 'translate(0,0)';
+      }
+    }
+
+    // Ghost button soft pull
+    const btn2 = document.getElementById('mag-btn-2');
+    const wrap2 = document.getElementById('mag-wrap-2');
+    if (btn2 && wrap2) {
+      const br = wrap2.getBoundingClientRect();
+      const ar = arena.getBoundingClientRect();
+      const bx = br.left + br.width/2  - ar.left;
+      const by = br.top  + br.height/2 - ar.top;
+      const dx = mx - bx, dy = my - by;
+      const dist = Math.hypot(dx, dy);
+      const radius = 80;
+      if (dist < radius) {
+        const pull = (1 - dist/radius);
+        btn2.style.transform = `translate(${dx * pull * 0.22}px, ${dy * pull * 0.22}px)`;
+      } else {
+        btn2.style.transform = 'translate(0,0)';
+      }
+    }
+  });
+
+  arena.addEventListener('mouseleave', () => {
+    document.getElementById('mag-btn-1').style.transform = 'translate(0,0)';
+    document.getElementById('mag-btn-2').style.transform = 'translate(0,0)';
+    ring.classList.remove('on-btn');
+  });
+
+  // ring lerp
+  function tick() {
+    rx += (mx - rx) * .15;
+    ry += (my - ry) * .15;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>
