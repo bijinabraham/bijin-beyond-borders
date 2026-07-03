@@ -128,8 +128,7 @@
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; }
-  .textPanel { border-inline-end: none; border-block-end: 1px solid var(--rule); padding-block-start: 2rem; }
-  .imagePanel { height: 60vw; min-height: 280px; }
+  .textPanel { border-inline-end: none; padding-block-start: 2rem; }
 }
 
 @media (max-width: 900px) {

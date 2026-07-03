@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import PhotoTrail from "@/components/PhotoTrail";
+import { photo } from "@/lib/basePath";
 import styles from "./about.module.css";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -36,6 +37,9 @@ export default function AboutPage() {
       <section className={styles.hero}>
         <div className={styles.heroText}>
           <PhotoTrail />
+          <div className={styles.mobileHeroImage} aria-hidden="true">
+            <img src={photo("/photos/tokyo-2025/hero.jpeg")} alt="" loading="lazy" />
+          </div>
           <motion.p className={styles.heroOverline} {...fadeUp(0.1)}>
             About
           </motion.p>
