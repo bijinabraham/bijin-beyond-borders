@@ -259,12 +259,12 @@
 @media (max-width: 768px) {
   .page {
     grid-template-columns: 1fr;
-    grid-template-rows: 60svh 1fr;
+    grid-template-rows: 75svh 1fr;
     height: auto;       /* allow page to scroll on mobile */
     overflow: visible;
   }
   .mapWrap {
-    height: 60svh;
+    height: 75svh;
     border-inline-end: none;
     border-block-end: 1px solid var(--rule);
   }
