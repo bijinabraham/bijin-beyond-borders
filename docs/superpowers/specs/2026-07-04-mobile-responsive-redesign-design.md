@@ -99,7 +99,7 @@ theme: {
 - Order: nav → image full-bleed (aspect-ratio 4/5, `object-fit: cover`) → text panel with `padding: 2rem var(--page-px)`.
 - Title clip-path reveal still fires (animation works at any size, no change needed).
 - Stat counters: horizontal strip below title (was aligned right on desktop), each stat gets equal width via `flex: 1`.
-- MagneticBtn: JS effect self-disables on touch devices (`if ('ontouchstart' in window) return;`). Button renders as a normal well-styled CTA with the same visual treatment (border, letter-spacing, arrow). Tap target ≥44px.
+- MagneticBtn: JS magnetism self-disables on touch/coarse-pointer devices. Inside `MagneticBtn.tsx`, the `useEffect` early-returns if `window.matchMedia('(pointer: coarse)').matches`. Button renders as a normal well-styled CTA with the same visual treatment (border, letter-spacing, arrow) — no mouse-follow, no scale-on-hover. Tap target ≥44px. Desktop behavior unchanged.
 - Border between image and text panel: replace `border-inline-end` (desktop) with `border-block-start` (mobile) inside a media query.
 
 ### 2.2 `Marquee.module.css`
@@ -137,7 +137,7 @@ Three breakpoint tiers:
 **Desktop:** PhotoTrail cursor trail unchanged.
 
 **Mobile (≤900px):**
-- PhotoTrail component early-returns on `!('mousemove' in window)` OR `matchMedia('(pointer: coarse)').matches`.
+- PhotoTrail component early-returns from its `useEffect` if `window.matchMedia('(pointer: coarse)').matches`.
 - Replace with a single static hero image slot in the About text panel: pick the first photo from PhotoTrail's photo array, render at 100% width with aspect-ratio 4/3, `object-fit: cover`.
 - Text panel and copy stay identical.
 
@@ -221,8 +221,9 @@ Manually verify on 320px, 375px, 414px, 768px, 1024px, 1440px widths using the d
 - `components/Nav.module.css`
 
 **Phase 2:**
-- `components/Hero.tsx` (touch detection for MagneticBtn)
+- `components/Hero.tsx` (verify layout render, no logic change beyond markup adjustments)
 - `components/Hero.module.css`
+- `components/MagneticBtn.tsx` (early-return in useEffect on coarse pointer)
 - `components/Marquee.module.css`
 - `components/PlacesGrid.module.css`
 - `components/Adrenaline.module.css`
@@ -255,6 +256,55 @@ Each pushed with `GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_SYSTEM=/dev/null git pu
 ## Session log
 
 After all three commits, append 2026-07-04 entry to `CONTEXT.md` covering the mobile pass, including the breakpoint tokens introduced and the touch-detection pattern used for MagneticBtn / PhotoTrail (for future components to reference).
+
+---
+
+## Non-regression safeguards
+
+**Hard constraint:** nothing breaks on mobile or desktop. All changes are additive; no existing rule is deleted or overwritten without an equivalent replacement.
+
+### Rules for every change
+
+1. **Additive media queries.** New rules use `@media (max-width: <bp>)` and only take effect on the specified width or narrower. Existing desktop-first rules remain the default cascade.
+2. **Existing effects preserved.** Every quirk / animation / component listed in `CONTEXT.md` under active design keeps functioning on desktop with identical visual output. No animation timing is changed except Marquee scroll duration (2.2) which is a mobile-only override inside a media query.
+3. **Touch detection is capability-based, not width-based.** Cursor-dependent effects (MagneticBtn, PhotoTrail) gate on `matchMedia('(pointer: coarse)').matches` — reliable for touchscreen-only devices. This does NOT misfire on desktops with touch monitors (those report `pointer: fine` because a mouse is also present).
+4. **Feature-detected APIs.** `dvh` unit fallback: any `dvh` usage has a `vh` fallback in the same rule (`max-height: calc(100vh - 60px); max-height: calc(100dvh - 60px);`). Same for `env(safe-area-inset-*)` fallbacks.
+5. **Breakpoint additions cannot invalidate existing breakpoints.** The current `900px` rule stays. New `480px` and `768px` rules layer inside `≤900px`, not on top of `≥900px`.
+6. **Tailwind config change is additive.** Adding `screens` config doesn't affect anything today because no Tailwind responsive classes are currently used in the codebase (per audit). Zero regression risk.
+7. **`globals.css` token changes are widening, not narrowing.** `--text-hero` clamp gets a smaller floor (3.25rem, was 5rem) — this only affects viewports narrower than the point where 10vw = 5rem, i.e., ≤500px. Desktop hero size is untouched.
+
+### Verification protocol (run before every push)
+
+For each phase commit, in order:
+
+1. Run `NODE_OPTIONS='' npx next dev` and confirm the dev server starts without errors.
+2. Load the homepage and check for console errors.
+3. Manually resize the browser to test widths in this order: **1440, 1024, 900, 768, 480, 375, 320**.
+4. For each width, verify:
+   - No horizontal scroll (except intentional: adrenaline drag, tabs, marquee).
+   - No obvious layout break (overlapping elements, text overflow, cropped critical UI).
+   - All navigation works.
+5. Confirm desktop (≥900px) looks pixel-identical to pre-change screenshots for the affected pages.
+6. Only commit + push if all checks pass. If a check fails, fix inline and re-verify.
+
+### Rollback plan
+
+Each phase is one commit. If a post-push regression is discovered:
+1. Identify the offending phase commit.
+2. Revert via `git revert <sha>` (creates a clean inverse commit, keeps history).
+3. Push the revert with the GIT_CONFIG bypass.
+4. Diagnose in a new branch or amend the plan.
+
+### Files explicitly NOT changed
+
+To make the safety envelope obvious, these files are read-only in this pass:
+
+- `components/Cursor.tsx` + module CSS (custom cursor logic stays intact)
+- `components/TiltCard.tsx` (tilt logic stays; on mobile, the hover events simply don't fire — no code change needed)
+- (MagneticBtn.tsx IS changed — see phase 2.1)
+- `lib/adrenalineData.ts`, `lib/travelsData.ts`, `lib/projectsData.ts`, `lib/basePath.ts` (data + helpers)
+- All content in `app/adrenaline/[slug]/page.tsx` route logic (only `ActivityContent` CSS + minor JS)
+- `instrumentation.ts` (localStorage polyfill stays)
 
 ---
 
