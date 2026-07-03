@@ -127,11 +127,6 @@
 }
 
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-  .textPanel { border-inline-end: none; padding-block-start: 2rem; }
-}
-
-@media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;

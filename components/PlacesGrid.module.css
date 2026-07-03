@@ -155,4 +155,9 @@
     grid-column: auto;
     grid-row: auto;
   }
+
+  .card:nth-child(1) {
+    grid-column: auto;
+    grid-row: auto;
+  }
 }
