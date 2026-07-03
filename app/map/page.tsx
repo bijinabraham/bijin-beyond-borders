@@ -643,6 +643,8 @@ export default function MapPage() {
 
       // ── RESIZE ──
       function onResize() {
+        // Dismiss any pinned polaroid so it doesn't detach from its (moved) marker
+        hidePolaroid();
         W = wrapRef.current?.clientWidth ?? W;
         H = wrapRef.current?.clientHeight ?? H;
         radius = Math.min(W, H) / 2 - (W < 768 ? 8 : 32);

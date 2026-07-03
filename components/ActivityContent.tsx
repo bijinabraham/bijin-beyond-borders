@@ -64,19 +64,17 @@ export default function ActivityContent({ activity }: { activity: Activity }) {
 
   useEffect(() => { intensityRef.current = activity.intensity; }, [activity.intensity]);
 
-  // Center the active tab on mount (mobile: horizontal scroll strip)
+  // Center the active tab on mount and when switching sports (mobile: horizontal scroll strip)
   useEffect(() => {
     const active = activeTabRef.current;
     const scroller = tabsRef.current;
     if (!active || !scroller) return;
-    // Only meaningful when the tab strip is actually overflowing (mobile).
-    // scrollIntoView with inline: "center" on the ancestor scroll container.
     active.scrollIntoView({
       inline: "center",
       block: "nearest",
       behavior: "auto",
     });
-  }, []);
+  }, [activity.slug]);
 
   // Idle glitch — fires every 1s
   useEffect(() => {
