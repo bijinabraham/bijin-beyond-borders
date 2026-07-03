@@ -10,6 +10,11 @@ img {
 
 /* ── DESIGN TOKENS ── */
 :root {
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 900px;
+  --bp-xl: 1200px;
+
   --bg:       oklch(0.93 0.016 14);
   --surface:  oklch(0.89 0.020 14);
   --surface2: oklch(0.85 0.024 14);
@@ -29,7 +34,7 @@ img {
   --text-xl:   clamp(1.30rem, 2.0vw, 1.80rem);
   --text-2xl:  clamp(1.80rem, 3.0vw, 2.50rem);
   --text-3xl:  clamp(2.50rem, 4.5vw, 3.50rem);
-  --text-hero: clamp(5.00rem, 10vw, 9.00rem);
+  --text-hero: clamp(3.25rem, 10vw, 9.00rem);
 
   --outline-stroke: oklch(0.34 0.11 14);
 
@@ -53,6 +58,8 @@ body {
   font-weight: 300;
   line-height: 1.75;
   cursor: none;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* ── TYPOGRAPHY HELPERS ── */
@@ -76,6 +83,10 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 768px) {
   :root { --page-px: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  :root { --page-px: 1rem; }
 }
 
 /* ── REDUCED MOTION ── */

@@ -6,6 +6,12 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      sm: "480px",
+      md: "768px",
+      lg: "900px",
+      xl: "1200px",
+    },
     extend: {
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"],

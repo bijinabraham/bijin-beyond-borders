@@ -35,3 +35,26 @@
 }
 
 .links a:hover { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-block: 2rem;
+  }
+
+  .links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .links a {
+    padding-block: 0.75rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}

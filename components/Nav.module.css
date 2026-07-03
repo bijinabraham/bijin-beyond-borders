@@ -110,7 +110,9 @@
 }
 
 .drawer.drawerOpen {
-  max-height: 420px;
+  max-height: calc(100vh - 60px);
+  max-height: calc(100dvh - 60px);
+  overflow-y: auto;
   border-block-start-width: 1px;
 }
 
@@ -188,4 +190,10 @@
 
 @media (max-width: 640px) {
   .navRow { padding: 1.25rem var(--page-px); }
+}
+
+@media (max-width: 480px) {
+  .drawerLinks a {
+    padding: 1rem var(--page-px);
+  }
 }

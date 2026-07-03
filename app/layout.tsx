@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Josefin_Sans, Nunito_Sans } from "next/font/google";
 import Nav from "@/components/Nav";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -30,6 +30,12 @@ export const metadata: Metadata = {
     description: "Travels, projects, and the spaces between.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
