@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { photo } from "@/lib/basePath";
 import styles from "./About.module.css";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -37,6 +38,9 @@ export default function About() {
   return (
     <section className={styles.section}>
       <div className={styles.textPanel}>
+        <div className={styles.mobileHeroImage} aria-hidden="true">
+          <img src={photo("/photos/tokyo-2025/hero.jpeg")} alt="" loading="lazy" />
+        </div>
         <motion.p
           className={styles.tag}
           initial={{ opacity: 0 }}

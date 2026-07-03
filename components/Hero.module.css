@@ -131,3 +131,51 @@
   .textPanel { border-inline-end: none; border-block-end: 1px solid var(--rule); padding-block-start: 2rem; }
   .imagePanel { height: 60vw; min-height: 280px; }
 }
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    min-height: auto;
+  }
+
+  .textPanel {
+    padding: 2rem var(--page-px) 3rem;
+    border-inline-end: none;
+    border-block-start: 1px solid var(--rule);
+    order: 2;
+  }
+
+  .imagePanel {
+    order: 1;
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    max-height: 70vh;
+  }
+
+  .index {
+    padding-block-start: 0;
+  }
+
+  .statStrip {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    margin-block-start: 2rem;
+  }
+
+  .statStrip > * {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .textPanel {
+    padding: 1.5rem var(--page-px) 2.5rem;
+  }
+
+  .statStrip {
+    gap: 0.5rem;
+  }
+}

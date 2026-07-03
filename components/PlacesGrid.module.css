@@ -130,3 +130,29 @@
 @media (prefers-reduced-motion: reduce) {
   .img { transition: none; }
 }
+
+@media (min-width: 481px) and (max-width: 899px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .card {
+    min-height: 220px;
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .card {
+    min-height: 260px;
+    grid-column: auto;
+    grid-row: auto;
+  }
+}

@@ -48,3 +48,9 @@
 @media (prefers-reduced-motion: reduce) {
   .track { animation: none; }
 }
+
+@media (max-width: 768px) {
+  .track {
+    animation-duration: 45s;
+  }
+}

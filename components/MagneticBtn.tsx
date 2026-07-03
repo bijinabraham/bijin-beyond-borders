@@ -13,6 +13,9 @@ export default function MagneticBtn({ children, strength = 0.38 }: MagneticBtnPr
   const innerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+      return;
+    }
     const wrap  = wrapRef.current;
     const inner = innerRef.current;
     if (!wrap || !inner) return;
