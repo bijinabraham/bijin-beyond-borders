@@ -415,3 +415,52 @@
   .heroGrain { animation: none; }
   .glitching { animation: none; }
 }
+
+/* ── MOBILE: tab strip becomes horizontal scroll, stats 2-col, wave shorter ── */
+@media (max-width: 900px) {
+  .tabs {
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-inline: var(--page-px);
+    justify-content: flex-start;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    min-width: auto;
+    padding-inline: 1rem;
+    scroll-snap-align: center;
+    flex: 0 0 auto;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .heroName {
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 768px) {
+  .waveCanvas {
+    height: 100px;
+  }
+
+  .photoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .photoGrid {
+    grid-template-columns: 1fr;
+  }
+}

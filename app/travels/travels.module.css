@@ -325,6 +325,19 @@
   .tripImgWrap { min-height: 100px; }
 }
 
+@media (max-width: 480px) {
+  .cityGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .tripRow,
+  .tripRight {
+    grid-template-columns: 1fr;
+    row-gap: 0.75rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cityImg, .tripImg { transition: none; }
   .cityTint, .tripTint { transition: none; }

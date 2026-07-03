@@ -222,7 +222,7 @@ export default function MapPage() {
 
       let W = wrapRef.current.clientWidth;
       let H = wrapRef.current.clientHeight || window.innerHeight - 67;
-      let radius = Math.min(W, H) / 2 - 32;
+      let radius = Math.min(W, H) / 2 - (W < 768 ? 8 : 32);
 
       // Projection  -  start facing Europe/Middle East/Japan arc
       const projection = d3.geoOrthographic()
@@ -560,44 +560,92 @@ export default function MapPage() {
       polaroid.appendChild(polCaption);
       wrapRef.current?.appendChild(polaroid);
 
+      // Touch-device detection — separate tap flow from hover flow on coarse pointers
+      const isCoarsePointer =
+        typeof window !== "undefined" &&
+        window.matchMedia("(pointer: coarse)").matches;
+
+      // Track which city (by name) is currently pinned by tap on touch devices
+      let pinnedCityName: string | null = null;
+
+      function showPolaroidFor(d: typeof allCities[0]) {
+        const photoSrc = cityPhotoMap[d.name];
+        if (!photoSrc) return false;
+        const coords = projection([d.lng, d.lat]);
+        if (!coords) return false;
+        const [cx, cy] = coords;
+        const rot = (Math.random() - 0.5) * 14;
+        polImg.src = photoSrc;
+        polCaption.textContent = d.name;
+        polaroid.style.left = (cx + 16) + "px";
+        polaroid.style.top  = (cy - 185) + "px";
+        polaroid.style.setProperty("--polaroidRot", rot + "deg");
+        polaroid.classList.add(styles.polVisible);
+        // Freeze globe so polaroid stays pinned to the city
+        autoRotate = false;
+        velX = 0;
+        velY = 0;
+        if (idleTimer) clearTimeout(idleTimer);
+        return true;
+      }
+
+      function hidePolaroid() {
+        polaroid.classList.remove(styles.polVisible);
+        pinnedCityName = null;
+      }
+
       // City hover — polaroid for cities with photos, text label otherwise
       // Also freezes globe rotation while polaroid is visible
       cityGs
         .on("mouseenter", function (_event: MouseEvent, d: typeof allCities[0]) {
-          const photoSrc = cityPhotoMap[d.name];
-          if (photoSrc) {
-            const coords = projection([d.lng, d.lat]);
-            if (coords) {
-              const [cx, cy] = coords;
-              const rot = (Math.random() - 0.5) * 14;
-              polImg.src = photoSrc;
-              polCaption.textContent = d.name;
-              polaroid.style.left = (cx + 16) + "px";
-              polaroid.style.top  = (cy - 185) + "px";
-              polaroid.style.setProperty("--polaroidRot", rot + "deg");
-              polaroid.classList.add(styles.polVisible);
-              // Freeze globe so polaroid stays pinned to the city
-              autoRotate = false;
-              velX = 0;
-              velY = 0;
-              if (idleTimer) clearTimeout(idleTimer);
-            }
-          } else {
+          if (isCoarsePointer) return; // touch flow handled via click
+          if (!showPolaroidFor(d)) {
             d3.select(this).select(".city-lbl").attr("opacity", 1);
           }
         })
         .on("mouseleave", function () {
+          if (isCoarsePointer) return;
           polaroid.classList.remove(styles.polVisible);
           d3.select(this).select(".city-lbl").attr("opacity", 0);
           // Resume auto-rotation after the normal idle delay
           startIdle();
+        })
+        .on("click", function (event: MouseEvent, d: typeof allCities[0]) {
+          if (!isCoarsePointer) return;
+          event.stopPropagation();
+          const photoSrc = cityPhotoMap[d.name];
+          if (!photoSrc) {
+            // No photo — just toggle text label
+            const lbl = d3.select(this).select(".city-lbl");
+            const nowVisible = +lbl.attr("opacity") > 0;
+            lbl.attr("opacity", nowVisible ? 0 : 1);
+            return;
+          }
+          if (pinnedCityName === d.name) {
+            hidePolaroid();
+            startIdle();
+          } else {
+            if (showPolaroidFor(d)) {
+              pinnedCityName = d.name;
+            }
+          }
         });
+
+      // Tap-away dismiss on touch devices — background click hides pinned polaroid
+      if (isCoarsePointer) {
+        svg.on("click", function () {
+          if (pinnedCityName) {
+            hidePolaroid();
+            startIdle();
+          }
+        });
+      }
 
       // ── RESIZE ──
       function onResize() {
         W = wrapRef.current?.clientWidth ?? W;
         H = wrapRef.current?.clientHeight ?? H;
-        radius = Math.min(W, H) / 2 - 32;
+        radius = Math.min(W, H) / 2 - (W < 768 ? 8 : 32);
         svg.attr("width", W).attr("height", H).attr("viewBox", `0 0 ${W} ${H}`);
         projection.scale(radius).translate([W / 2, H / 2]);
         svg.select(".globe-ocean").attr("cx", W / 2).attr("cy", H / 2).attr("r", radius);

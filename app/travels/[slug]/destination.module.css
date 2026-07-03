@@ -289,6 +289,14 @@
   .galleryCell:first-child { grid-column: span 2; grid-row: span 1; }
 }
 
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 240px;
+  }
+  .galleryCell:first-child { grid-column: auto; grid-row: auto; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .miniRing { animation: none; }
   .galleryCell img { transition: none; }

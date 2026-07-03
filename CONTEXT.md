@@ -146,6 +146,17 @@ Or set up a shell alias. The fetch URL works fine. Only push is blocked. The rem
 
 Most recent significant work (newest first):
 
+- **2026-07-04 (mobile pass):**
+  - Full mobile-responsive redesign across the site. All desktop quirks preserved.
+  - Introduced breakpoint tokens `--bp-sm/md/lg/xl` (480/768/900/1200) in `globals.css`, mirrored in `tailwind.config.ts`.
+  - Touch-detection pattern for cursor-dependent components: `window.matchMedia("(pointer: coarse)").matches` early-returns in the useEffect. Applied to `MagneticBtn.tsx` and `PhotoTrail.tsx`. Use this same pattern for future cursor-driven components.
+  - Homepage: Hero stacks image-over-text at ≤900px, PlacesGrid collapses 5→2→1, Adrenaline drag cards enlarge to ~1.2 cards per viewport with scroll-snap, Projects rows stack readably at ≤640px, About page shows a static hero image on mobile in place of PhotoTrail.
+  - Sub-pages: /map globe scaled up on mobile (radius padding 32→8), polaroid tap-to-open. Adrenaline sport pages: tab strip becomes horizontal scroll with active-tab centered on mount, stats 2-col, wave shorter. /projects wide cards stack vertically. /travels grids collapse to single column at 480px.
+  - Nav drawer uses `dvh` (vh fallback) instead of hardcoded 420px. Footer has its first mobile MQ (vertical stack, 44px tap targets).
+  - Explicit `viewport` metadata export in `app/layout.tsx`.
+  - Spec: `docs/superpowers/specs/2026-07-04-mobile-responsive-redesign-design.md`.
+  - Plan: `docs/superpowers/plans/2026-07-04-mobile-responsive-redesign.md`.
+
 - **2026-07-04:**
   - Added two new projects to `/projects`: **Portfolio** (03, featured with screenshot at `/projects/portfolio.png`, links to `bijinabraham.github.io`) and **Psychology Traits** (04, list-only, no URL, `live: false`, statusNote "Pipeline built, awaiting channel launch").
   - Portfolio entry references the editorial + technical-drawing career site (elevation/section toggle, inline SVG diagrams, Next.js 16 + React 19).

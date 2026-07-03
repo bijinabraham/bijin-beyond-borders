@@ -58,7 +58,25 @@ export default function ActivityContent({ activity }: { activity: Activity }) {
   // Glitch ref
   const nameRef = useRef<HTMLHeadingElement>(null);
 
+  // Tabs — refs for active-tab centering on mount
+  const tabsRef      = useRef<HTMLElement>(null);
+  const activeTabRef = useRef<HTMLAnchorElement>(null);
+
   useEffect(() => { intensityRef.current = activity.intensity; }, [activity.intensity]);
+
+  // Center the active tab on mount (mobile: horizontal scroll strip)
+  useEffect(() => {
+    const active = activeTabRef.current;
+    const scroller = tabsRef.current;
+    if (!active || !scroller) return;
+    // Only meaningful when the tab strip is actually overflowing (mobile).
+    // scrollIntoView with inline: "center" on the ancestor scroll container.
+    active.scrollIntoView({
+      inline: "center",
+      block: "nearest",
+      behavior: "auto",
+    });
+  }, []);
 
   // Idle glitch — fires every 1s
   useEffect(() => {
@@ -143,33 +161,41 @@ export default function ActivityContent({ activity }: { activity: Activity }) {
     <main className={styles.page}>
 
       {/* ── TAB SWITCHER (TOP) ── */}
-      <nav className={styles.tabs} aria-label="Adrenaline pursuits">
+      <nav ref={tabsRef} className={styles.tabs} aria-label="Adrenaline pursuits">
         <div className={styles.tabsGroup}>
-          {activities.filter(a => !a.horizon).map((a) => (
-            <Link
-              key={a.slug}
-              href={`/adrenaline/${a.slug}`}
-              className={`${styles.tab} ${a.slug === activity.slug ? styles.tabActive : ""}`}
-              prefetch
-            >
-              <span className={styles.tabName}>{a.name}</span>
-              <span className={styles.tabTag}>{a.tag.split(" · ")[0]}</span>
-            </Link>
-          ))}
+          {activities.filter(a => !a.horizon).map((a) => {
+            const isActive = a.slug === activity.slug;
+            return (
+              <Link
+                key={a.slug}
+                href={`/adrenaline/${a.slug}`}
+                className={`${styles.tab} ${isActive ? styles.tabActive : ""}`}
+                ref={isActive ? activeTabRef : undefined}
+                prefetch
+              >
+                <span className={styles.tabName}>{a.name}</span>
+                <span className={styles.tabTag}>{a.tag.split(" · ")[0]}</span>
+              </Link>
+            );
+          })}
         </div>
         <div className={styles.tabsDivider} />
         <div className={styles.tabsGroup}>
-          {activities.filter(a => a.horizon).map((a) => (
-            <Link
-              key={a.slug}
-              href={`/adrenaline/${a.slug}`}
-              className={`${styles.tab} ${styles.tabHorizon} ${a.slug === activity.slug ? styles.tabActive : ""}`}
-              prefetch
-            >
-              <span className={styles.tabName}>{a.name}</span>
-              <span className={styles.tabSoon}>Soon</span>
-            </Link>
-          ))}
+          {activities.filter(a => a.horizon).map((a) => {
+            const isActive = a.slug === activity.slug;
+            return (
+              <Link
+                key={a.slug}
+                href={`/adrenaline/${a.slug}`}
+                className={`${styles.tab} ${styles.tabHorizon} ${isActive ? styles.tabActive : ""}`}
+                ref={isActive ? activeTabRef : undefined}
+                prefetch
+              >
+                <span className={styles.tabName}>{a.name}</span>
+                <span className={styles.tabSoon}>Soon</span>
+              </Link>
+            );
+          })}
         </div>
       </nav>
 

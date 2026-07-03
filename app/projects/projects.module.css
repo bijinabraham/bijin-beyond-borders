@@ -371,9 +371,39 @@
   .phoneCopy { align-items: center; }
 }
 
+@media (max-width: 768px) {
+  /* Wide featured card: image stays full-bleed, aspect becomes less letterboxed,
+     text panel gets consistent inline padding. .featuredInfo already 1-col
+     from the 900px rule above. */
+  .screenshotWrap {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+  }
+
+  .featuredLeft {
+    padding: 1.5rem var(--page-px);
+    gap: 1.25rem;
+  }
+
+  .featuredRight {
+    padding: 1.5rem var(--page-px);
+  }
+
+  /* Phone featured card: enforce page-px on the stage regardless of clamp */
+  .phoneStage {
+    padding-inline: var(--page-px);
+  }
+}
+
 @media (max-width: 640px) {
   .header { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
   .listItem { grid-template-columns: 2rem 1fr; gap: 1rem; }
   .listTag, .listYear { display: none; }
   .screenshotWrap { aspect-ratio: 4 / 3; }
+}
+
+@media (max-width: 480px) {
+  .phoneStage {
+    padding-block: 1.5rem;
+  }
 }
