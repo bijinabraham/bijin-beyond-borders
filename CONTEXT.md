@@ -146,6 +146,13 @@ Or set up a shell alias. The fetch URL works fine. Only push is blocked. The rem
 
 Most recent significant work (newest first):
 
+- **2026-07-04:**
+  - Added two new projects to `/projects`: **Portfolio** (03, featured with screenshot at `/projects/portfolio.png`, links to `bijinabraham.github.io`) and **Psychology Traits** (04, list-only, no URL, `live: false`, statusNote "Pipeline built, awaiting channel launch").
+  - Portfolio entry references the editorial + technical-drawing career site (elevation/section toggle, inline SVG diagrams, Next.js 16 + React 19).
+  - Removed the "Project Three" placeholder.
+  - Spec: `docs/superpowers/specs/2026-07-04-add-portfolio-psychology-projects-design.md`.
+  - Known outstanding: mobile responsiveness overhaul is next up (site currently only has 900/768/640 breakpoints, Footer has no MQ, adrenaline horizontal-scroll cards collapse to ~120px on 375px screens, viewport meta needs verification).
+
 - **2026-07-01:**
   - Project 02 is **Atlas** (mobile workout and strength tracker, React Native + Expo + SQLite, lives at `~/Atlas`). Live but not on store.
   - `/projects` now supports a `layout: "wide" | "phone"` field per project. Sculptura uses the existing wide-cap featured block; Atlas gets a new **phone-stage** variant: dark surface, screenshot inside a phone frame on the left, name + copy on the right, then the same meta-strip pattern below. Both featured blocks now show a **Status** meta row with a pulsing accent live dot (`statusNote` appends a qualifier like "Not on store").
