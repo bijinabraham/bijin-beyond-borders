@@ -344,7 +344,7 @@
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .heroText { border-inline-end: none; border-block-end: 1px solid var(--rule); padding-block-start: 2rem; }
-  .heroImage { height: 60vw; min-height: 260px; }
+  .heroImage { display: none; }
   .bioColumns { grid-template-columns: 1fr; gap: 1.5rem; }
   .workInner { grid-template-columns: 1fr; gap: 2rem; }
   .adventureGrid { grid-template-columns: repeat(3, 1fr); height: auto; }
