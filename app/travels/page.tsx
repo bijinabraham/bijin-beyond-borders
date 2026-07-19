@@ -227,8 +227,8 @@ const byTrip = [
   {
     year: "2025", season: "August", country: "Europe",
     title: "Iberian and Italian Circuit",
-    cities: ["Madrid", "Barcelona", "Valencia", "Rome", "Florence", "Venice", "Amsterdam"],
-    seed: "barcelona-es", slug: "barcelona",
+    cities: ["Madrid", "Valencia", "Tarragona", "Barcelona", "Rome", "Florence", "Pisa", "Venice", "Lucerne", "Mt. Pilatus", "Zurich", "Amsterdam"],
+    seed: "madrid-es", slug: "madrid",
   },
   {
     year: "2025", season: "Dec 14 - 21", country: "United States",
