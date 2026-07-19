@@ -231,6 +231,12 @@ const byTrip = [
     seed: "barcelona-es", slug: "barcelona",
   },
   {
+    year: "2025", season: "Dec 14 - 21", country: "United States",
+    title: "Miami and Jupiter Beach",
+    cities: ["Miami", "Jupiter Beach"],
+    seed: "miami-us", slug: "miami",
+  },
+  {
     year: "2026", season: "Jan - Mar", country: "Canada · US · UK",
     title: "Toronto to US to London",
     cities: ["Toronto", "Mont Tremblant", "Seattle", "Snoqualmie", "Vancouver", "London"],

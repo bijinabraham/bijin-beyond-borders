@@ -406,19 +406,24 @@ export const destinations: Record<string, Destination> = {
 
   "miami": {
     slug: "miami", name: "Miami", country: "United States", region: "Florida",
-    lat: 25.7617, lng: -80.1918, visitDate: "2024", duration: "3 days",
+    lat: 25.7617, lng: -80.1918, visitDate: "December 2025", duration: "Dec 14 - 21",
     heroSeed: "miami-hero",
     story: [
-      "Miami has exactly the energy its reputation promises, and that turns out to be enough. South Beach at evening, the Art Deco district in the morning light, the heat that never really leaves even at midnight.",
-      "Wynwood changed how I think about street art  -  it is an entire neighbourhood transformed into a living gallery, and the works change constantly. Little Havana is the counterweight: older, slower, with better coffee.",
+      "Miami and the Florida coast, mid-December 2025.",
     ],
-    highlights: [
-      "South Beach at sunrise before anyone else arrives",
-      "Wynwood Walls  -  go on a weekday morning",
-      "Little Havana for Cuban coffee and dominoes",
-      "Art Basel in December if timing allows",
+    highlights: [],
+    gallerySeed: "miami", nextSlug: "jupiter-beach", nextName: "Jupiter Beach",
+  },
+
+  "jupiter-beach": {
+    slug: "jupiter-beach", name: "Jupiter Beach", country: "United States", region: "Florida",
+    lat: 26.9342, lng: -80.0892, visitDate: "December 2025", duration: "Dec 2025",
+    heroSeed: "jupiter-hero",
+    story: [
+      "Jupiter Beach on the Florida coast, part of the December 2025 trip with Miami.",
     ],
-    gallerySeed: "miami", nextSlug: "washington-dc", nextName: "Washington DC",
+    highlights: [],
+    gallerySeed: "jupiter-beach", nextSlug: "miami", nextName: "Miami",
   },
 
   "washington-dc": {
