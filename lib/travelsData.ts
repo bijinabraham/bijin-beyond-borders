@@ -429,9 +429,19 @@ export const destinations: Record<string, Destination> = {
     lat: 47.6062, lng: -122.3321, visitDate: "January 2025", duration: "late Jan 2025",
     heroSeed: "seattle-hero",
     story: [
-      "First time in Seattle, on the way back from Japan.",
+      "Landed in Seattle for the first time. It had started to snow slowly by the time we cleared immigration, and we took a cab straight to the hotel. Rested for a while, then went out for dinner. Seattle was cold, but Japan had left us with a kind of accumulated tolerance for it and it did not register the way it should have.",
+      "The Amazon Spheres were the most surprising thing we saw. Three glass domes at street level holding more than 40,000 plants and a small working ecosystem for frogs and other tiny creatures. It looks like an office building until you step inside and realise you are standing in a curated rainforest. From there we walked the waterfront: the piers, the Gum Wall in Post Alley (a passage of gum stuck to the wall in every colour and depth), and the Seattle Great Wheel on Pier 57. Breakfast one morning was at the 5 Point Cafe, a diner near the Space Needle with proper food and the kind of no-nonsense character that Seattle does well. We also went to the original Starbucks at Pike Place, opened in 1971, and to the Starbucks Reserve Roastery on Capitol Hill, which is Starbucks pretending to be a laboratory and mostly succeeding.",
+      "Our last night in the city we went to the Museum of Pop Culture for a party. It was fine. Nothing was going to beat the GKO party at the Chelsea in Vegas, and we knew it going in.",
     ],
-    highlights: [],
+    highlights: [
+      "Amazon Spheres: three glass domes, 40,000+ plants, frogs and other small life inside",
+      "5 Point Cafe for breakfast near the Space Needle",
+      "Original Starbucks at Pike Place: opened 1971",
+      "Starbucks Reserve Roastery on Capitol Hill",
+      "Gum Wall in Post Alley: every colour, every depth",
+      "Seattle Great Wheel on Pier 57 and the waterfront walk",
+      "MoPOP on the last night: fine, not Vegas",
+    ],
     gallerySeed: "seattle", nextSlug: "snoqualmie", nextName: "Snoqualmie",
   },
 
@@ -440,9 +450,19 @@ export const destinations: Record<string, Destination> = {
     lat: 47.5290, lng: -121.8267, visitDate: "February 2025", duration: "Feb 2025",
     heroSeed: "snoqualmie-hero",
     story: [
-      "Snoqualmie.",
+      "The plan was to drive out to Snoqualmie the day after GKO for a day of skiing. I rented a blue Jeep Wrangler that had to be picked up from a Costco nearby. We got the car, drove it back to the hotel to check out and shift bags to the next place we were staying at, and headed to the ski rental. The shop did not open until ten or eleven, which left us standing around waiting for the door to unlock. We used the time to eat breakfast. After picking up the equipment we drove out to Snoqualmie, stopping on the way at Snoqualmie Falls, which is exactly as loud and cold and worth-stopping-for as it looks in photographs.",
+      "At Summit Central I bought a lift ticket for myself and spent the next hour or two teaching the guys the basics on the beginner slope. Once they were sorted, I took the lift up to actually ski. The snow was great. The ride up was long. I went again, and again, and again, and lost track of time in the way you only lose track of time doing something you genuinely enjoy. Then I realised the car keys were in my pocket. I went back down thinking I could take a bigger lift further up and look for the guys from the top to hand off the keys. Got to the base of it and saw about two hundred people in the queue. I had to return the skis by seven and the car by eleven. That was not going to happen.",
+      "I headed to the car. Sharang and Vibin were already waiting, cold in a way I could not feel because I had been skiing all afternoon and my body was still warm. Udaya was somewhere on the mountain looking for me. I got the boots off, and when I started backing the Jeep out I realised someone had parked too close on my side. First time using reverse on an AWD, I gave it a bit too much throttle and the car jumped back and tapped the Mazda parked behind. No mark, no alarm. I had hit the brakes in time. From there we were racing the clock. Made it to the ski rental in time to return everything, went for dinner, stopped at Apple University Village so the guys could buy phones, and got the Jeep back by half past eleven.",
     ],
-    highlights: [],
+    highlights: [
+      "Blue Jeep Wrangler picked up from a Costco",
+      "Snoqualmie Falls on the drive up: worth the stop",
+      "Teaching the crew ski basics for two hours before actually skiing myself",
+      "Summit Central: great snow, long lift, lost track of time",
+      "Realising the car keys were in my pocket at the top of the mountain",
+      "First reverse in an AWD: Jeep tapped a parked Mazda, no mark, no alarm",
+      "Return-by-eleven race back to town with an Apple University Village stop for phones",
+    ],
     gallerySeed: "snoqualmie", nextSlug: "seattle-2026", nextName: "Seattle",
   },
 
