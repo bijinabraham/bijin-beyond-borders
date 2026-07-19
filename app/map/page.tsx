@@ -41,6 +41,12 @@ const visitedByRegion = [
     ],
   },
   {
+    country: "Hong Kong",
+    cities: [
+      { name: "Hong Kong",      lat:  22.3193, lng:  114.1694 },
+    ],
+  },
+  {
     country: "Canada",
     cities: [
       { name: "Toronto",        lat:  43.6532, lng:  -79.3832 },
@@ -49,6 +55,13 @@ const visitedByRegion = [
       { name: "Niagara Falls",  lat:  43.0896, lng:  -79.0849 },
       { name: "Vancouver",      lat:  49.2827, lng: -123.1207 },
       { name: "Mont Tremblant", lat:  46.1185, lng:  -74.5962 },
+    ],
+  },
+  {
+    country: "Mexico",
+    cities: [
+      { name: "Tijuana",        lat:  32.5149, lng: -117.0382 },
+      { name: "Mexico City",    lat:  19.4326, lng:  -99.1332 },
     ],
   },
   {
@@ -63,6 +76,12 @@ const visitedByRegion = [
       { name: "Horseshoe Bend",  lat:  36.8791, lng: -111.5102 },
       { name: "Antelope Canyon", lat:  36.8619, lng: -111.3743 },
       { name: "Austin",          lat:  30.2672, lng:  -97.7431 },
+      { name: "San Diego",       lat:  32.7157, lng: -117.1611 },
+      { name: "Salt Lake City",  lat:  40.7608, lng: -111.8910 },
+      { name: "Island Park",     lat:  44.4211, lng: -111.3667 },
+      { name: "Yellowstone",     lat:  44.4280, lng: -110.5885 },
+      { name: "Gardiner",        lat:  45.0308, lng: -110.7050 },
+      { name: "Chicago",         lat:  41.8781, lng:  -87.6298 },
       { name: "Miami",           lat:  25.7617, lng:  -80.1918 },
       { name: "Jupiter Beach",   lat:  26.9342, lng:  -80.0892 },
       { name: "Washington DC",   lat:  38.9072, lng:  -77.0369 },
@@ -148,11 +167,39 @@ const allCities = visitedByRegion.flatMap((r) =>
   r.cities.map((c) => ({ ...c, country: r.country }))
 );
 
+// Small territories not represented as separate polygons in world-atlas 110m.
+// Drawn as GeoJSON polygons so they highlight like countries.
+// Coordinates are simplified approximations of the actual boundaries.
+type ExtraRegion = { name: string; geometry: GeoJSON.Polygon };
+const EXTRA_REGIONS: ExtraRegion[] = [
+  {
+    name: "Hong Kong",
+    geometry: {
+      type: "Polygon",
+      coordinates: [[
+        [113.87, 22.52],
+        [114.10, 22.56],
+        [114.28, 22.56],
+        [114.40, 22.48],
+        [114.42, 22.36],
+        [114.35, 22.24],
+        [114.22, 22.18],
+        [114.10, 22.16],
+        [113.96, 22.20],
+        [113.87, 22.28],
+        [113.85, 22.40],
+        [113.87, 22.52],
+      ]],
+    },
+  },
+];
+
 // ISO 3166-1 numeric codes for visited countries
 // "Europe" region spans Spain, Italy, Switzerland, Netherlands
 const VISITED_IDS = new Set([
   392,  // Japan
   124,  // Canada
+  484,  // Mexico
   840,  // United States (incl. Hawaii)
   826,  // United Kingdom
   372,  // Ireland
@@ -171,8 +218,10 @@ const VISITED_IDS = new Set([
 const countryFlags = [
   { name: "Japan",                flag: "🇯🇵" },
   { name: "India",                flag: "🇮🇳" },
+  { name: "Hong Kong",            flag: "🇭🇰" },
   { name: "United States",        flag: "🇺🇸" },
   { name: "Canada",               flag: "🇨🇦" },
+  { name: "Mexico",               flag: "🇲🇽" },
   { name: "United Kingdom",       flag: "🇬🇧" },
   { name: "Ireland",              flag: "🇮🇪" },
   { name: "Germany",              flag: "🇩🇪" },
@@ -187,8 +236,8 @@ const countryFlags = [
 
 // Countries for sidebar display (grouped by region)
 const countriesByRegion = [
-  { region: "Asia",          countries: ["Japan", "India"] },
-  { region: "North America", countries: ["United States", "Canada"] },
+  { region: "Asia",          countries: ["Japan", "India", "Hong Kong"] },
+  { region: "North America", countries: ["United States", "Canada", "Mexico"] },
   { region: "Europe",        countries: ["United Kingdom", "Ireland", "Germany", "Spain", "Italy", "Switzerland", "Netherlands", "Vatican City"] },
   { region: "South America", countries: ["Brazil"] },
   { region: "Middle East",   countries: ["United Arab Emirates"] },
@@ -204,6 +253,7 @@ export default function MapPage() {
   useEffect(() => {
     let animId: number;
     let cleanup: (() => void) | null = null;
+    let isMounted = true;
 
     async function init() {
       const [d3, topo] = await Promise.all([
@@ -211,7 +261,10 @@ export default function MapPage() {
         import("topojson-client"),
       ]);
 
-      if (!svgRef.current || !wrapRef.current) return;
+      if (!isMounted || !svgRef.current || !wrapRef.current) return;
+
+      // Clear any prior render from a previous effect run (StrictMode double-invoke)
+      svgRef.current.replaceChildren();
 
       const SENSITIVITY   = 0.28;
       const FRICTION      = 0.88;
@@ -295,6 +348,18 @@ export default function MapPage() {
             .attr("d", path as any);
 
         });
+
+      // ── EXTRA REGIONS (city-states / SARs not in the topojson) ──
+      const extraRegionPaths = svg.selectAll<SVGPathElement, ExtraRegion>(".extra-region")
+        .data(EXTRA_REGIONS)
+        .enter()
+        .append("path")
+        .attr("class", "extra-region")
+        .attr("fill", "oklch(0.76 0.07 14)")
+        .attr("stroke", "oklch(0.58 0.09 14)")
+        .attr("stroke-width", 0.5)
+        .attr("pointer-events", "none")
+        .attr("d", (d) => path(d.geometry) as string);
 
       // ── ATMOSPHERE RING ──
       svg.append("circle")
@@ -463,6 +528,7 @@ export default function MapPage() {
       function renderFrame() {
         graticuleEl.attr("d", path);
         if (countryPaths) countryPaths.attr("d", path as any);
+        extraRegionPaths.attr("d", (d) => path(d.geometry) as string);
 
         const rot = projection.rotate() as unknown as [number, number];
         const center: [number, number] = [-rot[0], -rot[1]];
@@ -517,6 +583,7 @@ export default function MapPage() {
 
       // ── ANIMATION LOOP ──
       function animate() {
+        if (!isMounted) return;
         if (!isDragging) {
           const rot = projection.rotate() as [number, number, number];
           if (autoRotate) {
@@ -669,7 +736,11 @@ export default function MapPage() {
     }
 
     init();
-    return () => { cleanup?.(); cancelAnimationFrame(animId); };
+    return () => {
+      isMounted = false;
+      cleanup?.();
+      cancelAnimationFrame(animId);
+    };
   }, []);
 
   return (

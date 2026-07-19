@@ -386,7 +386,7 @@ export const destinations: Record<string, Destination> = {
 
   "vancouver": {
     slug: "vancouver", name: "Vancouver", country: "Canada", region: "British Columbia",
-    lat: 49.2827, lng: -123.1207, visitDate: "2024", duration: "3 days",
+    lat: 49.2827, lng: -123.1207, visitDate: "February 2026", duration: "Feb 8",
     heroSeed: "vancouver-hero",
     story: [
       "Vancouver sits between mountains and ocean in a way that makes every other city feel geographically compromised. You can ski in the morning and swim in the afternoon, and the city has organised itself around that fact.",
@@ -398,9 +398,75 @@ export const destinations: Record<string, Destination> = {
       "Capilano Suspension Bridge at sunset",
       "Gastown for dinner and the steam clock",
     ],
-    gallerySeed: "vancouver", nextSlug: "toronto-2024", nextName: "Toronto",
+    gallerySeed: "vancouver", nextSlug: "london-2026", nextName: "London",
   },
 
+
+  "toronto-jan-2026": {
+    slug: "toronto-jan-2026", name: "Toronto", country: "Canada", region: "Ontario",
+    lat: 43.6532, lng: -79.3832, visitDate: "January 2026", duration: "Jan 17 - 28, Jan 31 - Feb 2",
+    heroSeed: "toronto-jan-2026-hero",
+    story: [
+      "Two weeks in Toronto, up to Mont Tremblant, back to Toronto, then onward to Seattle.",
+    ],
+    highlights: [],
+    gallerySeed: "toronto-jan-2026", nextSlug: "mont-tremblant", nextName: "Mont Tremblant",
+  },
+
+  "mont-tremblant": {
+    slug: "mont-tremblant", name: "Mont Tremblant", country: "Canada", region: "Quebec",
+    lat: 46.1185, lng: -74.5962, visitDate: "January 2026", duration: "Jan 28 - 31",
+    heroSeed: "mont-tremblant-hero",
+    story: [
+      "Mont Tremblant.",
+    ],
+    highlights: [],
+    gallerySeed: "mont-tremblant", nextSlug: "toronto-jan-2026", nextName: "Toronto",
+  },
+
+  "seattle": {
+    slug: "seattle", name: "Seattle", country: "United States", region: "Washington",
+    lat: 47.6062, lng: -122.3321, visitDate: "January 2025", duration: "late Jan 2025",
+    heroSeed: "seattle-hero",
+    story: [
+      "First time in Seattle, on the way back from Japan.",
+    ],
+    highlights: [],
+    gallerySeed: "seattle", nextSlug: "snoqualmie", nextName: "Snoqualmie",
+  },
+
+  "snoqualmie": {
+    slug: "snoqualmie", name: "Snoqualmie", country: "United States", region: "Washington",
+    lat: 47.5290, lng: -121.8267, visitDate: "February 2025", duration: "Feb 2025",
+    heroSeed: "snoqualmie-hero",
+    story: [
+      "Snoqualmie.",
+    ],
+    highlights: [],
+    gallerySeed: "snoqualmie", nextSlug: "seattle-2026", nextName: "Seattle",
+  },
+
+  "seattle-2026": {
+    slug: "seattle-2026", name: "Seattle", country: "United States", region: "Washington",
+    lat: 47.6062, lng: -122.3321, visitDate: "February 2026", duration: "Feb 2 - 8",
+    heroSeed: "seattle-2026-hero",
+    story: [
+      "Return visit to Seattle.",
+    ],
+    highlights: [],
+    gallerySeed: "seattle-2026", nextSlug: "snoqualmie-2026", nextName: "Snoqualmie",
+  },
+
+  "snoqualmie-2026": {
+    slug: "snoqualmie-2026", name: "Snoqualmie", country: "United States", region: "Washington",
+    lat: 47.5290, lng: -121.8267, visitDate: "February 2026", duration: "Feb 2026",
+    heroSeed: "snoqualmie-2026-hero",
+    story: [
+      "Return visit to Snoqualmie.",
+    ],
+    highlights: [],
+    gallerySeed: "snoqualmie-2026", nextSlug: "vancouver", nextName: "Vancouver",
+  },
 
   "toronto-2024": {
     slug: "toronto-2024", name: "Toronto", country: "Canada", region: "Ontario",
@@ -456,7 +522,7 @@ export const destinations: Record<string, Destination> = {
 
   "london": {
     slug: "london", name: "London", country: "United Kingdom", region: "England",
-    lat: 51.5074, lng: -0.1278, visitDate: "Autumn", duration: "4 days",
+    lat: 51.5074, lng: -0.1278, visitDate: "February 2025", duration: "Feb - Mar 2025",
     heroSeed: "london-hero",
     story: [
       "London is the city that invented the idea of a city and has been quietly refining it ever since. The layers are visible everywhere: Roman walls inside a Tube station, a Georgian terrace next to a 1960s office block, a Victorian market selling artisan coffee.",
@@ -470,6 +536,17 @@ export const destinations: Record<string, Destination> = {
       "The British Museum  -  allow three hours minimum",
     ],
     gallerySeed: "london", nextSlug: "dublin", nextName: "Dublin",
+  },
+
+  "london-2026": {
+    slug: "london-2026", name: "London", country: "United Kingdom", region: "England",
+    lat: 51.5074, lng: -0.1278, visitDate: "February 2026", duration: "Feb 10 - Mar 20",
+    heroSeed: "london-2026-hero",
+    story: [
+      "Return visit to London on the way back to Bangalore.",
+    ],
+    highlights: [],
+    gallerySeed: "london-2026", nextSlug: "toronto-jan-2026", nextName: "Toronto",
   },
 
   "dublin": {
@@ -601,6 +678,116 @@ export const destinations: Record<string, Destination> = {
     photos: ["1.png", "2.png"],
   },
 
+  "san-diego": {
+    slug: "san-diego", name: "San Diego", country: "United States", region: "California",
+    lat: 32.7157, lng: -117.1611, visitDate: "August 2026", duration: "Aug 11 - 14",
+    heroSeed: "san-diego-hero",
+    story: [
+      "San Diego.",
+    ],
+    highlights: [],
+    gallerySeed: "san-diego", nextSlug: "tijuana", nextName: "Tijuana",
+  },
+
+  "tijuana": {
+    slug: "tijuana", name: "Tijuana", country: "Mexico", region: "Baja California",
+    lat: 32.5149, lng: -117.0382, visitDate: "August 2026", duration: "Aug 14",
+    heroSeed: "tijuana-hero",
+    story: [
+      "Tijuana.",
+    ],
+    highlights: [],
+    gallerySeed: "tijuana", nextSlug: "mexico-city", nextName: "Mexico City",
+  },
+
+  "mexico-city": {
+    slug: "mexico-city", name: "Mexico City", country: "Mexico", region: "Central Mexico",
+    lat: 19.4326, lng: -99.1332, visitDate: "August 2026", duration: "Aug 14 - 16",
+    heroSeed: "mexico-city-hero",
+    story: [
+      "Mexico City.",
+    ],
+    highlights: [],
+    gallerySeed: "mexico-city", nextSlug: "toronto-2026", nextName: "Toronto",
+  },
+
+  "toronto-2026": {
+    slug: "toronto-2026", name: "Toronto", country: "Canada", region: "Ontario",
+    lat: 43.6532, lng: -79.3832, visitDate: "August 2026", duration: "Aug 17",
+    heroSeed: "toronto-2026-hero",
+    story: [
+      "Back in Toronto to meet a friend before heading home.",
+    ],
+    highlights: [],
+    gallerySeed: "toronto-2026", nextSlug: "san-diego", nextName: "San Diego",
+  },
+
+  "salt-lake-city": {
+    slug: "salt-lake-city", name: "Salt Lake City", country: "United States", region: "Utah",
+    lat: 40.7608, lng: -111.8910, visitDate: "August 2026", duration: "Aug 31 - Sep 3, Sep 7",
+    heroSeed: "slc-hero",
+    story: [
+      "Salt Lake City.",
+    ],
+    highlights: [],
+    gallerySeed: "salt-lake-city", nextSlug: "island-park", nextName: "Island Park",
+  },
+
+  "island-park": {
+    slug: "island-park", name: "Island Park", country: "United States", region: "Idaho",
+    lat: 44.4211, lng: -111.3667, visitDate: "September 2026", duration: "Sep 3 - 5",
+    heroSeed: "island-park-hero",
+    story: [
+      "Base for the first two days of Yellowstone, near the west entrance.",
+    ],
+    highlights: [],
+    gallerySeed: "island-park", nextSlug: "yellowstone", nextName: "Yellowstone",
+  },
+
+  "yellowstone": {
+    slug: "yellowstone", name: "Yellowstone", country: "United States", region: "Wyoming, Idaho, Montana",
+    lat: 44.4280, lng: -110.5885, visitDate: "September 2026", duration: "Sep 4 - 6",
+    heroSeed: "yellowstone-hero",
+    story: [
+      "Yellowstone National Park.",
+    ],
+    highlights: [],
+    gallerySeed: "yellowstone", nextSlug: "gardiner", nextName: "Gardiner",
+  },
+
+  "gardiner": {
+    slug: "gardiner", name: "Gardiner", country: "United States", region: "Montana",
+    lat: 45.0308, lng: -110.7050, visitDate: "September 2026", duration: "Sep 5 - 7",
+    heroSeed: "gardiner-hero",
+    story: [
+      "Base near the north entrance of Yellowstone for the last two nights.",
+    ],
+    highlights: [],
+    gallerySeed: "gardiner", nextSlug: "chicago", nextName: "Chicago",
+  },
+
+  "chicago": {
+    slug: "chicago", name: "Chicago", country: "United States", region: "Illinois",
+    lat: 41.8781, lng: -87.6298, visitDate: "September 2026", duration: "Sep 7 - 11",
+    heroSeed: "chicago-hero",
+    story: [
+      "Chicago.",
+    ],
+    highlights: [],
+    gallerySeed: "chicago", nextSlug: "hong-kong", nextName: "Hong Kong",
+  },
+
+  "hong-kong": {
+    slug: "hong-kong", name: "Hong Kong", country: "Hong Kong", region: "Special Administrative Region",
+    lat: 22.3193, lng: 114.1694, visitDate: "September 2026", duration: "Sep 12 - 13",
+    heroSeed: "hong-kong-hero",
+    story: [
+      "Hong Kong.",
+    ],
+    highlights: [],
+    gallerySeed: "hong-kong", nextSlug: "salt-lake-city", nextName: "Salt Lake City",
+  },
+
   "rio-de-janeiro": {
     slug: "rio-de-janeiro", name: "Rio de Janeiro", country: "Brazil", region: "Rio de Janeiro State",
     lat: -22.9068, lng: -43.1729, visitDate: "2026", duration: "5 days",
@@ -669,15 +856,17 @@ export const allCitySlugs: string[] = [
   // Japan
   "tokyo-2025","tokyo-2026","kyoto","osaka","nara","kobe","sakai","nikko","kamakura","enoshima","otaru","sapporo","mt-fuji","chuzenji-lake",
   // United States
-  "san-francisco","los-angeles","yosemite","seattle","snoqualmie","las-vegas","horseshoe-bend","antelope-canyon","austin","miami","jupiter-beach","washington-dc","new-york","new-york-sep-2024","philadelphia",
+  "san-francisco","los-angeles","yosemite","seattle","seattle-2026","snoqualmie","snoqualmie-2026","las-vegas","horseshoe-bend","antelope-canyon","austin","san-diego","salt-lake-city","island-park","yellowstone","gardiner","chicago","miami","jupiter-beach","washington-dc","new-york","new-york-sep-2024","philadelphia",
+  // Mexico
+  "tijuana","mexico-city",
   // Canada
-  "vancouver","toronto-2024","montreal-2024","quebec-city-2024","niagara-falls","mont-tremblant",
+  "vancouver","toronto-2024","toronto-jan-2026","toronto-2026","montreal-2024","quebec-city-2024","niagara-falls","mont-tremblant",
   // Europe
   "madrid","valencia","tarragona","barcelona","rome","vatican-city","florence","pisa","venice","lucerne","zurich","mt-pilatus","amsterdam","berlin",
   // Ireland
   "dublin","howth","wicklow",
   // UK
-  "london",
+  "london","london-2026",
   // UAE
   "dubai","abu-dhabi",
   // Brazil
@@ -686,4 +875,6 @@ export const allCitySlugs: string[] = [
   "new-delhi","kerala","karnataka","tamil-nadu","goa","mumbai","hyderabad","valley-of-flowers","haridwar","srinagar","gulmarg","nagpur","mulki",
   // Hawaii
   "honolulu","kauai",
+  // Hong Kong
+  "hong-kong",
 ];

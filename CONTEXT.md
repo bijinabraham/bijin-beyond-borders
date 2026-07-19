@@ -142,9 +142,30 @@ Or set up a shell alias. The fetch URL works fine. Only push is blocked. The rem
 
 ---
 
+## Cross-machine setup
+
+Additional Claude context lives in the personal setup repo: **https://github.com/bijinabraham/claude**. On a new laptop, follow that repo's `claude-setup.md` first to install plugins/skills, then clone this repo and this CONTEXT.md becomes the source of truth for the site itself.
+
 ## Active session log
 
 Most recent significant work (newest first):
+
+- **2026-07-19 (travels + map data overhaul):**
+  - Confirmed upcoming and recent 2026 trips added to travelsData + /travels + map:
+    - Jan-Mar 2026 (Canada · US · UK): `toronto-jan-2026`, `mont-tremblant`, `seattle-2026`, `snoqualmie-2026`, updated `vancouver` (Feb 2026), new `london-2026` (Feb 10 - Mar 20).
+    - Aug 2026 (US · Mexico · Canada): `san-diego`, `tijuana`, `mexico-city`, `toronto-2026`.
+    - Aug-Sep 2026 (US · Hong Kong): `salt-lake-city`, `island-park`, `yellowstone`, `gardiner`, `chicago`, `hong-kong`.
+    - 2026 Japan · Hawaii · Brazil trip retitled "Sapporo to São Paulo" with the full 13-city itinerary.
+  - Retro fixes to older 2025 data:
+    - Split the combined 2025 "First Time in Japan" trip into three: Japan (Jan), US (Seattle+Snoqualmie), UK (London Feb-Mar) — Ireland now sits after UK on the timeline.
+    - Seattle and Snoqualmie became repeat-visit cities: `seattle`/`snoqualmie` are the 2025 first visits, `seattle-2026`/`snoqualmie-2026` are the 2026 second visits.
+    - `london` is now the 2025 first visit (was mislabeled 2026 mid-session).
+    - Removed Vancouver and Mont Tremblant from the 2024 Great White North trip (never visited that year); Vancouver was reassigned to Feb 2026 first-visit.
+  - New countries added to map + sidebar + flag collection: **Mexico** (ISO 484, colors via world-atlas), **Hong Kong** (SAR is not in the 110m topojson — highlighted via a simplified GeoJSON polygon in an `EXTRA_REGIONS` array so it fills like other countries).
+  - `/travels` byCountry labels: repeat cities now show year/month in parentheses — Tokyo (Jan 2025) / Tokyo (2026), New York (Feb 2024) / New York (Sep 2024), Toronto (Nov 2024) / (Jan 2026) / (Aug 2026), London (Feb 2025) / (Feb 2026), Seattle and Snoqualmie split into 2025 / 2026.
+  - `ComingSoon` component upgraded: was text-only "In progress" for cities without full destination entries. Now renders the same 88vh picsum hero + bento gallery as `DestinationContent`, keeping an "In progress" label. Any slug in `allCitySlugs` without a full entry gets a proper visual page. Just drop photos + write a story to promote it.
+  - Globe map fixes: (1) `touch-action: none` + `user-select: none` on the SVG so trackpad/touch pointerdown isn't hijacked by browser scroll. (2) React StrictMode double-init leak — first `init()` async completed after cleanup fired (cleanup was still null), leaving a ghost animate loop that fought pointerdown. Fixed by adding an `isMounted` flag checked inside `init()` and `animate()`, plus `svgRef.current.replaceChildren()` at start of init to clear leaked prior render.
+  - Dev server tip: use `NODE_OPTIONS='' npx next dev --turbopack` — Turbopack HMR is dramatically more reliable than the default Webpack dev server for this codebase.
 
 - **2026-07-04 (mobile pass):**
   - Full mobile-responsive redesign across the site. All desktop quirks preserved.

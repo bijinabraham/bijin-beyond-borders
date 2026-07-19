@@ -22,6 +22,9 @@
   height: 100%;
   display: block;
   cursor: inherit;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* These are used by D3 via .attr("class") not CSS modules */
