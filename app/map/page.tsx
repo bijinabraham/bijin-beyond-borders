@@ -171,24 +171,27 @@ const allCities = visitedByRegion.flatMap((r) =>
 // Drawn as GeoJSON polygons so they highlight like countries.
 // Coordinates are simplified approximations of the actual boundaries.
 type ExtraRegion = { name: string; geometry: GeoJSON.Polygon };
+// Hong Kong's true footprint (~0.5° × 0.4°) renders as ~4px on the globe — invisible.
+// Scaled ~3× around the real centroid (22.32°N, 114.16°E) so it reads as a small country
+// while keeping the same shape and location.
 const EXTRA_REGIONS: ExtraRegion[] = [
   {
     name: "Hong Kong",
     geometry: {
       type: "Polygon",
       coordinates: [[
-        [113.87, 22.52],
-        [114.10, 22.56],
-        [114.28, 22.56],
-        [114.40, 22.48],
-        [114.42, 22.36],
-        [114.35, 22.24],
-        [114.22, 22.18],
-        [114.10, 22.16],
-        [113.96, 22.20],
-        [113.87, 22.28],
-        [113.85, 22.40],
-        [113.87, 22.52],
+        [113.30, 23.10],
+        [114.00, 23.30],
+        [114.55, 23.30],
+        [114.95, 22.95],
+        [115.00, 22.60],
+        [114.80, 22.20],
+        [114.40, 21.90],
+        [114.00, 21.85],
+        [113.55, 21.95],
+        [113.25, 22.30],
+        [113.20, 22.70],
+        [113.30, 23.10],
       ]],
     },
   },

@@ -52,8 +52,8 @@ export default function Hero() {
     return () => obs.disconnect();
   }, []);
 
-  const count1 = useCounter(15, statVisible);
-  const count2 = useCounter(2, statVisible);
+  const count1 = useCounter(16, statVisible);
+  const count2 = useCounter(4, statVisible);
 
   const lines = [
     { text: "Bijin",   cls: styles.line1 },

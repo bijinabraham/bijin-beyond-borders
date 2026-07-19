@@ -7,8 +7,9 @@ import About from "@/components/About";
 import Footer from "@/components/Footer";
 
 const countries = [
-  "Japan", "India", "United States", "Canada", "Ireland", "Spain",
-  "Italy", "Switzerland", "Netherlands", "Germany", "Brazil", "Hawaii", "UAE", "UK",
+  "Japan", "India", "Hong Kong", "United States", "Canada", "Mexico",
+  "UK", "Ireland", "Spain", "Italy", "Vatican City", "Switzerland",
+  "Netherlands", "Germany", "Brazil", "UAE", "Hawaii",
 ];
 
 const activities = [
