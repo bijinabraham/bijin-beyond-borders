@@ -760,20 +760,24 @@ export const destinations: Record<string, Destination> = {
 
   "madrid": {
     slug: "madrid", name: "Madrid", country: "Spain", region: "Community of Madrid",
-    lat: 40.4168, lng: -3.7038, visitDate: "August 2025", duration: "3 days",
+    lat: 40.4168, lng: -3.7038, visitDate: "August 2025", duration: "Aug 22 - 24",
     heroSeed: "madrid-hero",
     story: [
-      "Madrid operates on a different clock. Lunch at 3pm. Dinner at 10pm. The city is fully alive at midnight on a Tuesday. Once you adjust your expectations, the rhythm of the city becomes the best thing about it.",
-      "The Prado is one of the greatest collections of European art in the world and it is never as crowded as it should be. Retiro Park in the morning. Mercado de San Miguel for lunch. Malasaña for the rest.",
+      "I left for Madrid five days after losing Leo. The trip had been planned months earlier, and looking back it probably gave me a way to be moving instead of sitting still with it. Sharang was on the same flight. Bangalore to Abu Dhabi to Madrid, with seven hours in AUH in the middle.",
+      "After landing in Abu Dhabi and redoing security, I realised I had left my wallet on the plane. Credit cards, ID, a hundred dollars in cash. There is no way to get back onto a flight you have just left. I filed a lost and found case, and a few hours later they came back to tell me they had it. Great. Except their process only released items at 4pm and my next flight was at 2pm. I tried every workaround I could think of and hit the same answer every time. The only way to actually pick it up was to come back in person, which meant I had to wait until the layover on my return flight. Do not ask why the process works this way. My return had about six hours in AUH built in, which was long enough, and I had packed a backup card away for exactly this kind of thing.",
+      "Landed in Madrid in the evening, checked into the hotel, and went out for dinner. Found a place close by and had pizza and pasta. Early night.",
+      "Spent the morning of the 23rd walking Madrid. The city was quieter than I had expected. Shops shut, streets empty, that specific August-in-Europe hush where everyone is somewhere else for the month. Later we made our way toward Sol and it was the exact opposite: a sea of people, buskers, and street musicians every few metres. Two versions of the same city depending on where you stood. Dinner ended up being gelato, which is a perfectly acceptable dinner in the right weather. Early night again because we had a train to Valencia in the morning.",
     ],
     highlights: [
-      "The Prado  -  arrive at opening",
-      "El Retiro park on a Sunday morning",
-      "Mercado de San Miguel",
-      "Malasaña for independent shops and coffee",
-      "Chocolatería San Ginés for churros at midnight",
+      "Leaving five days after losing Leo, movement over stillness",
+      "Wallet left on the flight in Abu Dhabi, recovered only on the return layover",
+      "Pizza and pasta the first night in Madrid",
+      "Quiet daytime Madrid: shops shut, empty streets, August in Europe",
+      "Sol at night: buskers, musicians, sea of people, the opposite city",
+      "Gelato as dinner, which is fine in the right weather",
+      "Early train to Valencia the next morning",
     ],
-    gallerySeed: "madrid", nextSlug: "rome", nextName: "Rome",
+    gallerySeed: "madrid", nextSlug: "valencia", nextName: "Valencia",
   },
 
   "rome": {
