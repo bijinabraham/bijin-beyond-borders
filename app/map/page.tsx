@@ -16,6 +16,7 @@ const cityPhotoMap: Record<string, string> = {
   "Philadelphia":  photo("/photos/philadelphia/hero.jpg"),
   "Quebec City":   photo("/photos/quebec-city-2024/hero.jpeg"),
   "San Francisco": photo("/photos/san-francisco/hero.jpeg"),
+  "San Jose":      photo("/photos/san-jose/20250715_050339 Large.jpeg"),
   "Toronto":       photo("/photos/toronto-2024/hero.jpeg"),
   "Yosemite":      photo("/photos/yosemite/hero.jpeg"),
   "Dubai":         photo("/photos/dubai/hero.png"),

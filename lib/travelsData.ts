@@ -238,6 +238,8 @@ export const destinations: Record<string, Destination> = {
       "Millionaire bacon at Sweet Maple: reorders your ranking of foods",
     ],
     gallerySeed: "sf-2025", nextSlug: "san-jose", nextName: "San Jose",
+    heroPhoto: "IMG_20260528_082739 Large.jpeg",
+    photos: ["IMG_20260528_082739 Large.jpeg","IMG_20260719_130530 Large.jpeg","IMG_20260719_130536 Large.jpeg","IMG_20260719_130542 Large.jpeg","IMG_20260719_130550 Large.jpeg","IMG_20260719_130604 Large.jpeg"],
   },
 
   "san-jose": {
@@ -252,6 +254,8 @@ export const destinations: Record<string, Destination> = {
       "San Jose Earthquakes match one evening",
     ],
     gallerySeed: "san-jose", nextSlug: "yosemite-2025", nextName: "Yosemite",
+    heroPhoto: "20250715_050339 Large.jpeg",
+    photos: ["20250715_050339 Large.jpeg","20250716_053137 Large.jpeg","20250716_053206 Large.jpeg","20250716_070730 Large.jpeg"],
   },
 
   "yosemite": {
