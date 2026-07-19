@@ -445,6 +445,8 @@ export const destinations: Record<string, Destination> = {
       "MoPOP on the last night: fine, not Vegas",
     ],
     gallerySeed: "seattle", nextSlug: "snoqualmie", nextName: "Snoqualmie",
+    heroPhoto: "20250202_142544 Large.jpeg",
+    photos: ["20250202_142544 Large.jpeg","20250202_144738 Large.jpeg","20250203_102532 Large.jpeg","20250203_111020 Large.jpeg","20250203_124725 Large.jpeg","20250203_131013 Large.jpeg","20250203_131727 Large.jpeg","20250203_145509 Large.jpeg","IMG-20250203-WA0000 Large.jpeg","20250206_192806 Large.jpeg","20250206_194058 Large.jpeg","IMG_20260719_121102 Large.jpeg","IMG_20260719_121111 Large.jpeg","IMG_20260719_121118 Large.jpeg","IMG_20260719_121125 Large.jpeg","IMG_20260719_121146 Large.jpeg"],
   },
 
   "snoqualmie": {
@@ -466,6 +468,8 @@ export const destinations: Record<string, Destination> = {
       "Return-by-eleven race back to town with an Apple University Village stop for phones",
     ],
     gallerySeed: "snoqualmie", nextSlug: "seattle-2026", nextName: "Seattle",
+    heroPhoto: "20250207_173828 Large.jpeg",
+    photos: ["20250207_173828 Large.jpeg","IMG-20250207-WA0010 Large.jpeg"],
   },
 
   "seattle-2026": {
@@ -561,6 +565,8 @@ export const destinations: Record<string, Destination> = {
       "Walked Tower Bridge across and on to St. Paul's",
     ],
     gallerySeed: "london", nextSlug: "manchester", nextName: "Manchester",
+    heroPhoto: "20250214_164324 Large.jpeg",
+    photos: ["20250214_164324 Large.jpeg","20250214_171437 Large.jpeg","20250214_172525 Large.jpeg","20250214_174048 Large.jpeg","IMG-20250215-WA0018 Large.jpeg","IMG-20250215-WA0060 Large.jpeg","IMG-20250216-WA0005 Large.jpeg","IMG-20250216-WA0009 Large.jpeg","IMG-20250216-WA0024 Large.jpeg","IMG-20250216-WA0035 Large.jpeg","IMG-20250216-WA0051 Large.jpeg","IMG-20250216-WA0061 Large.jpeg","IMG-20250216-WA0071 Large.jpeg","IMG-20250216-WA0079 Large.jpeg","IMG-20250216-WA0121 Large.jpeg","IMG-20250216-WA0135 Large.jpeg","IMG-20250216-WA0139 Large.jpeg","f4fa4fed-9485-4bb6-872b-f5c396fc6f5a Large.jpeg","IMG_20260719_122754 Large.jpeg","IMG_20260719_122800 Large.jpeg","IMG_20260719_122805 Large.jpeg","IMG_20260719_122811 Large.jpeg"],
   },
 
   "manchester": {
@@ -581,6 +587,8 @@ export const destinations: Record<string, Destination> = {
       "Train back to London",
     ],
     gallerySeed: "manchester", nextSlug: "dublin", nextName: "Dublin",
+    heroPhoto: "20250306_110525 Large.jpeg",
+    photos: ["20250306_110525 Large.jpeg","20250306_112441 Large.jpeg","20250306_122014 Large.jpeg","20250306_193854 Large.jpeg","20250307_104532 Large.jpeg","9adf679a-b4fa-47f5-ab7d-a90ab0ec2040 Large.jpeg"],
   },
 
   "london-2026": {
@@ -612,6 +620,8 @@ export const destinations: Record<string, Destination> = {
       "Egg puffs on the morning I left, two of them made it back to Moksha in London",
     ],
     gallerySeed: "dublin", nextSlug: "howth", nextName: "Howth",
+    heroPhoto: "20250221_185537 Large.jpeg",
+    photos: ["20250221_185537 Large.jpeg","IMG-20250221-WA0002 Large.jpeg","IMG-20250221-WA0006 Large.jpeg","20250222_085127 Large.jpeg","IMG-20250301-WA0077 Large.jpeg"],
   },
 
   "howth": {
@@ -627,6 +637,8 @@ export const destinations: Record<string, Destination> = {
       "Long stretch of headland to walk",
     ],
     gallerySeed: "howth", nextSlug: "wicklow", nextName: "Wicklow",
+    heroPhoto: "20250222_114752 Large.jpeg",
+    photos: ["20250222_114752 Large.jpeg","IMG-20250301-WA0029 Large.jpeg","IMG-20250301-WA0053 Large.jpeg","IMG-20250301-WA0059 Large.jpeg","IMG-20250301-WA0071 Large.jpeg"],
   },
 
   "wicklow": {
@@ -642,6 +654,8 @@ export const destinations: Record<string, Destination> = {
       "Turned back once the weather made the point",
     ],
     gallerySeed: "wicklow", nextSlug: "barcelona", nextName: "Barcelona",
+    heroPhoto: "IMG-20250301-WA0007 Large.jpeg",
+    photos: ["IMG-20250301-WA0007 Large.jpeg","IMG-20250301-WA0017 Large.jpeg"],
   },
 
   "barcelona": {

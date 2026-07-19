@@ -19,6 +19,13 @@ const cityPhotoMap: Record<string, string> = {
   "Toronto":       photo("/photos/toronto-2024/hero.jpeg"),
   "Yosemite":      photo("/photos/yosemite/hero.jpeg"),
   "Dubai":         photo("/photos/dubai/hero.png"),
+  "Seattle":       photo("/photos/seattle/20250202_142544 Large.jpeg"),
+  "Snoqualmie":    photo("/photos/snoqualmie/20250207_173828 Large.jpeg"),
+  "London":        photo("/photos/london/20250214_164324 Large.jpeg"),
+  "Manchester":    photo("/photos/manchester/20250306_110525 Large.jpeg"),
+  "Dublin":        photo("/photos/dublin/20250221_185537 Large.jpeg"),
+  "Howth":         photo("/photos/howth/20250222_114752 Large.jpeg"),
+  "Wicklow":       photo("/photos/wicklow/IMG-20250301-WA0007 Large.jpeg"),
 };
 
 const visitedByRegion = [
