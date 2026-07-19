@@ -803,6 +803,26 @@ export const destinations: Record<string, Destination> = {
     gallerySeed: "valencia", nextSlug: "tarragona", nextName: "Tarragona",
   },
 
+  "tarragona": {
+    slug: "tarragona", name: "Tarragona", country: "Spain", region: "Catalonia",
+    lat: 41.1189, lng: 1.2445, visitDate: "August 2025", duration: "Aug 25 - 26",
+    heroSeed: "tarragona-hero",
+    story: [
+      "Reached Tarragona in the evening. Every city on this trip had been noticeably different from the last, and Tarragona was beach and hills at the same time. Dinner at a hotel nearby, pizza and pasta again, which we were fine with. Walked out to a cliff viewpoint after and had gelato with the sea below us. By the time we were done wandering the streets the shops were shutting for the night. Called it there.",
+      "Spent the next day walking the city. Roman ruins scattered through the old town, the kind of thing that stops you mid-step because you were not expecting a Roman wall on the way to a cafe. Good beach views from higher up. In the middle of a small plaza we came across a sundial that was still doing its job. A lot of beautiful streets in general. Later that afternoon we caught the train to Barcelona.",
+    ],
+    highlights: [
+      "Beach and hills at the same time",
+      "Pizza and pasta dinner at a hotel nearby",
+      "Cliff viewpoint with gelato, sea below",
+      "Roman ruins scattered through the old town",
+      "Beach views from higher up",
+      "Sundial in a small plaza, still doing its job",
+      "Afternoon train to Barcelona",
+    ],
+    gallerySeed: "tarragona", nextSlug: "barcelona", nextName: "Barcelona",
+  },
+
   "rome": {
     slug: "rome", name: "Rome", country: "Italy", region: "Lazio",
     lat: 41.9028, lng: 12.4964, visitDate: "August 2025", duration: "4 days",
