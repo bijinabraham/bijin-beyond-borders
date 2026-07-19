@@ -431,6 +431,7 @@ export const destinations: Record<string, Destination> = {
     story: [
       "Landed in Seattle for the first time. It had started to snow slowly by the time we cleared immigration, and we took a cab straight to the hotel. Rested for a while, then went out for dinner. Seattle was cold, but Japan had left us with a kind of accumulated tolerance for it and it did not register the way it should have.",
       "The Amazon Spheres were the most surprising thing we saw. Three glass domes at street level holding more than 40,000 plants and a small working ecosystem for frogs and other tiny creatures. It looks like an office building until you step inside and realise you are standing in a curated rainforest. From there we walked the waterfront: the piers, the Gum Wall in Post Alley (a passage of gum stuck to the wall in every colour and depth), and the Seattle Great Wheel on Pier 57. Breakfast one morning was at the 5 Point Cafe, a diner near the Space Needle with proper food and the kind of no-nonsense character that Seattle does well. We also went to the original Starbucks at Pike Place, opened in 1971, and to the Starbucks Reserve Roastery on Capitol Hill, which is Starbucks pretending to be a laboratory and mostly succeeding.",
+      "Vibin and I went to a shooting range one afternoon, first time either of us had fired a gun. We shot a .22 and a 9mm. Louder, heavier, and more precise-feeling than I had expected on every axis. Would do it again.",
       "Our last night in the city we went to the Museum of Pop Culture for a party. It was fine. Nothing was going to beat the GKO party at the Chelsea in Vegas, and we knew it going in.",
     ],
     highlights: [
@@ -438,6 +439,7 @@ export const destinations: Record<string, Destination> = {
       "5 Point Cafe for breakfast near the Space Needle",
       "Original Starbucks at Pike Place: opened 1971",
       "Starbucks Reserve Roastery on Capitol Hill",
+      "First shooting range with Vibin: .22 and 9mm, first time firing a gun",
       "Gum Wall in Post Alley: every colour, every depth",
       "Seattle Great Wheel on Pier 57 and the waterfront walk",
       "MoPOP on the last night: fine, not Vegas",
