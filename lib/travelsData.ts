@@ -295,6 +295,8 @@ export const destinations: Record<string, Destination> = {
       "Cafe breakfast in Oakhurst before the drive back to the city",
     ],
     gallerySeed: "yosemite-2025", nextSlug: "new-york-jul-2025", nextName: "New York",
+    heroPhoto: "20250717_232027 Large.jpeg",
+    photos: ["20250717_232027 Large.jpeg","20250717_233443 Large.jpeg","20250718_072602 Large.jpeg","20250718_081933 Large.jpeg","IMG_1017 Large.jpeg","IMG_1093 Large.jpeg","IMG_3592 Large.jpeg","IMG_4623 Large.jpeg","IMG_20260719_131107 Large.jpeg","IMG_20260719_131114 Large.jpeg","IMG_20260719_131124 Large.jpeg","IMG_20260719_131130 Large.jpeg","IMG_20260719_131136 Large.jpeg","IMG_20260719_131145 Large.jpeg","IMG_20260719_131151 Large.jpeg"],
   },
 
   "las-vegas": {
