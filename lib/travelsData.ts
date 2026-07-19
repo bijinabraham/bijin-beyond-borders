@@ -780,6 +780,29 @@ export const destinations: Record<string, Destination> = {
     gallerySeed: "madrid", nextSlug: "valencia", nextName: "Valencia",
   },
 
+  "valencia": {
+    slug: "valencia", name: "Valencia", country: "Spain", region: "Valencian Community",
+    lat: 39.4699, lng: -0.3763, visitDate: "August 2025", duration: "Aug 24 - 25",
+    heroSeed: "valencia-hero",
+    story: [
+      "Three or four hours on the train from Madrid and we were in Valencia. Bus to the hotel, which was near the main beach. Dropped bags and went straight down. Sharang got in the water. I sat and watched the waves for a while, which was what I needed at that point in the trip. On the way back we found a football lying around and kicked it about for a bit before heading to change for lunch.",
+      "Lunch was at Festinar, a small cafe I had picked without any real expectation. I had a small pizza there: burrata, basil pesto, sun-dried tomatoes. It is still, by some distance, the best pizza I have eaten. I actually dreamt about it that night. Later we went looking for drinks, a beer for Sharang and a cider for me. Bought them from a mart. The cider was not cold. We asked the mart to keep it in their fridge, walked around for a while, and came back to collect it once it had chilled.",
+      "The next morning we had breakfast at La Cabanyita and I had the best tuna of my life. That meal is the reason I started eating sushi after this trip. In the evening we went to Filmoteca for an open-air cinema screening, first time I had seen a film like that. Later we went to a couple of pubs. What I did not expect was that bars in Valencia hand out little dishes of olives for free with your drinks. I went through a lot of them, and Sharang and I spent a serious portion of that evening discussing what it would take to become olive farmers.",
+      "We left for Tarragona on the night train. The ride was one of the better ones I have taken. Long stretches of coastline in and out of tunnels, sea views appearing and disappearing as the train slipped through and back out into the light.",
+    ],
+    highlights: [
+      "Beach right by the hotel: Sharang in the water, me watching the waves",
+      "Kicking a football around on the way to lunch",
+      "Festinar pizza: burrata, basil pesto, sun-dried tomatoes. Dreamt about it that night",
+      "Cider chilled at the mart while we walked around, then picked up",
+      "La Cabanyita breakfast tuna: the reason I started eating sushi",
+      "Filmoteca open-air cinema, first time watching a film like that",
+      "Free olives at Valencia pubs: went through a lot, discussed becoming olive farmers",
+      "Night train to Tarragona: sea views appearing and disappearing through tunnels",
+    ],
+    gallerySeed: "valencia", nextSlug: "tarragona", nextName: "Tarragona",
+  },
+
   "rome": {
     slug: "rome", name: "Rome", country: "Italy", region: "Lazio",
     lat: 41.9028, lng: 12.4964, visitDate: "August 2025", duration: "4 days",
