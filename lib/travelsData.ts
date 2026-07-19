@@ -400,6 +400,8 @@ export const destinations: Record<string, Destination> = {
       "Walked the city in a single day, no fixed itinerary",
     ],
     gallerySeed: "ny-jul-2025", nextSlug: "san-francisco-2025", nextName: "San Francisco",
+    heroPhoto: "20250720_133029 Large.jpeg",
+    photos: ["20250720_133029 Large.jpeg","IMG-20250720-WA0000 Large.jpeg","IMG-20250720-WA0011 Large.jpeg","20250720_231501 Large.jpeg","IMG_20260719_131715 Large.jpeg","IMG_20260719_131721 Large.jpeg","IMG_20260719_131727 Large.jpeg","IMG_20260719_131732 Large.jpeg","IMG_20260719_131741 Large.jpeg"],
   },
 
   "miami": {
