@@ -227,6 +227,7 @@ export const destinations: Record<string, Destination> = {
     heroSeed: "sf-2025-hero",
     story: [
       "Second time in San Francisco. This trip we did the full tourist arc: Golden Gate Bridge, Painted Ladies at Alamo Square, the Palace of Fine Arts, Ghirardelli Square, and a walk through Chinatown. San Francisco does not change much between visits, and that turns out to be the good thing about it.",
+      "The other standout was breakfast at Sweet Maple. Their millionaire bacon is a thick-cut, brown-sugar-and-chili-crusted slab of pork that lives up to the name. Very few things you eat before noon reorder your ranking of foods. That did.",
     ],
     highlights: [
       "Golden Gate Bridge",
@@ -234,6 +235,7 @@ export const destinations: Record<string, Destination> = {
       "Palace of Fine Arts",
       "Ghirardelli Square",
       "Chinatown walk",
+      "Millionaire bacon at Sweet Maple: reorders your ranking of foods",
     ],
     gallerySeed: "sf-2025", nextSlug: "san-jose", nextName: "San Jose",
   },
@@ -279,12 +281,13 @@ export const destinations: Record<string, Destination> = {
     heroSeed: "yosemite-2025-hero",
     story: [
       "Rented a car after the San Jose event and drove out to Yosemite. Second visit. Udaya, Sharang, and Krishna were with me this time. We stayed in Oakhurst, and the first night's sky is the thing I still think about most from the trip. The sea of stars was so dense it did not look real. That night was the moment stargazing became something I wanted to actually go and do, rather than think about doing.",
-      "Spent the next day in the park. Swam in the Upper and Lower Yosemite Falls, water cold enough to reset your nervous system in one plunge. Driving back later I stopped at a bridge I had swum under the first time I came, and got in the water again. I saw a guy jump off the bridge. I decided I wanted to too. Stood on the edge and second-guessed everything about it, because a bridge always looks lower until you are on it. Eventually I jumped.",
+      "Spent the next day in the park. Started at Mariposa Grove, walking under the giant sequoias, which are trees that make you rethink your sense of scale in ways nothing else really does. Then swam in the Upper and Lower Yosemite Falls, water cold enough to reset your nervous system in one plunge. Driving back later I stopped at a bridge I had swum under the first time I came, and got in the water again. I saw a guy jump off the bridge. I decided I wanted to too. Stood on the edge and second-guessed everything about it, because a bridge always looks lower until you are on it. Eventually I jumped.",
       "In the evening we drove to Glacier Point for stargazing and ran into some folks from my office who had come out for the same reason. I had never seen stars like that in my life. The Milky Way was visible with the naked eye. I lay down on the stairs at the point and stayed there for a while, just looking up. Drove back to the room in the dark. The car went up on the kerb at one point and I very narrowly did not hit a pole. Breakfast at a cafe in Oakhurst the next morning, and we drove back to the city.",
     ],
     highlights: [
       "Second visit to Yosemite, with Udaya, Sharang, and Krishna",
       "Oakhurst night sky: the moment stargazing went from idea to plan",
+      "Mariposa Grove: the giant sequoias reset your sense of scale",
       "Swimming the Upper and Lower Yosemite Falls: nervous-system-reset cold",
       "Bridge jump: stood, second-guessed, jumped",
       "Glacier Point at night: Milky Way with the naked eye, first time in my life",
@@ -632,7 +635,7 @@ export const destinations: Record<string, Destination> = {
     ],
     gallerySeed: "london", nextSlug: "manchester", nextName: "Manchester",
     heroPhoto: "20250214_164324 Large.jpeg",
-    photos: ["20250214_164324 Large.jpeg","20250214_171437 Large.jpeg","20250214_172525 Large.jpeg","20250214_174048 Large.jpeg","IMG-20250215-WA0018 Large.jpeg","IMG-20250215-WA0060 Large.jpeg","IMG-20250216-WA0005 Large.jpeg","IMG-20250216-WA0009 Large.jpeg","IMG-20250216-WA0024 Large.jpeg","IMG-20250216-WA0035 Large.jpeg","IMG-20250216-WA0051 Large.jpeg","IMG-20250216-WA0061 Large.jpeg","IMG-20250216-WA0071 Large.jpeg","IMG-20250216-WA0079 Large.jpeg","IMG-20250216-WA0121 Large.jpeg","IMG-20250216-WA0135 Large.jpeg","IMG-20250216-WA0139 Large.jpeg","f4fa4fed-9485-4bb6-872b-f5c396fc6f5a Large.jpeg","IMG_20260719_122754 Large.jpeg","IMG_20260719_122800 Large.jpeg","IMG_20260719_122805 Large.jpeg","IMG_20260719_122811 Large.jpeg"],
+    photos: ["20250214_164324 Large.jpeg","20250214_171437 Large.jpeg","20250214_172525 Large.jpeg","20250214_174048 Large.jpeg","IMG-20250215-WA0018 Large.jpeg","IMG-20250215-WA0060 Large.jpeg","IMG-20250216-WA0005 Large.jpeg","IMG-20250216-WA0009 Large.jpeg","IMG-20250216-WA0024 Large.jpeg","IMG-20250216-WA0035 Large.jpeg","IMG-20250216-WA0051 Large.jpeg","IMG-20250216-WA0061 Large.jpeg","IMG-20250216-WA0071 Large.jpeg","IMG-20250216-WA0079 Large.jpeg","IMG-20250216-WA0121 Large.jpeg","IMG-20250216-WA0135 Large.jpeg","IMG-20250216-WA0139 Large.jpeg","20250309_121612 Large.jpeg","20250309_121932 Large.jpeg","20250309_141150 Large.jpeg","20250309_141855 Large.jpeg","20250309_142546 Large.jpeg","20250309_145855 Large.jpeg","20250309_152237 Large.jpeg","20250309_162500 Large.jpeg","IMG-20250316-WA0002 Large.jpeg","f4fa4fed-9485-4bb6-872b-f5c396fc6f5a Large.jpeg","IMG_20260719_122754 Large.jpeg","IMG_20260719_122800 Large.jpeg","IMG_20260719_122805 Large.jpeg","IMG_20260719_122811 Large.jpeg"],
   },
 
   "manchester": {
