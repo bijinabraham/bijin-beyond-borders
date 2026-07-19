@@ -75,6 +75,7 @@ const visitedByRegion = [
     country: "United States",
     cities: [
       { name: "San Francisco",   lat:  37.7749, lng: -122.4194 },
+      { name: "San Jose",        lat:  37.3382, lng: -121.8863 },
       { name: "Los Angeles",     lat:  34.0522, lng: -118.2437 },
       { name: "Yosemite",        lat:  37.8651, lng: -119.5383 },
       { name: "Seattle",         lat:  47.6062, lng: -122.3321 },

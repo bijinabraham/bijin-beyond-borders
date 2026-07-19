@@ -221,6 +221,37 @@ export const destinations: Record<string, Destination> = {
     photos: ["IMG_20260621_002408 Large.jpeg","IMG_20260621_002418 Large.jpeg","IMG_20260621_002428 Large.jpeg","IMG_20260621_002438 Large.jpeg","IMG_20260621_002447 Large.jpeg","IMG_20260621_002454 Large.jpeg","IMG_20260621_002512 Large.jpeg","IMG_20260621_002527 Large.jpeg","IMG_20260621_002545 Large.jpeg","IMG_20260621_002555 Large.jpeg","IMG_20260621_002602 Large.jpeg","IMG_20260621_002609 Large.jpeg","IMG_20260621_002617 Large.jpeg","IMG_20260621_002629 Large.jpeg","IMG_20260621_002639 Large.jpeg","IMG_20260621_002649 Large.jpeg","IMG_20260621_002711 Large.jpeg","IMG_20260621_002721 Large.jpeg","IMG_20260621_002729 Large.jpeg","IMG_7553 Large.jpeg","IMG_7567 Large.jpeg","IMG_7567 Medium Large.jpeg","IMG_7585 Large.jpeg","IMG_7587 Large.jpeg","IMG_7591 Large.jpeg","IMG_7596 Large.jpeg","IMG_7597 Large.jpeg","IMG_7734 Large.jpeg","IMG-20240921-WA0021 Large.jpeg","IMG-20240921-WA0024 Large.jpeg"],
   },
 
+  "san-francisco-2025": {
+    slug: "san-francisco-2025", name: "San Francisco", country: "United States", region: "California",
+    lat: 37.7749, lng: -122.4194, visitDate: "July 2025", duration: "July 2025",
+    heroSeed: "sf-2025-hero",
+    story: [
+      "Second time in San Francisco. This trip we did the full tourist arc: Golden Gate Bridge, Painted Ladies at Alamo Square, the Palace of Fine Arts, Ghirardelli Square, and a walk through Chinatown. San Francisco does not change much between visits, and that turns out to be the good thing about it.",
+    ],
+    highlights: [
+      "Golden Gate Bridge",
+      "Painted Ladies at Alamo Square",
+      "Palace of Fine Arts",
+      "Ghirardelli Square",
+      "Chinatown walk",
+    ],
+    gallerySeed: "sf-2025", nextSlug: "san-jose", nextName: "San Jose",
+  },
+
+  "san-jose": {
+    slug: "san-jose", name: "San Jose", country: "United States", region: "California",
+    lat: 37.3382, lng: -121.8863, visitDate: "July 2025", duration: "July 2025",
+    heroSeed: "san-jose-hero",
+    story: [
+      "In San Jose for a work event. One evening we went to a Quakers game (the San Jose Earthquakes, MLS). Loud crowd, good energy, exactly the kind of evening the city puts on well. That was San Jose done.",
+    ],
+    highlights: [
+      "Work event in San Jose",
+      "San Jose Earthquakes match one evening",
+    ],
+    gallerySeed: "san-jose", nextSlug: "yosemite-2025", nextName: "Yosemite",
+  },
+
   "yosemite": {
     slug: "yosemite", name: "Yosemite", country: "United States", region: "California, Sierra Nevada",
     lat: 37.8651, lng: -119.5383, visitDate: "2024", duration: "Day trip from San Francisco",
@@ -240,6 +271,27 @@ export const destinations: Record<string, Destination> = {
     gallerySeed: "yosemite", nextSlug: "toronto-2024", nextName: "Toronto",
     heroPhoto: "hero.jpeg",
     photos: ["IMG_20260621_003521 Large.jpeg","IMG_20260621_003537 Large.jpeg","IMG_20260621_003625 Large.jpeg","IMG_20260621_003636 Large.jpeg","IMG_20260621_003642 Large.jpeg","IMG_20260621_003647 Large.jpeg","IMG_20260621_003653 Large.jpeg","IMG_20260621_003658 Large.jpeg","IMG_7794 Large.jpeg","IMG_7797 Large.jpeg","IMG_7799 Large.jpeg","IMG_7802 Large.jpeg","IMG_7805 Large.jpeg"],
+  },
+
+  "yosemite-2025": {
+    slug: "yosemite-2025", name: "Yosemite", country: "United States", region: "California, Sierra Nevada",
+    lat: 37.8651, lng: -119.5383, visitDate: "July 2025", duration: "2 days",
+    heroSeed: "yosemite-2025-hero",
+    story: [
+      "Rented a car after the San Jose event and drove out to Yosemite. Second visit. Udaya, Sharang, and Krishna were with me this time. We stayed in Oakhurst, and the first night's sky is the thing I still think about most from the trip. The sea of stars was so dense it did not look real. That night was the moment stargazing became something I wanted to actually go and do, rather than think about doing.",
+      "Spent the next day in the park. Swam in the Upper and Lower Yosemite Falls, water cold enough to reset your nervous system in one plunge. Driving back later I stopped at a bridge I had swum under the first time I came, and got in the water again. I saw a guy jump off the bridge. I decided I wanted to too. Stood on the edge and second-guessed everything about it, because a bridge always looks lower until you are on it. Eventually I jumped.",
+      "In the evening we drove to Glacier Point for stargazing and ran into some folks from my office who had come out for the same reason. I had never seen stars like that in my life. The Milky Way was visible with the naked eye. I lay down on the stairs at the point and stayed there for a while, just looking up. Drove back to the room in the dark. The car went up on the kerb at one point and I very narrowly did not hit a pole. Breakfast at a cafe in Oakhurst the next morning, and we drove back to the city.",
+    ],
+    highlights: [
+      "Second visit to Yosemite, with Udaya, Sharang, and Krishna",
+      "Oakhurst night sky: the moment stargazing went from idea to plan",
+      "Swimming the Upper and Lower Yosemite Falls: nervous-system-reset cold",
+      "Bridge jump: stood, second-guessed, jumped",
+      "Glacier Point at night: Milky Way with the naked eye, first time in my life",
+      "Almost hit a pole on the drive back to Oakhurst",
+      "Cafe breakfast in Oakhurst before the drive back to the city",
+    ],
+    gallerySeed: "yosemite-2025", nextSlug: "new-york-jul-2025", nextName: "New York",
   },
 
   "las-vegas": {
@@ -325,6 +377,20 @@ export const destinations: Record<string, Destination> = {
     gallerySeed: "ny-sep", nextSlug: "new-york", nextName: "New York (Feb 2024)",
     heroPhoto: "hero.jpeg",
     photos: ["20240923_102046 Large.jpeg","20240923_123043 Large.jpeg","IMG_7899 Large.jpeg","IMG_7907 Large.jpeg","IMG_7913 Large.jpeg","IMG_7915 Large.jpeg","IMG_7916 Large.jpeg","IMG_7918 Large.jpeg"],
+  },
+
+  "new-york-jul-2025": {
+    slug: "new-york-jul-2025", name: "New York", country: "United States", region: "New York State",
+    lat: 40.7128, lng: -74.0060, visitDate: "July 2025", duration: "2 days on the way home",
+    heroSeed: "ny-jul-2025-hero",
+    story: [
+      "Dropped the rental car, took a cab to the airport, and flew from the West Coast to New York. Two days on the ground before the flight back to Bangalore. Walked the city. Did the whole thing in a day. New York rewards the second visit for exactly this reason: no obligation to see anything specific, and everything you do see feels like a private version of the city.",
+    ],
+    highlights: [
+      "Two-day New York stopover on the way home",
+      "Walked the city in a single day, no fixed itinerary",
+    ],
+    gallerySeed: "ny-jul-2025", nextSlug: "san-francisco-2025", nextName: "San Francisco",
   },
 
   "miami": {
@@ -947,7 +1013,7 @@ export const allCitySlugs: string[] = [
   // Japan
   "tokyo-2025","tokyo-2026","kyoto","osaka","nara","kobe","sakai","nikko","kamakura","enoshima","otaru","sapporo","mt-fuji","chuzenji-lake",
   // United States
-  "san-francisco","los-angeles","yosemite","seattle","seattle-2026","snoqualmie","snoqualmie-2026","las-vegas","horseshoe-bend","antelope-canyon","austin","san-diego","salt-lake-city","island-park","yellowstone","gardiner","chicago","miami","jupiter-beach","washington-dc","new-york","new-york-sep-2024","philadelphia",
+  "san-francisco","san-francisco-2025","san-jose","los-angeles","yosemite","yosemite-2025","seattle","seattle-2026","snoqualmie","snoqualmie-2026","las-vegas","horseshoe-bend","antelope-canyon","austin","san-diego","salt-lake-city","island-park","yellowstone","gardiner","chicago","miami","jupiter-beach","washington-dc","new-york","new-york-sep-2024","new-york-jul-2025","philadelphia",
   // Mexico
   "tijuana","mexico-city",
   // Canada
