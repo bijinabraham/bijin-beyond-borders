@@ -545,17 +545,40 @@ export const destinations: Record<string, Destination> = {
     lat: 51.5074, lng: -0.1278, visitDate: "February 2025", duration: "Feb - Mar 2025",
     heroSeed: "london-hero",
     story: [
-      "London is the city that invented the idea of a city and has been quietly refining it ever since. The layers are visible everywhere: Roman walls inside a Tube station, a Georgian terrace next to a 1960s office block, a Victorian market selling artisan coffee.",
-      "I stayed in Shoreditch and spent most of my time somewhere else. The Tate Modern at night. Portobello Market on a Friday. The South Bank walk from Borough Market to the Globe. Every direction is a different century.",
+      "First time in London. I was flying in to meet Moksha, and I had told her I would land on the 15th. I actually landed a few days earlier and wanted her to find out only when she opened the door. I messaged Anjaly with a cover story: a surprise order was on its way for her. I got to Stratford, could not navigate the apartment block on foot for the life of me, and eventually gave up and took an Uber the rest of the way. Once outside, I messaged Anjaly to come down and collect the delivery. She came down expecting a package and saw me instead. She was properly surprised. She then took a recording of me walking in to meet Moksha. Moksha did not know I was in the country. She was in the kitchen washing dishes when I came in. She turned, saw me, and started crying. It was wholesome in a way that does not quite come across in the retelling.",
+      "I rested for a bit and then jumped into some work later that day. The rest of the visit was mostly on foot. Regent's Park in the morning. Hyde Park on a colder afternoon. Covent Garden for the buzz. Borough Market for the food, which lives up to everything it is meant to. Ramen at Uzumaki one afternoon, then straight into the British Museum, which is a place you can walk around in for hours and still leave feeling like you have seen a fraction of it. We saw Big Ben, the London Eye, and Tower Bridge, then walked the bridge across and continued on to St. Paul's. London is a city that rewards walking and I did a lot of it that trip.",
     ],
     highlights: [
-      "Borough Market on a Thursday or Friday morning",
-      "Tate Modern  -  the Turbine Hall alone is worth it",
-      "Notting Hill and Portobello Road",
-      "South Bank walk at dusk",
-      "The British Museum  -  allow three hours minimum",
+      "The surprise arrival",
+      "Regent's Park in the morning",
+      "Hyde Park on a colder afternoon",
+      "Covent Garden for the buzz",
+      "Borough Market for the food, which lives up to everything it is meant to",
+      "Ramen at Uzumaki, then straight into the British Museum",
+      "Big Ben, the London Eye, and Tower Bridge",
+      "Walked Tower Bridge across and on to St. Paul's",
     ],
-    gallerySeed: "london", nextSlug: "dublin", nextName: "Dublin",
+    gallerySeed: "london", nextSlug: "manchester", nextName: "Manchester",
+  },
+
+  "manchester": {
+    slug: "manchester", name: "Manchester", country: "United Kingdom", region: "England",
+    lat: 53.4808, lng: -2.2426, visitDate: "February 2025", duration: "Feb 2025",
+    heroSeed: "manchester-hero",
+    story: [
+      "I went to Manchester to meet Anil, a friend from school. Took a train in the morning and he picked me up from the station. We parked the car and walked around the city for a while, and ended up at a Wetherspoons for a drink. I had an apple cider, he had a beer. Apple cider is something Moksha had introduced me to, and I love it now because it tastes like apple juice. You only remember it is not when it hits.",
+      "Anil's place was thirty to forty minutes away. I had brought a bottle of whisky along expecting Ajin and Blesson to be there too, and only realised later that they had moved further out. Sara, Anil's wife and also a school mate, was home when we got in. She had made biriyani and it was excellent. Anil asked me to stay the night. I messaged Moksha, and I stayed. In the morning Sara made appam and stew for breakfast, which is exactly the kind of breakfast I did not expect to eat in Manchester and did not want to leave behind. Anil dropped me back at the station and I took the train back to London.",
+    ],
+    highlights: [
+      "Train up in the morning, Anil at Manchester station",
+      "Wetherspoons: apple cider for me, beer for Anil",
+      "Whisky I brought expecting more of the school crew, who had moved further out",
+      "Sara's biriyani when we got to their place",
+      "Staying the night on the fly",
+      "Appam and stew for breakfast: not what I expected in Manchester",
+      "Train back to London",
+    ],
+    gallerySeed: "manchester", nextSlug: "dublin", nextName: "Dublin",
   },
 
   "london-2026": {
@@ -571,20 +594,52 @@ export const destinations: Record<string, Destination> = {
 
   "dublin": {
     slug: "dublin", name: "Dublin", country: "Ireland", region: "Leinster Province",
-    lat: 53.3498, lng: -6.2603, visitDate: "2025", duration: "3 days",
+    lat: 53.3498, lng: -6.2603, visitDate: "February 2025", duration: "Weekend, Fri - Mon",
     heroSeed: "dublin-hero",
     story: [
-      "Dublin is a city best understood on foot and in conversation. The pubs are the social infrastructure: places where strangers become acquaintances over a pint and the conversation finds its level without any particular effort.",
-      "Trinity College Library. The Book of Kells. St. Stephen's Green on a rainy afternoon. The National Gallery for free. The city is compact and endlessly walkable, and the coast is only a DART ride away.",
+      "Since I was in the UK, I wanted to visit Nidhish in Ireland. I told him I was coming, left on a weekend, and came back to London on Monday. The flight out of Gatwick was fifteen pounds. The bus to Gatwick cost more than the flight, which I found both funny and slightly annoying. Nidhish picked me up from the airport. I had a work meeting I could not push, so he pulled into a parking lot on the way home and I finished it in the car.",
+      "At the house I met Nivya chechi, his sister, and the rest of the place: Vishnu, Aavani, Amal, and Ashiq, who all rented rooms there. We drove out to Wicklow Mountains one day. It rained the whole way and did not stop. We walked a trail anyway, took in what views the weather allowed, and turned back. Howth Cliffs on another day was the opposite: sunny, flowers in bloom, a long stretch of headland. That is where the good photos came from.",
+      "One night we walked over to Temple Bar, which sits close enough to his house that a taxi would have felt silly. Nidhish had a Guinness, I had a cider, and we wandered for a bit before walking back. Nivya chechi cooked properly every single day, and on the morning I was leaving she made egg puffs. I took a couple with me back to London for Moksha.",
     ],
     highlights: [
-      "Trinity College Library  -  the Long Room",
-      "Howth Cliffs  -  take the DART, walk the headland",
-      "Kehoe's pub for a proper pint of Guinness",
-      "National Museum of Ireland  -  free and extraordinary",
-      "Wicklow Mountains for the wild contrast",
+      "Fifteen-pound Gatwick flight, more expensive bus to the airport",
+      "Work meeting finished in Nidhish's parked car on the way home",
+      "The full house: Nivya chechi, Vishnu, Aavani, Amal, Ashiq",
+      "Temple Bar walk: Nidhish's Guinness, my cider",
+      "Nivya chechi cooking properly every single day",
+      "Egg puffs on the morning I left, two of them made it back to Moksha in London",
     ],
-    gallerySeed: "dublin", nextSlug: "barcelona", nextName: "Barcelona",
+    gallerySeed: "dublin", nextSlug: "howth", nextName: "Howth",
+  },
+
+  "howth": {
+    slug: "howth", name: "Howth", country: "Ireland", region: "Fingal, County Dublin",
+    lat: 53.3862, lng: -6.0644, visitDate: "February 2025", duration: "Day trip from Dublin",
+    heroSeed: "howth-hero",
+    story: [
+      "Sunny day at the Howth Cliffs, flowers in bloom, a long stretch of headland to walk. Opposite weather to Wicklow the day before. Most of the good photos from the Ireland trip came from here.",
+    ],
+    highlights: [
+      "Sunny day at the cliffs",
+      "Flowers in bloom",
+      "Long stretch of headland to walk",
+    ],
+    gallerySeed: "howth", nextSlug: "wicklow", nextName: "Wicklow",
+  },
+
+  "wicklow": {
+    slug: "wicklow", name: "Wicklow Mountains", country: "Ireland", region: "County Wicklow",
+    lat: 53.0000, lng: -6.3500, visitDate: "February 2025", duration: "Day trip from Dublin",
+    heroSeed: "wicklow-hero",
+    story: [
+      "Decent drive out from Dublin. It rained the whole way and did not stop. We walked a trail anyway, took in what views the weather allowed, and turned back.",
+    ],
+    highlights: [
+      "Rain the whole way, did not stop",
+      "Walked a trail anyway",
+      "Turned back once the weather made the point",
+    ],
+    gallerySeed: "wicklow", nextSlug: "barcelona", nextName: "Barcelona",
   },
 
   "barcelona": {
@@ -886,7 +941,7 @@ export const allCitySlugs: string[] = [
   // Ireland
   "dublin","howth","wicklow",
   // UK
-  "london","london-2026",
+  "london","manchester","london-2026",
   // UAE
   "dubai","abu-dhabi",
   // Brazil

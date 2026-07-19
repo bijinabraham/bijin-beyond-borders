@@ -93,6 +93,7 @@ const visitedByRegion = [
     country: "UK",
     cities: [
       { name: "London",          lat:  51.5074, lng:   -0.1278 },
+      { name: "Manchester",      lat:  53.4808, lng:   -2.2426 },
     ],
   },
   {

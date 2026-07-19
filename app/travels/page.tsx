@@ -111,10 +111,11 @@ const byCountry = [
     ],
   },
   {
-    country: "UK", region: "Europe", count: 2, countryCount: 1,
+    country: "UK", region: "Europe", count: 3, countryCount: 1,
     cities: [
-      { name: "London (Feb 2025)",  slug: "london",       seed: "london-uk" },
-      { name: "London (Feb 2026)",  slug: "london-2026",  seed: "london-uk" },
+      { name: "London (Feb 2025)",  slug: "london",       seed: "london-uk"     },
+      { name: "Manchester",         slug: "manchester",   seed: "manchester-uk" },
+      { name: "London (Feb 2026)",  slug: "london-2026",  seed: "london-uk"     },
     ],
   },
   {
@@ -204,12 +205,12 @@ const byTrip = [
   {
     year: "2025", season: "Feb - Mar", country: "United Kingdom",
     title: "First Time in the UK",
-    cities: ["London"],
+    cities: ["London", "Manchester"],
     seed: "london-uk", slug: "london",
   },
   {
-    year: "2025", season: "2025", country: "Ireland",
-    title: "Green and Wild",
+    year: "2025", season: "February", country: "Ireland",
+    title: "Weekend with Nidhish",
     cities: ["Dublin", "Howth", "Wicklow Mountains"],
     seed: "dublin-ie", slug: "dublin",
   },
