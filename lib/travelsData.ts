@@ -1062,6 +1062,17 @@ export const destinations: Record<string, Destination> = {
     ],
     gallerySeed: "honolulu", nextSlug: "kyoto", nextName: "Kyoto",
   },
+
+  "bangkok": {
+    slug: "bangkok", name: "Bangkok", country: "Thailand", region: "Central Thailand",
+    lat: 13.7563, lng: 100.5018, visitDate: "November 2026", duration: "Nov 2026",
+    heroSeed: "bangkok-hero",
+    story: [
+      "Bangkok.",
+    ],
+    highlights: [],
+    gallerySeed: "bangkok", nextSlug: "tokyo-2025", nextName: "Tokyo",
+  },
 };
 
 export function getDestination(slug: string): Destination | null {
@@ -1098,4 +1109,6 @@ export const allCitySlugs: string[] = [
   "honolulu","kauai",
   // Hong Kong
   "hong-kong",
+  // Thailand
+  "bangkok",
 ];

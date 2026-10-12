@@ -55,6 +55,12 @@ const visitedByRegion = [
     ],
   },
   {
+    country: "Thailand",
+    cities: [
+      { name: "Bangkok",        lat:  13.7563, lng:  100.5018 },
+    ],
+  },
+  {
     country: "Canada",
     cities: [
       { name: "Toronto",        lat:  43.6532, lng:  -79.3832 },
@@ -225,6 +231,7 @@ const VISITED_IDS = new Set([
   336,  // Vatican City
   276,  // Germany
   356,  // India
+  764,  // Thailand
 ]);
 
 // Flag collection  -  excludes Hawaii (part of USA)
@@ -232,6 +239,7 @@ const countryFlags = [
   { name: "Japan",                flag: "🇯🇵" },
   { name: "India",                flag: "🇮🇳" },
   { name: "Hong Kong",            flag: "🇭🇰" },
+  { name: "Thailand",             flag: "🇹🇭" },
   { name: "United States",        flag: "🇺🇸" },
   { name: "Canada",               flag: "🇨🇦" },
   { name: "Mexico",               flag: "🇲🇽" },
@@ -249,7 +257,7 @@ const countryFlags = [
 
 // Countries for sidebar display (grouped by region)
 const countriesByRegion = [
-  { region: "Asia",          countries: ["Japan", "India", "Hong Kong"] },
+  { region: "Asia",          countries: ["Japan", "India", "Hong Kong", "Thailand"] },
   { region: "North America", countries: ["United States", "Canada", "Mexico"] },
   { region: "Europe",        countries: ["United Kingdom", "Ireland", "Germany", "Spain", "Italy", "Switzerland", "Netherlands", "Vatican City"] },
   { region: "South America", countries: ["Brazil"] },

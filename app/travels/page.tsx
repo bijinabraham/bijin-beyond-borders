@@ -36,6 +36,12 @@ const byCountry = [
     ],
   },
   {
+    country: "Thailand", region: "Asia", count: 1, countryCount: 1,
+    cities: [
+      { name: "Bangkok (Nov 2026)", slug: "bangkok", seed: "bangkok-th" },
+    ],
+  },
+  {
     country: "United States", region: "North America", count: 27, countryCount: 1,
     cities: [
       { name: "San Francisco (2024)",   slug: "san-francisco",       seed: "sf-us"         },
@@ -259,6 +265,12 @@ const byTrip = [
     title: "Yellowstone, Chicago, Hong Kong",
     cities: ["Salt Lake City", "Island Park", "Yellowstone", "Gardiner", "Chicago", "Hong Kong"],
     seed: "yellowstone-us", slug: "salt-lake-city",
+  },
+  {
+    year: "2026", season: "November", country: "Thailand",
+    title: "Bangkok",
+    cities: ["Bangkok"],
+    seed: "bangkok-th", slug: "bangkok",
   },
 ];
 
